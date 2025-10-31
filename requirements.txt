@@ -1,0 +1,34 @@
+# Core
+streamlit==1.33.0
+
+# Data handling
+numpy==1.26.4
+pandas==2.2.1
+openpyxl==3.1.3
+
+# Charts & dashboards
+plotly==5.18.0
+
+# AI local model
+ollama==0.2.0
+
+
+
+
+# Kill everything
+#pkill -f streamlit
+
+# Clean reinstall
+#deactivate
+#rm -rf venv
+#python3 -m venv venv
+#source venv/bin/activate
+
+# Install in correct order
+#pip install --upgrade pip
+#pip install numpy==1.26.4
+#pip install pandas==2.2.1
+#pip install streamlit==1.33.0
+#pip install openpyxl==3.1.3
+#pip install plotly==5.18.0
+#pip install ollama==0.2.0
