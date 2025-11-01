@@ -8,8 +8,19 @@ def render_plotly_chart(chart_data, df):
     Handles: bar, pie, line, scatter charts with defensive error handling.
     """
     try:
+        # Debug logging
+        with st.expander("🔍 Debug: Chart Data Details"):
+            st.write("Chart Data:", chart_data)
+            st.write("DataFrame Columns:", df.columns.tolist())
+        
         title = chart_data.get("title", "AI Generated Chart")
         chart_type = chart_data.get("chart_type", "").lower()
+
+        # Check if we have pre-aggregated data
+        if chart_data.get("data"):
+            import pandas as pd
+            df = pd.DataFrame(chart_data["data"])
+            st.write("Using pre-aggregated data:", df)
 
         # Defensive check for column existence
         required_cols = []
@@ -110,6 +121,16 @@ def render_chat_response(msg_content, df, msg_key):
     Renders an AI chat response with interactive buttons.
     Handles: text responses, charts, errors, and suggested actions.
     """
+    # Debug logging for message content
+    with st.expander("🔍 Debug: Full Message Content"):
+        st.write("Message Type:", msg_content.get("response_type"))
+        st.write("Is Visualizable:", msg_content.get("is_visualizable"))
+        st.write("Has Chart Data:", bool(msg_content.get("chart_data")))
+        st.write("Full Message Structure:")
+        st.json(msg_content)
+        if df is not None:
+            st.write("Available DataFrame Columns:", df.columns.tolist())
+
     # Check if this message is already pinned
     is_pinned = any(item == msg_content for item in st.session_state.canvas_items)
     
