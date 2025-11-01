@@ -2,7 +2,6 @@
 
 # ----------------------------
 # Open Analyst MVP Startup Script
-# FIXED: Handles Anaconda conflicts
 # ----------------------------
 
 echo "🚀 Starting Open Analyst MVP setup..."
@@ -13,43 +12,57 @@ if command -v conda &> /dev/null; then
     conda deactivate 2>/dev/null || true
 fi
 
-# 1. Create virtual environment if it doesn't exist
+# 1. Check for Ollama
+echo "🔍 Checking for Ollama installation..."
+if ! command -v ollama &> /dev/null; then
+    echo "⚙️ Ollama not found. Installing Ollama..."
+
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS install
+        curl -fsSL https://ollama.com/download/Ollama-darwin.zip -o ollama.zip
+        unzip ollama.zip -d /Applications/Ollama
+        rm ollama.zip
+        echo "✅ Ollama installed (macOS)"
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux install
+        curl -fsSL https://ollama.com/install.sh | sh
+        echo "✅ Ollama installed (Linux)"
+    else
+        echo "❌ Unsupported OS for automatic Ollama install."
+        echo "Please manually install from https://ollama.com/download"
+        exit 1
+    fi
+else
+    echo "✅ Ollama already installed."
+fi
+
+# 2. Ensure model is available
+MODEL_NAME="llama3"
+echo "🔍 Checking for Ollama model: $MODEL_NAME ..."
+if ! ollama list | grep -q "$MODEL_NAME"; then
+    echo "📦 Pulling Ollama model: $MODEL_NAME ..."
+    ollama pull $MODEL_NAME
+else
+    echo "✅ Model $MODEL_NAME already available."
+fi
+
+# 3. Create virtual environment if it doesn't exist
 if [ ! -d "venv" ]; then
     echo "Creating Python virtual environment..."
-    # Use system Python, not Anaconda Python
     /usr/bin/python3 -m venv venv
 fi
 
-# 2. Activate the environment
+# 4. Activate the environment
 echo "Activating virtual environment..."
 source venv/bin/activate
 
-# 3. Verify we're using the right Python
-echo "Using Python from: $(which python)"
-echo "Python version: $(python --version)"
-
-# 4. Upgrade pip
-echo "Upgrading pip..."
+# 5. Upgrade pip and install dependencies
+echo "Upgrading pip and installing dependencies..."
 pip install --upgrade pip
-
-# 5. Install dependencies
-echo "Installing Python dependencies..."
 pip install -r requirements.txt
 
-# 6. Verify critical packages
-echo "Verifying package versions..."
-python -c "import numpy; import pandas; print(f'NumPy: {numpy.__version__}'); print(f'Pandas: {pandas.__version__}')"
-
-# 7. Launch Streamlit app
-echo "Launching Streamlit app..."
+# 6. Launch Streamlit app
+echo "🚀 Launching Streamlit app..."
 streamlit run app.py
 
-# ----------------------------
-# Notes:
-# - This script now deactivates conda before creating venv
-# - Uses /usr/bin/python3 to avoid Anaconda's Python
-# - Ensures Ollama is installed and your Llama3 model is available locally
-# - For Windows, replace 'source venv/bin/activate' with:
-#       venv\Scripts\activate
-# ----------------------------
 echo "✅ Open Analyst MVP setup complete!"
