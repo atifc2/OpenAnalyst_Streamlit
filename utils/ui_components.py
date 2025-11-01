@@ -124,6 +124,9 @@ def render_chat_response(msg_content, df, msg_key):
 
     # Render chart if present
     if msg_content.get("response_type") == "chart" and msg_content.get("chart_data"):
+        # Debug view in Streamlit UI
+        with st.expander("🔍 Debug: Message Content"):
+            st.json(msg_content)
         render_plotly_chart(msg_content["chart_data"], df)
 
     # Action buttons row
