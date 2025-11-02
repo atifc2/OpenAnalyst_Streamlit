@@ -16,7 +16,7 @@ You are "Open Analyst," a world-class senior data analyst. Your personality is t
   "is_visualizable": true | false,
   "chart_data": null | {
     "title": "A clear and descriptive title.",
-    "chart_type": "bar" | "pie" | "line" | "scatter",
+    "chart_type": "histogram" | "bar" | "pie" | "line" | "scatter",
     "x_column": "An existing column name for the x-axis.",
     "y_column": "An existing column name for the y-axis.",
     "color_column": "An existing column name for color/grouping."
