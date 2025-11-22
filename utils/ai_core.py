@@ -121,7 +121,7 @@ class GeminiClient:
         if self._initialized:
             return
 
-        self.model = genai.GenerativeModel('gemini-2.5-flash-lite`')
+        self.model = genai.GenerativeModel('gemini-2.5-flash-lite')
         self.rate_limiter = RateLimiter(TOKEN_FILL_RATE)
         self._initialized = True
 
@@ -200,6 +200,19 @@ def get_ai_response(data_profile, chat_history, model=None):
                 "suggested_actions": ["Try again", "Upload your data again"]
             }
 
+        # Extract column information from data profile
+        try:
+            import json
+            profile_data = json.loads(data_profile)
+            available_columns = [col["name"] for col in profile_data.get("columns", [])]
+        except:
+            available_columns = []
+
+        # Enhance system prompt with column information
+        if available_columns:
+            column_info = f"\n\n**AVAILABLE COLUMNS IN CURRENT DATASET:**\n{', '.join(available_columns)}\n\nIMPORTANT: Only use these exact column names in chart_data. Do not invent new columns."
+            system_prompt += column_info
+
         # Format chat history
         formatted_history = _format_history_for_ai(chat_history)
 
@@ -207,6 +220,130 @@ def get_ai_response(data_profile, chat_history, model=None):
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": f"Here is the profile for the current dataset:\n{data_profile}"}
+        ]
+        messages.extend(formatted_history[-4:])  # Use last 4 messages for context
+
+        # Make API call
+        with st.spinner("Analyzing your data..."):
+            try:
+                max_retries = 3
+                retry_delay = 2  # seconds
+                
+                for attempt in range(max_retries):
+                    try:
+                        response_content = client.process_messages(messages=messages)
+                        logger.info("Successfully received response from Gemini API")
+                        break
+                    except Exception as e:
+                        if str(e) == "rate_limit_exceeded" and attempt < max_retries - 1:
+                            wait_time = retry_delay * (attempt + 1)
+                            logger.info(f"Rate limit hit, waiting {wait_time} seconds...")
+                            time.sleep(wait_time)
+                            continue
+                        raise
+                
+                cleaned_content = _clean_json_response(response_content)
+                return json.loads(cleaned_content)
+
+            except ValueError as ve:
+                logger.error(f"Validation error: {str(ve)}")
+                return {
+                    "response_type": "error",
+                    "content": "The request could not be processed. Please try rephrasing your question.",
+                    "is_visualizable": False,
+                    "suggested_actions": ["Rephrase question", "Try a simpler query"]
+                }
+
+            except genai.types.generation_types.BlockedPromptException as bpe:
+                logger.error(f"Content blocked: {str(bpe)}")
+                return {
+                    "response_type": "error",
+                    "content": "I cannot process that type of request. Please try a different question.",
+                    "is_visualizable": False,
+                    "suggested_actions": ["Ask a different question", "Review content guidelines"]
+                }
+
+            except Exception as api_error:
+                error_str = str(api_error).lower()
+                if "permission" in error_str or "unauthorized" in error_str:
+                    return {
+                        "response_type": "error",
+                        "content": "There's an issue with the API authentication. Please check your API key.",
+                        "is_visualizable": False,
+                        "suggested_actions": ["Verify API key", "Contact support"]
+                    }
+                elif "quota" in error_str or "rate" in error_str:
+                    return {
+                        "response_type": "error",
+                        "content": "We've hit the API rate limit. Please wait a moment before trying again.",
+                        "is_visualizable": False,
+                        "suggested_actions": ["Wait a moment", "Try later"]
+                    }
+
+                logger.error(f"Gemini API error: {str(api_error)}")
+                return {
+                    "response_type": "error",
+                    "content": "An error occurred while processing your request. Please try again.",
+                    "is_visualizable": False,
+                    "suggested_actions": ["Try again", "Contact support"]
+                }
+
+    except Exception as e:
+        logger.error(f"Unexpected error: {str(e)}")
+        return {
+            "response_type": "error",
+            "content": "I encountered an unexpected issue while analyzing your data.",
+            "is_visualizable": False,
+            "suggested_actions": ["Try again", "Ask a different question"]
+        }
+
+
+def get_ai_response(profile, history):
+    """AI response using the centralized system prompt"""
+    
+    try:
+        # Read the main system prompt from file
+        with open("prompts/system_prompt.txt", "r") as f:
+            base_system_prompt = f.read()
+        
+        # Add dynamic context to the existing prompt
+        # FIX: Handle both string and dict profiles
+        if isinstance(profile, dict):
+            available_columns = profile.get("columns", [])
+        else:
+            # If profile is a string, try to parse it or use empty list
+            try:
+                import json
+                profile_dict = json.loads(profile) if isinstance(profile, str) else {}
+                available_columns = profile_dict.get("columns", [])
+            except:
+                available_columns = []
+        
+        # FIX: Ensure available_columns contains only strings
+        if available_columns:
+            # Convert any non-string items to strings
+            available_columns = [str(col) if not isinstance(col, str) else col for col in available_columns]
+        
+        # Enhance the base prompt with current data context
+        enhanced_prompt = base_system_prompt + f"""
+
+**CURRENT DATA CONTEXT:**
+Available columns: {', '.join(available_columns)}
+
+Common derived columns available:
+- total_sale (if quantity * price was calculated)
+- month, year, month_name (if date columns exist)
+
+Remember to validate column existence before creating charts.
+"""
+    
+        # Format history for AI
+        formatted_history = _format_history_for_ai(history)
+
+        # Build messages
+        messages = [
+            {"role": "system", "content": enhanced_prompt},
+            {"role": "user", "content": f"Here is the profile for the current dataset:\n{json.dumps(profile)}"}
         ]
         messages.extend(formatted_history[-4:])  # Use last 4 messages for context
 
