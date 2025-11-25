@@ -244,9 +244,12 @@ class GeminiClient:
 client = GeminiClient()
 
 
-def get_ai_response(profile, history):
-    """AI response using the centralized system prompt with vector context"""
+def get_ai_response(profile, history, domain_info=None):
+    """AI response using the centralized system prompt with vector context and domain awareness"""
     start_time = time.time()  # Track response time
+    
+    # Extract domain info for vector storage
+    current_domain = domain_info.get('domain', 'general') if domain_info else 'general'
     
     try:
         # Read the main system prompt from file
@@ -388,15 +391,29 @@ Common derived columns (if available):
                         ]
                     }
                 
-                # Store interaction in vector DB for future semantic search
+                # Store interaction in vector DB for future semantic search with domain info
                 if VECTOR_DB_ENABLED and last_user_message and isinstance(ai_response, dict):
                     try:
+                        from utils.domain_detector import get_schema_signature
                         vector_store = get_vector_store()
-                        # Store user message
+                        
+                        # Generate schema signature (if we have access to the dataframe)
+                        schema_sig = None
+                        # Schema would need to be passed in - skip for now, can enhance later
+                        
+                        # Determine query type from AI response
+                        query_type = "complex"
+                        if ai_response.get("is_visualizable"):
+                            query_type = "chart"
+                        
+                        # Store user message with domain metadata
                         vector_store.store_chat_message(
                             role="user",
                             content=last_user_message,
-                            dataset_name=dataset_name
+                            dataset_name=dataset_name,
+                            domain=current_domain,
+                            schema_signature=schema_sig,
+                            query_type=query_type
                         )
                         # Store assistant response
                         assistant_content = ai_response.get("content", "")
@@ -404,9 +421,11 @@ Common derived columns (if available):
                             vector_store.store_chat_message(
                                 role="assistant",
                                 content=assistant_content[:500],  # Store first 500 chars
-                                dataset_name=dataset_name
+                                dataset_name=dataset_name,
+                                domain=current_domain,
+                                query_type=query_type
                             )
-                        logger.info("Stored interaction in vector DB")
+                        logger.info(f"Stored interaction in vector DB (domain: {current_domain})")
                         # Track embedding creation
                         embeddings_created = 2  # User + assistant message
                     except Exception as store_error:

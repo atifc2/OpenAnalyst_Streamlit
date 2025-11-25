@@ -89,15 +89,21 @@ class VectorStore:
         self, 
         role: str, 
         content: str, 
-        dataset_name: Optional[str] = None
+        dataset_name: Optional[str] = None,
+        domain: Optional[str] = None,
+        schema_signature: Optional[str] = None,
+        query_type: Optional[str] = None
     ) -> bool:
         """
-        Store a chat message with its embedding.
+        Store a chat message with its embedding and domain metadata.
         
         Args:
             role: 'user' or 'assistant'
             content: The message content
             dataset_name: Optional dataset context
+            domain: Data domain (sales/marketing/hr/financial/survey/general)
+            schema_signature: Column schema pattern
+            query_type: Type of query (simple/complex/chart)
             
         Returns:
             True if stored successfully, False otherwise
@@ -116,17 +122,27 @@ class VectorStore:
             # Generate unique ID
             point_id = str(uuid.uuid4())
             
-            # Create point with metadata
+            # Create point with enhanced metadata
+            payload = {
+                "role": role,
+                "content": content,
+                "dataset": dataset_name or "unknown",
+                "timestamp": datetime.now().isoformat(),
+                "type": "chat_message"
+            }
+            
+            # Add optional domain-aware metadata
+            if domain:
+                payload["domain"] = domain
+            if schema_signature:
+                payload["schema_signature"] = schema_signature
+            if query_type:
+                payload["query_type"] = query_type
+            
             point = PointStruct(
                 id=point_id,
                 vector=embedding,
-                payload={
-                    "role": role,
-                    "content": content,
-                    "dataset": dataset_name or "unknown",
-                    "timestamp": datetime.now().isoformat(),
-                    "type": "chat_message"
-                }
+                payload=payload
             )
             
             self.client.upsert(
@@ -134,7 +150,7 @@ class VectorStore:
                 points=[point]
             )
             
-            logger.info(f"Stored {role} message in vector DB")
+            logger.info(f"Stored {role} message in vector DB (domain: {domain})")
             return True
             
         except Exception as e:
@@ -244,6 +260,89 @@ def get_vector_store() -> VectorStore:
     if _vector_store_instance is None:
         _vector_store_instance = VectorStore()
     return _vector_store_instance
+
+
+# Add these methods to VectorStore class by monkey-patching
+def _search_by_domain(self, query_text: str, domain: str, limit: int = 5, min_score: float = 0.7) -> List[Dict]:
+    """Search for similar analyses filtered by domain"""
+    if not self.client:
+        return []
+        
+    try:
+        from qdrant_client.models import Filter, FieldCondition, MatchValue
+        
+        query_embedding = self._generate_embedding(query_text)
+        if not query_embedding:
+            return []
+        
+        results = self.client.search(
+            collection_name=self.collection_name,
+            query_vector=query_embedding,
+            query_filter=Filter(must=[FieldCondition(key="domain", match=MatchValue(value=domain))]),
+            limit=limit
+        )
+        
+        similar_analyses = []
+        for hit in results:
+            if hit.score >= min_score:
+                similar_analyses.append({
+                    "score": hit.score,
+                    "content": hit.payload.get("content"),
+                    "domain": hit.payload.get("domain"),
+                    "query_type": hit.payload.get("query_type"),
+                    "dataset": hit.payload.get("dataset"),
+                    "timestamp": hit.payload.get("timestamp")
+                })
+        
+        return similar_analyses
+        
+    except Exception as e:
+        logger.error(f"Error searching by domain: {e}")
+        return []
+
+def _seed_example_analyses(self, examples: List[Dict]) -> bool:
+    """Pre-populate vector DB with example analyses"""
+    if not self.client:
+        return False
+        
+    try:
+        points = []
+        for example in examples:
+            embedding = self._generate_embedding(example['content'])
+            if not embedding:
+                continue
+            
+            point_id = str(uuid.uuid4())
+            point = PointStruct(
+                id=point_id,
+                vector=embedding,
+                payload={
+                    "role": "example",
+                    "content": example['content'],
+                    "domain": example.get('domain', 'general'),
+                    "query_type": example.get('query_type', 'analysis'),
+                    "dataset": "example",
+                    "timestamp": datetime.now().isoformat(),
+                    "type": "example_analysis",
+                    "is_seed": True
+                }
+            )
+            points.append(point)
+        
+        if points:
+            self.client.upsert(collection_name=self.collection_name, points=points)
+            logger.info(f"Seeded {len(points)} example analyses")
+            return True
+        
+        return False
+        
+    except Exception as e:
+        logger.error(f"Error seeding examples: {e}")
+        return False
+
+# Monkey-patch the methods onto VectorStore class
+VectorStore.search_by_domain = _search_by_domain
+VectorStore.seed_example_analyses = _seed_example_analyses
 
 
 def index_sample_dataset(dataset_name: str, df, vector_store: VectorStore) -> bool:

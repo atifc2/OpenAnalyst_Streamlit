@@ -7,6 +7,11 @@ import streamlit as st
 import pandas as pd
 import datetime
 import time
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Set the page configuration for a wide layout and a professional title.
 st.set_page_config(layout="wide", page_title="Open Analyst Workshop", initial_sidebar_state="expanded")
@@ -262,6 +267,41 @@ with st.sidebar:
     
     st.divider()
     
+    # Show Similar Analyses Widget (if data is loaded)
+    if st.session_state.active_dataset_key and st.session_state.processed_data:
+        try:
+            from utils.domain_detector import detect_data_domain
+            from utils.vector_db import get_vector_store
+            from utils.similar_analyses_widget import render_similar_analyses_widget
+            from utils.seed_vector_db import seed_vector_db
+            
+            # Get active dataframe
+            active_df = st.session_state.processed_data[st.session_state.active_dataset_key]["df"]
+            
+            # Detect domain (cache it in session state)
+            if 'current_domain_info' not in st.session_state or st.session_state.previous_dataset_key != st.session_state.active_dataset_key:
+                domain_info = detect_data_domain(active_df)
+                st.session_state.current_domain_info = domain_info
+            else:
+                domain_info = st.session_state.current_domain_info
+            
+            # Seed vector DB on first load
+            if 'vector_db_seeded' not in st.session_state:
+                seed_vector_db()
+                st.session_state.vector_db_seeded = True
+            
+            # Render similar analyses widget
+            vector_store = get_vector_store()
+            render_similar_analyses_widget(
+                vector_store=vector_store,
+                current_domain=domain_info['domain'],
+                current_dataset_name=st.session_state.active_dataset_key
+            )
+            
+        except Exception as e:
+            logger.error(f"Error rendering similar analyses: {e}")
+            st.divider()
+    
     uploaded_files = st.file_uploader(
         "Upload Files", type=["csv", "xlsx"], accept_multiple_files=True
     )
@@ -502,7 +542,10 @@ else:
                         try:
                             profile = create_data_profile(active_df, st.session_state.active_dataset_key)
                             history = st.session_state.messages
-                            ai_response = get_ai_response(profile, history)
+                            
+                            # Pass domain info to AI if available
+                            domain_info = st.session_state.get('current_domain_info', {})
+                            ai_response = get_ai_response(profile, history, domain_info=domain_info)
                             
                             if not isinstance(ai_response, dict):
                                 ai_response = {"content": str(ai_response), "suggested_actions": []}
