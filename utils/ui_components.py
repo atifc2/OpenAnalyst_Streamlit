@@ -129,11 +129,19 @@ def render_plotly_chart(chart_data, df):
             st.code(traceback.format_exc())
 
 def render_chat_response(ai_response, active_df, msg_key):
-    """Enhanced response rendering with smart chart generation"""
+    """Enhanced response rendering with results-first display and reasoning toggle"""
     
     if isinstance(ai_response, dict):
         content = ai_response.get("content", "")
+        reasoning = ai_response.get("reasoning", "")
+        
+        # Display main content (results)
         st.markdown(content)
+        
+        # Collapsible reasoning section (hidden by default)
+        if reasoning:
+            with st.expander("🔍 Show Reasoning", expanded=False):
+                st.markdown(f"**Technical Details:**\n\n{reasoning}")
         
         # Create chart if visualizable
         chart_data = None
@@ -238,7 +246,7 @@ def generate_chart_from_insight(insight_text, active_df, msg_key):
     })
 
 def add_to_canvas(text_content, chart_data, active_df):
-    """Add response to canvas - simple function"""
+    """Add response to canvas with duplicate prevention"""
     # Determine title
     if chart_data:
         title = chart_data.get("title", "Analysis with Chart")
@@ -246,24 +254,58 @@ def add_to_canvas(text_content, chart_data, active_df):
         # Use first 50 chars of text as title
         title = text_content[:50] + "..." if len(text_content) > 50 else text_content
     
+    # Generate unique hash for duplicate detection
+    import hashlib
+    content_hash = hashlib.md5(
+        f"{text_content}{str(chart_data)}".encode()
+    ).hexdigest()
+    
+    # Check for duplicates
+    if "canvas_items" not in st.session_state:
+        st.session_state.canvas_items = []
+    
+    # Check if this exact item already exists
+    for existing_item in st.session_state.canvas_items:
+        existing_hash = existing_item.get("content_hash", "")
+        if existing_hash == content_hash:
+            st.warning("⚠️ This item is already in your canvas!")
+            return
+    
     # Create canvas item
     canvas_item = {
         "title": title,
         "text_content": text_content,
         "chart_data": chart_data,
+        "content_hash": content_hash,  # Store hash for duplicate detection
         "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "pinned_at": datetime.datetime.now().strftime("%H:%M:%S"),
         "dataset_source": st.session_state.get("active_dataset_key", "Unknown")
     }
     
-    # Add to session state
-    if "canvas_items" not in st.session_state:
-        st.session_state.canvas_items = []
-    
     st.session_state.canvas_items.append(canvas_item)
 
 def render_canvas_item(item, df, index):
-    """Render canvas item"""
+    """Render canvas item with improved text visibility"""
+    # Add custom CSS for better text wrapping and visibility
+    st.markdown("""
+        <style>
+        .canvas-item-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4CAF50;
+        }
+        .canvas-item-content {
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            max-width: 100%;
+            overflow-wrap: break-word;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    
     with st.container():
         # Header
         col1, col2, col3 = st.columns([4, 1, 1])
@@ -282,10 +324,10 @@ def render_canvas_item(item, df, index):
                     st.session_state.canvas_items.pop(index)
                     st.rerun()
         
-        # Show text content
+        # Show text content with improved styling
         text_content = item.get("text_content", "")
         if text_content:
-            st.markdown(text_content)
+            st.markdown(f'<div class="canvas-item-content">{text_content}</div>', unsafe_allow_html=True)
         
         # Show chart if available
         chart_data = item.get("chart_data")
@@ -302,7 +344,7 @@ def render_canvas_item(item, df, index):
                 if missing_cols:
                     st.warning(f"⚠️ Chart needs columns: {', '.join(missing_cols)} from {item.get('dataset_source')}")
                 else:
-                    create_chart(chart_data, df, f"canvas_{index}", allow_chart_selection=True)
+                    create_chart(chart_data, df, f"canvas_{index}", allow_chart_selection=False)
                     
             except Exception as e:
                 st.warning(f"⚠️ Chart from: {item.get('dataset_source', 'Unknown')}")
@@ -378,6 +420,21 @@ def create_plotly_chart(df, chart_type, x_col, y_col, color_col, title):
     import plotly.graph_objects as go
     
     try:
+        # Validate columns exist in dataframe
+        df_columns = df.columns.tolist()
+        
+        if x_col and x_col not in df_columns:
+            st.warning(f"⚠️ Column '{x_col}' not found. Available columns: {', '.join(df_columns[:10])}")
+            return None
+        
+        if y_col and y_col not in df_columns:
+            st.warning(f"⚠️ Column '{y_col}' not found. Available columns: {', '.join(df_columns[:10])}")
+            return None
+        
+        if color_col and color_col not in df_columns:
+            # Color column is optional, just skip it
+            color_col = None
+        
         # Prepare data
         plot_df = df.dropna(subset=[col for col in [x_col, y_col] if col])
         
@@ -491,18 +548,23 @@ def render_report_item(item, df, index):
     
     st.markdown("---")
 
-def generate_pdf_report(canvas_items, include_timestamp):
-    """Generate and download PDF report"""
+def generate_pdf_report(canvas_items, df, include_timestamp):
+    """Generate and download PDF report with embedded charts"""
     try:
         from reportlab.lib.pagesizes import letter, A4
-        from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
+        from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, Image
         from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
         from reportlab.lib.units import inch
+        from reportlab.lib.enums import TA_CENTER
         import io
+        import tempfile
+        import os
         
         # Create PDF buffer
         buffer = io.BytesIO()
-        doc = SimpleDocTemplate(buffer, pagesize=A4)
+        doc = SimpleDocTemplate(buffer, pagesize=A4, 
+                               leftMargin=inch, rightMargin=inch,
+                               topMargin=inch, bottomMargin=inch)
         styles = getSampleStyleSheet()
         story = []
         
@@ -512,7 +574,7 @@ def generate_pdf_report(canvas_items, include_timestamp):
             parent=styles['Heading1'],
             fontSize=24,
             spaceAfter=30,
-            alignment=1  # Center
+            alignment=TA_CENTER
         )
         story.append(Paragraph("Analysis Report", title_style))
         story.append(Spacer(1, 20))
@@ -530,41 +592,232 @@ def generate_pdf_report(canvas_items, include_timestamp):
             story.append(Paragraph(f"{i + 1}. {title}", styles['Heading2']))
             
             # Source info
-            source_text = f"Source Dataset: {item.get('dataset_source', 'Unknown')}"
+            source_text = f"<b>Source Dataset:</b> {item.get('dataset_source', 'Unknown')}"
             story.append(Paragraph(source_text, styles['Normal']))
             
             if include_timestamp:
-                time_text = f"Added: {item.get('timestamp', 'Unknown')}"
+                time_text = f"<b>Added:</b> {item.get('timestamp', 'Unknown')}"
                 story.append(Paragraph(time_text, styles['Normal']))
             
             story.append(Spacer(1, 10))
             
             # Content
-            content = item.get('content', {})
-            if content.get('text'):
-                story.append(Paragraph(content['text'], styles['Normal']))
+            text_content = item.get('text_content', '')
+            if text_content:
+                # Clean and format text for PDF
+                clean_text = text_content.replace('\n', '<br/>')
+                story.append(Paragraph(clean_text, styles['BodyText']))
+                story.append(Spacer(1, 10))
             
-            # Chart info (we can't embed interactive charts in PDF, so add description)
-            if content.get('chart_data'):
-                chart_data = content['chart_data']
-                chart_desc = f"Chart: {chart_data.get('title', 'Visualization')} ({chart_data.get('chart_type', 'Unknown type')})"
-                story.append(Paragraph(chart_desc, styles['Italic']))
+            # Embed chart as image
+            chart_data = item.get('chart_data')
+            if chart_data and df is not None:
+                try:
+                    # Create the chart
+                    fig = create_plotly_chart(
+                        df, 
+                        chart_data.get('chart_type', 'bar'),
+                        chart_data.get('x_column'),
+                        chart_data.get('y_column'),
+                        chart_data.get('color_column'),
+                        chart_data.get('title', 'Chart')
+                    )
+                    
+                    if fig:
+                        # Save chart as high-res image
+                        tmp_path = tempfile.mktemp(suffix='.png')
+                        
+                        try:
+                            # Remove engine parameter - let plotly auto-detect
+                            fig.write_image(tmp_path, width=800, height=500, scale=2)
+                            
+                            # Verify image was created successfully
+                            if os.path.exists(tmp_path) and os.path.getsize(tmp_path) > 0:
+                                # Add image to PDF
+                                img = Image(tmp_path, width=5*inch, height=3*inch)
+                                story.append(img)
+                            else:
+                                raise ValueError("Chart image file is empty or not created")
+                            
+                        except Exception as img_error:
+                            # Fallback: Add chart description if image creation fails
+                            chart_desc = f"<i>Chart: {chart_data.get('title', 'Visualization')} - {chart_data.get('chart_type', 'chart')}</i><br/>"
+                            chart_desc += f"<i>X: {chart_data.get('x_column', 'N/A')}, Y: {chart_data.get('y_column', 'N/A')}</i><br/>"
+                            chart_desc += f"<i>(Chart rendering unavailable: {str(img_error)[:80]})</i>"
+                            story.append(Paragraph(chart_desc, styles['Italic']))
+                            story.append(Spacer(1, 10))
+                        finally:
+                            # Clean up temp file
+                            if os.path.exists(tmp_path):
+                                try:
+                                    os.unlink(tmp_path)
+                                except:
+                                    pass
+                    else:
+                        # Fig creation failed
+                        chart_desc = f"<i>Chart: {chart_data.get('title', 'Visualization')} (rendering failed)</i>"
+                        story.append(Paragraph(chart_desc, styles['Italic']))
+                        
+                except Exception as chart_error:
+                    # If chart fails, add detailed text description
+                    chart_desc = f"<i>Chart: {chart_data.get('title', 'Visualization')} ({chart_data.get('chart_type', 'chart')})</i><br/>"
+                    chart_desc += f"<i>Error: {str(chart_error)[:100]}</i>"
+                    story.append(Paragraph(chart_desc, styles['Italic']))
             
             story.append(Spacer(1, 20))
+            
+            # Add page break between items (except last one)
+            if i < len(canvas_items) - 1:
+                story.append(PageBreak())
         
         # Build PDF
         doc.build(story)
         buffer.seek(0)
         
-        # Download button
-        st.download_button(
-            label="📄 Download PDF Report",
-            data=buffer.getvalue(),
-            file_name=f"analysis_report_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
-            mime="application/pdf"
-        )
+        return buffer.getvalue()
         
-    except ImportError:
-        st.error("PDF generation requires reportlab. Install with: pip install reportlab")
+    except ImportError as ie:
+        st.error(f"PDF generation requires additional libraries: {str(ie)}")
+        st.info("Install with: pip install reportlab kaleido")
+        return None
     except Exception as e:
         st.error(f"PDF generation failed: {str(e)}")
+        import traceback
+        st.code(traceback.format_exc())
+        return None
+
+def generate_html_report(canvas_items, df, include_timestamp):
+    """Generate and download HTML report with interactive charts"""
+    try:
+        import plotly.io as pio
+        
+        html_content = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Analysis Report</title>
+            <meta charset="utf-8">
+            <style>
+                body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 40px;
+                    background-color: #f5f5f5;
+                }
+                .header {
+                    text-align: center;
+                    margin-bottom: 40px;
+                    padding: 30px;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    border-radius: 10px;
+                }
+                .header h1 {
+                    margin: 0;
+                    font-size: 36px;
+                }
+                .timestamp {
+                    color: #e0e0e0;
+                    margin-top: 10px;
+                }
+                .item {
+                    background-color: white;
+                    margin-bottom: 30px;
+                    padding: 30px;
+                    border-radius: 10px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }
+                .item-title {
+                    color: #333;
+                    font-size: 24px;
+                    margin-bottom: 10px;
+                    border-bottom: 3px solid #667eea;
+                    padding-bottom: 10px;
+                }
+                .item-meta {
+                    color: #666;
+                    font-size: 14px;
+                    margin-bottom: 20px;
+                }
+                .item-content {
+                    line-height: 1.8;
+                    color: #444;
+                    margin-bottom: 20px;
+                }
+                .chart-container {
+                    margin: 20px 0;
+                }
+            </style>
+            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        </head>
+        <body>
+            <div class="header">
+                <h1>📊 Analysis Report</h1>
+        """
+        
+        if include_timestamp:
+            timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            html_content += f'<div class="timestamp">Generated on: {timestamp}</div>'
+        
+        html_content += """
+            </div>
+        """
+        
+        # Add each canvas item
+        for i, item in enumerate(canvas_items):
+            title = item.get('title', f'Analysis {i + 1}')
+            dataset = item.get('dataset_source', 'Unknown')
+            timestamp = item.get('timestamp', 'Unknown')
+            text_content = item.get('text_content', '')
+            
+            html_content += f"""
+            <div class="item">
+                <div class="item-title">{i + 1}. {title}</div>
+                <div class="item-meta">
+                    <strong>Dataset:</strong> {dataset}
+            """
+            
+            if include_timestamp:
+                html_content += f' | <strong>Added:</strong> {timestamp}'
+            
+            html_content += '</div>'
+            
+            if text_content:
+                # Convert markdown-style formatting to HTML
+                formatted_text = text_content.replace('\n', '<br/>')
+                formatted_text = formatted_text.replace('**', '<strong>').replace('**', '</strong>')
+                html_content += f'<div class="item-content">{formatted_text}</div>'
+            
+            # Embed interactive chart
+            chart_data = item.get('chart_data')
+            if chart_data and df is not None:
+                try:
+                    fig = create_plotly_chart(
+                        df,
+                        chart_data.get('chart_type', 'bar'),
+                        chart_data.get('x_column'),
+                        chart_data.get('y_column'),
+                        chart_data.get('color_column'),
+                        chart_data.get('title', 'Chart')
+                    )
+                    
+                    if fig:
+                        chart_html = pio.to_html(fig, include_plotlyjs=False, div_id=f'chart_{i}')
+                        html_content += f'<div class="chart-container">{chart_html}</div>'
+                        
+                except Exception as chart_error:
+                    html_content += f'<p><em>Chart: {chart_data.get("title", "Visualization")}</em></p>'
+            
+            html_content += '</div>'
+        
+        html_content += """
+        </body>
+        </html>
+        """
+        
+        return html_content
+        
+    except Exception as e:
+        st.error(f"HTML generation failed: {str(e)}")
+        return None
