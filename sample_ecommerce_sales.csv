@@ -1,0 +1,651 @@
+date,order_id,product,category,quantity,price,region,customer_type,payment_method,total_sale,discount_percent,shipping_cost
+2023-01-01,ORD000593,Watch,Electronics,8,899,West,Returning,Debit Card,7192,10.0,10
+2023-01-02,ORD000241,Camera,Accessories,3,1299,West,New,PayPal,3897,10.0,10
+2023-01-02,ORD000190,Camera,Electronics,9,899,South,VIP,Debit Card,8091,0.0,999
+2023-01-02,ORD000065,Camera,Wearables,3,999,East,New,Debit Card,2997,20.0,5
+2023-01-05,ORD000119,Phone,Wearables,9,999,West,New,Bank Transfer,8991,15.0,15
+2023-01-05,ORD000380,Camera,Accessories,4,999,North,New,Credit Card,3996,5.0,10
+2023-01-08,ORD000635,Camera,Accessories,4,1299,South,Returning,Debit Card,5196,0.0,10
+2023-01-09,ORD000544,Laptop,Accessories,8,899,East,Returning,PayPal,7192,,10
+2023-01-09,ORD000248,Camera,Accessories,7,999,East,VIP,PayPal,6993,0.0,15
+2023-01-12,ORD000629,Camera,Accessories,6,149,South,New,PayPal,894,0.0,10
+2023-01-12,ORD000467,Laptop,Electronics,4,999,South,New,Bank Transfer,3996,5.0,10
+2023-01-14,ORD000050,Laptop,Wearables,4,999,North,VIP,Bank Transfer,3996,5.0,5
+2023-01-15,ORD000088,Phone,Accessories,7,149,North,VIP,PayPal,1043,0.0,0
+2023-01-15,ORD000125,Tablet,Electronics,4,299,West,New,PayPal,1196,0.0,10
+2023-01-16,ORD000448,Watch,Electronics,7,149,North,New,Bank Transfer,1043,0.0,5
+2023-01-17,ORD000308,Watch,Accessories,3,299,East,New,PayPal,897,5.0,0
+2023-01-18,ORD000332,Laptop,Electronics,1,999,South,VIP,Credit Card,999,0.0,10
+2023-01-19,ORD000507,Phone,Wearables,8,899,East,New,Bank Transfer,7192,0.0,10
+2023-01-20,ORD000354,Phone,Accessories,1,299,South,Returning,Debit Card,299,0.0,5
+2023-01-21,ORD000006,Phone,Electronics,5,699,East,Returning,Debit Card,3495,5.0,10
+2023-01-21,ORD000044,Phone,Electronics,5,149,East,VIP,Debit Card,745,15.0,10
+2023-01-22,ORD000287,Laptop,Wearables,6,899,East,VIP,Bank Transfer,5394,5.0,5
+2023-01-22,ORD000029,Laptop,Accessories,7,149,South,VIP,Bank Transfer,1043,0.0,10
+2023-01-23,ORD000438,Watch,Wearables,6,899,West,New,PayPal,5394,0.0,0
+2023-01-25,ORD000524,Camera,Accessories,8,1299,West,New,Credit Card,10392,20.0,15
+2023-01-27,ORD000295,Headphones,Electronics,7,149,South,New,Credit Card,1043,0.0,5
+2023-01-28,ORD000106,Headphones,Wearables,1,1299,North,New,Bank Transfer,1299,0.0,10
+2023-01-28,ORD000147,Camera,Wearables,1,149,South,Returning,Debit Card,149,10.0,10
+2023-01-29,ORD000558,Watch,Wearables,6,149,West,New,Bank Transfer,894,20.0,15
+2023-02-02,ORD000283,Laptop,Electronics,3,149,West,New,PayPal,447,,5
+2023-02-02,ORD000109,Phone,Accessories,5,1299,North,VIP,Credit Card,6495,0.0,15
+2023-02-04,ORD000472,Headphones,Accessories,4,149,West,New,PayPal,596,0.0,15
+2023-02-04,ORD000060,Phone,Wearables,5,149,East,New,Debit Card,745,10.0,5
+2023-02-05,ORD000138,Phone,Electronics,9,149,East,Returning,Bank Transfer,1341,20.0,5
+2023-02-05,ORD000353,Headphones,Electronics,4,699,North,VIP,Credit Card,2796,15.0,0
+2023-02-06,ORD000246,Camera,Accessories,2,999,South,VIP,PayPal,1998,0.0,999
+2023-02-06,ORD000317,Camera,Electronics,1,899,West,VIP,Credit Card,899,5.0,5
+2023-02-06,ORD000497,Camera,Electronics,5,299,South,New,Credit Card,1495,10.0,999
+2023-02-07,ORD000289,Camera,Electronics,7,999,North,VIP,Credit Card,6993,0.0,5
+2023-02-08,ORD000581,Watch,Accessories,6,299,North,VIP,PayPal,1794,10.0,10
+2023-02-08,ORD000347,Tablet,Wearables,7,699,South,Returning,PayPal,4893,10.0,5
+2023-02-08,ORD000531,Laptop,Electronics,2,699,North,VIP,PayPal,1398,0.0,10
+2023-02-10,ORD000086,Camera,Accessories,5,1299,North,New,PayPal,6495,0.0,0
+2023-02-10,ORD000105,Laptop,Electronics,4,1299,North,New,PayPal,5196,0.0,5
+2023-02-10,ORD000643,Headphones,Wearables,8,699,West,VIP,Credit Card,5592,10.0,5
+2023-02-11,ORD000533,Headphones,Electronics,3,999,East,Returning,Debit Card,2997,0.0,5
+2023-02-12,ORD000463,Camera,Wearables,7,899,East,New,Debit Card,6293,10.0,10
+2023-02-15,ORD000313,Laptop,Electronics,5,1299,North,New,Credit Card,6495,0.0,999
+2023-02-16,ORD000425,Phone,Electronics,4,899,South,New,Credit Card,3596,0.0,15
+2023-02-16,ORD000617,Phone,Electronics,4,899,North,New,Debit Card,3596,20.0,5
+2023-02-16,ORD000384,Camera,Electronics,6,899,East,VIP,Credit Card,5394,5.0,5
+2023-02-17,ORD000110,Laptop,Electronics,5,299,West,VIP,Credit Card,1495,15.0,15
+2023-02-18,ORD000306,Headphones,Accessories,8,999,East,Returning,Debit Card,7992,15.0,0
+2023-02-20,ORD000363,Laptop,Accessories,9,1299,East,Returning,Debit Card,11691,0.0,10
+2023-02-22,ORD000081,Headphones,Wearables,4,699,West,VIP,Credit Card,2796,,10
+2023-02-22,ORD000377,Headphones,Wearables,4,1299,North,Returning,Bank Transfer,5196,0.0,10
+2023-02-22,ORD000199,Laptop,Wearables,4,899,West,VIP,Debit Card,3596,15.0,5
+2023-02-23,ORD000256,Camera,Electronics,7,1299,North,New,Debit Card,9093,0.0,999
+2023-02-23,ORD000373,Tablet,Wearables,2,999,North,VIP,Credit Card,1998,0.0,15
+2023-02-27,ORD000402,Headphones,Electronics,3,299,South,New,Debit Card,897,0.0,10
+2023-02-27,ORD000395,Phone,Accessories,2,299,South,Returning,Debit Card,598,5.0,10
+2023-02-27,ORD000588,Laptop,Accessories,7,999,North,Returning,PayPal,6993,0.0,10
+2023-02-27,ORD000604,Tablet,Electronics,5,149,North,Returning,Debit Card,745,,5
+2023-02-28,ORD000033,Camera,Accessories,1,299,North,Returning,Credit Card,299,0.0,10
+2023-03-03,ORD000503,Laptop,Accessories,9,149,West,New,PayPal,1341,0.0,10
+2023-03-04,ORD000095,Tablet,Electronics,7,899,West,VIP,Bank Transfer,6293,,10
+2023-03-06,ORD000089,Camera,Wearables,8,699,North,VIP,Debit Card,5592,0.0,5
+2023-03-10,ORD000424,Camera,Electronics,7,699,South,New,PayPal,4893,0.0,5
+2023-03-10,ORD000521,Laptop,Accessories,5,1299,North,Returning,Credit Card,6495,,999
+2023-03-11,ORD000573,Laptop,Accessories,5,149,West,VIP,Bank Transfer,745,0.0,5
+2023-03-13,ORD000005,Laptop,Electronics,7,149,West,Returning,Credit Card,1043,0.0,5
+2023-03-15,ORD000545,Phone,Wearables,2,699,North,New,Credit Card,1398,0.0,5
+2023-03-16,ORD000483,Phone,Accessories,1,899,South,Returning,Debit Card,899,,5
+2023-03-17,ORD000513,Watch,Wearables,5,899,West,Returning,Debit Card,4495,0.0,10
+2023-03-17,ORD000417,Watch,Accessories,1,899,East,New,PayPal,899,10.0,5
+2023-03-21,ORD000608,Headphones,Wearables,8,299,North,VIP,Credit Card,2392,5.0,999
+2023-03-22,ORD000188,Tablet,Accessories,1,299,East,Returning,Credit Card,299,0.0,999
+2023-03-22,ORD000062,Phone,Accessories,5,699,West,VIP,Debit Card,3495,20.0,15
+2023-03-27,ORD000421,Headphones,Electronics,8,299,West,VIP,Bank Transfer,2392,10.0,5
+2023-03-27,ORD000142,Headphones,Wearables,5,999,South,Returning,Debit Card,4995,,15
+2023-03-29,ORD000005,Laptop,Electronics,9,999,South,New,Bank Transfer,8991,,5
+2023-03-31,ORD000638,Camera,Wearables,3,299,South,Returning,PayPal,897,15.0,999
+2023-03-31,ORD000473,Laptop,Wearables,6,899,West,Returning,PayPal,5394,15.0,10
+2023-04-01,ORD000579,Tablet,Accessories,6,899,South,New,PayPal,5394,0.0,10
+2023-04-02,ORD000361,Laptop,Electronics,7,299,North,VIP,Bank Transfer,2093,5.0,5
+2023-04-02,ORD000055,Headphones,,4,299,West,Returning,PayPal,1196,0.0,15
+2023-04-04,ORD000426,Camera,Wearables,4,899,South,Returning,Bank Transfer,3596,5.0,0
+2023-04-06,ORD000131,Laptop,Electronics,9,1299,West,Returning,PayPal,11691,0.0,10
+2023-04-06,ORD000405,Watch,Electronics,2,999,North,New,Debit Card,1998,,0
+2023-04-06,ORD000493,Tablet,Electronics,1,149,East,VIP,Bank Transfer,149,,15
+2023-04-09,ORD000324,Camera,Electronics,8,1299,North,Returning,Debit Card,10392,0.0,10
+2023-04-09,ORD000522,Laptop,Accessories,5,1299,South,VIP,Bank Transfer,6495,0.0,5
+2023-04-09,ORD000114,Watch,Wearables,6,1299,West,Returning,Debit Card,7794,0.0,5
+2023-04-09,ORD000491,Laptop,Accessories,8,1299,South,Returning,Bank Transfer,10392,15.0,5
+2023-04-09,ORD000316,Tablet,Accessories,8,899,North,VIP,Debit Card,7192,5.0,0
+2023-04-09,ORD000269,Laptop,Wearables,8,699,West,New,PayPal,5592,10.0,15
+2023-04-09,ORD000250,Camera,Accessories,2,149,South,Returning,Debit Card,298,0.0,5
+2023-04-10,ORD000005,Laptop,Electronics,2,1299,West,Returning,Credit Card,2598,15.0,0
+2023-04-10,ORD000440,Watch,Accessories,7,999,East,New,Bank Transfer,6993,0.0,10
+2023-04-13,ORD000001,Camera,Electronics,8,1299,South,VIP,PayPal,10392,15.0,10
+2023-04-13,ORD000381,Tablet,Wearables,3,1299,East,New,Credit Card,3897,0.0,999
+2023-04-14,ORD000263,Camera,Wearables,8,699,West,Returning,Bank Transfer,5592,0.0,10
+2023-04-14,ORD000343,Headphones,Wearables,4,899,South,New,Debit Card,3596,10.0,5
+2023-04-16,ORD000068,Tablet,Accessories,2,899,East,VIP,Credit Card,1798,10.0,15
+2023-04-16,ORD000389,Tablet,Electronics,5,149,North,VIP,Bank Transfer,745,0.0,999
+2023-04-17,ORD000004,Headphones,Electronics,2,999,East,New,Bank Transfer,1998,0.0,0
+2023-04-19,ORD000532,Headphones,Accessories,2,699,East,VIP,PayPal,1398,5.0,5
+2023-04-22,ORD000266,Camera,Electronics,4,1299,East,Returning,Credit Card,5196,10.0,10
+2023-04-23,ORD000177,Watch,Accessories,6,299,North,VIP,PayPal,1794,,5
+2023-04-23,ORD000189,Tablet,Electronics,4,699,South,New,Debit Card,2796,10.0,10
+2023-04-23,ORD000185,Phone,Wearables,4,299,East,New,Credit Card,1196,5.0,10
+2023-04-25,ORD000477,Headphones,Accessories,1,899,West,VIP,Credit Card,899,5.0,999
+2023-04-26,ORD000325,Headphones,Electronics,7,899,North,New,Bank Transfer,6293,0.0,999
+2023-04-27,ORD000602,Phone,Accessories,8,1299,East,New,Debit Card,10392,,5
+2023-04-27,ORD000398,Phone,Accessories,7,1299,East,VIP,PayPal,9093,0.0,10
+2023-04-28,ORD000407,Headphones,Electronics,8,999,South,New,Bank Transfer,7992,,15
+2023-04-30,ORD000257,Phone,Electronics,8,299,North,VIP,Debit Card,2392,0.0,5
+2023-04-30,ORD000393,Camera,Accessories,4,1299,West,VIP,Credit Card,5196,0.0,10
+2023-05-02,ORD000636,Camera,Wearables,8,699,East,Returning,Bank Transfer,5592,,999
+2023-05-02,ORD000008,Camera,Accessories,6,1299,South,New,Credit Card,7794,,0
+2023-05-03,ORD000205,Camera,Wearables,7,149,East,VIP,PayPal,1043,,15
+2023-05-04,ORD000215,Phone,Electronics,8,149,East,VIP,Debit Card,1192,5.0,5
+2023-05-05,ORD000367,Camera,Electronics,2,999,North,New,Bank Transfer,1998,0.0,5
+2023-05-06,ORD000582,Headphones,Accessories,2,299,West,VIP,Bank Transfer,598,0.0,15
+2023-05-07,ORD000399,Laptop,Accessories,3,149,East,New,Bank Transfer,447,0.0,5
+2023-05-08,ORD000331,Tablet,Electronics,4,299,West,New,Bank Transfer,1196,5.0,10
+2023-05-09,ORD000092,Phone,Wearables,6,899,East,New,PayPal,5394,0.0,10
+2023-05-10,ORD000198,Tablet,Electronics,4,699,East,Returning,Bank Transfer,2796,10.0,5
+2023-05-11,ORD000017,Laptop,Accessories,6,299,West,Returning,Debit Card,1794,5.0,5
+2023-05-11,ORD000253,Tablet,Accessories,7,1299,East,Returning,Debit Card,9093,10.0,5
+2023-05-11,ORD000041,Headphones,Electronics,9,299,West,New,PayPal,2691,10.0,10
+2023-05-12,ORD000572,Tablet,Accessories,5,699,West,VIP,Bank Transfer,3495,0.0,15
+2023-05-13,ORD000538,Camera,Accessories,9,899,West,Returning,Bank Transfer,8091,0.0,15
+2023-05-14,ORD000603,Phone,Electronics,1,149,West,VIP,Debit Card,149,0.0,15
+2023-05-15,ORD000107,Headphones,Electronics,1,1299,South,VIP,Debit Card,1299,10.0,10
+2023-05-15,ORD000279,Camera,Wearables,8,299,South,New,PayPal,2392,0.0,0
+2023-05-19,ORD000096,Phone,Accessories,7,699,South,Returning,PayPal,4893,15.0,15
+2023-05-23,ORD000360,Camera,Electronics,3,899,South,New,Credit Card,2697,0.0,15
+2023-05-23,ORD000621,Phone,Accessories,1,699,West,New,Bank Transfer,699,15.0,10
+2023-05-24,ORD000520,Headphones,Wearables,3,999,West,Returning,PayPal,2997,15.0,15
+2023-05-24,ORD000237,Headphones,Wearables,5,999,West,New,PayPal,4995,0.0,10
+2023-05-24,ORD000529,Camera,Electronics,9,899,East,VIP,Bank Transfer,8091,5.0,5
+2023-05-24,ORD000212,Watch,Electronics,8,999,North,Returning,Bank Transfer,7992,5.0,999
+2023-05-25,ORD000645,Headphones,Accessories,5,999,South,VIP,PayPal,4995,5.0,999
+2023-05-27,ORD000224,Watch,Electronics,9,1299,South,VIP,Credit Card,11691,0.0,0
+2023-05-28,ORD000225,Tablet,Electronics,2,1299,North,New,PayPal,2598,0.0,10
+2023-05-29,ORD000607,Headphones,Accessories,4,149,North,New,Credit Card,596,10.0,10
+2023-05-30,ORD000368,Headphones,Electronics,3,299,West,VIP,Bank Transfer,897,5.0,15
+2023-05-31,ORD000528,Camera,Electronics,8,999,West,VIP,Debit Card,7992,0.0,5
+2023-05-31,ORD000232,Phone,Wearables,1,699,West,Returning,PayPal,699,0.0,15
+2023-06-01,ORD000255,Watch,Accessories,1,1299,West,New,PayPal,1299,,10
+2023-06-02,ORD000270,Phone,Accessories,1,999,West,New,Credit Card,999,10.0,10
+2023-06-03,ORD000418,Phone,Accessories,4,899,South,VIP,Bank Transfer,3596,0.0,10
+2023-06-04,ORD000340,Watch,Accessories,9,999,South,Returning,Credit Card,8991,,999
+2023-06-06,ORD000087,Watch,Accessories,1,299,West,Returning,Credit Card,299,0.0,5
+2023-06-07,ORD000311,Laptop,Electronics,8,1299,West,VIP,Credit Card,10392,15.0,10
+2023-06-09,ORD000140,Tablet,Wearables,1,699,East,Returning,PayPal,699,5.0,10
+2023-06-09,ORD000452,Tablet,Electronics,2,899,North,Returning,Bank Transfer,1798,0.0,5
+2023-06-09,ORD000247,Tablet,Wearables,3,699,North,New,Credit Card,2097,15.0,0
+2023-06-10,ORD000273,Tablet,Electronics,7,999,West,New,PayPal,6993,,10
+2023-06-10,ORD000026,Headphones,Electronics,8,149,East,New,PayPal,1192,10.0,0
+2023-06-10,ORD000328,Phone,Electronics,6,999,North,New,Bank Transfer,5994,15.0,10
+2023-06-11,ORD000072,Camera,Electronics,2,299,East,VIP,Debit Card,598,0.0,5
+2023-06-12,ORD000272,Phone,Accessories,9,999,West,Returning,Debit Card,8991,15.0,999
+2023-06-12,ORD000539,Tablet,Accessories,9,299,West,New,Debit Card,2691,,15
+2023-06-14,ORD000559,Laptop,Wearables,4,1299,East,VIP,Debit Card,5196,0.0,999
+2023-06-16,ORD000045,Phone,Wearables,1,299,South,Returning,PayPal,299,,10
+2023-06-16,ORD000578,Camera,Accessories,6,999,North,VIP,Credit Card,5994,0.0,15
+2023-06-17,ORD000462,Phone,Wearables,4,999,East,Returning,Debit Card,3996,5.0,5
+2023-06-17,ORD000552,Tablet,Wearables,7,149,North,New,Credit Card,1043,0.0,15
+2023-06-19,ORD000553,Phone,Wearables,9,149,South,Returning,Debit Card,1341,15.0,5
+2023-06-20,ORD000136,Phone,Wearables,6,999,East,Returning,Credit Card,5994,10.0,10
+2023-06-21,ORD000309,Laptop,Electronics,7,999,North,VIP,Credit Card,6993,,5
+2023-06-22,ORD000584,Headphones,Electronics,5,299,East,Returning,Credit Card,1495,0.0,15
+2023-06-22,ORD000606,Watch,Wearables,1,1299,East,Returning,Bank Transfer,1299,15.0,0
+2023-06-23,ORD000550,Laptop,Wearables,8,299,East,Returning,Bank Transfer,2392,15.0,5
+2023-06-25,ORD000346,Tablet,Electronics,2,1299,West,VIP,Debit Card,2598,5.0,0
+2023-06-26,ORD000508,Watch,Electronics,3,299,North,Returning,Credit Card,897,5.0,15
+2023-06-27,ORD000641,Phone,Accessories,5,299,North,VIP,Bank Transfer,1495,5.0,5
+2023-06-29,ORD000441,Watch,Electronics,2,1299,East,VIP,PayPal,2598,0.0,15
+2023-06-30,ORD000322,Watch,Wearables,6,149,East,Returning,Credit Card,894,10.0,5
+2023-07-01,ORD000577,Camera,Electronics,7,699,East,Returning,Bank Transfer,4893,10.0,5
+2023-07-03,ORD000204,Laptop,Electronics,8,999,West,New,Debit Card,7992,5.0,10
+2023-07-05,ORD000534,Camera,Electronics,1,299,North,New,Credit Card,299,15.0,5
+2023-07-06,ORD000216,Tablet,Accessories,1,1299,West,VIP,Bank Transfer,1299,5.0,5
+2023-07-07,ORD000083,Phone,Accessories,7,149,North,Returning,Bank Transfer,1043,20.0,10
+2023-07-08,ORD000413,Tablet,Wearables,5,149,West,VIP,Debit Card,745,0.0,15
+2023-07-09,ORD000496,Tablet,Wearables,3,149,South,New,Bank Transfer,447,10.0,5
+2023-07-09,ORD000036,Headphones,Wearables,8,299,North,VIP,PayPal,2392,10.0,10
+2023-07-09,ORD000366,Phone,Wearables,2,999,East,New,PayPal,1998,0.0,15
+2023-07-09,ORD000596,Phone,Wearables,3,149,East,Returning,Debit Card,447,0.0,999
+2023-07-09,ORD000157,Laptop,Accessories,2,149,East,VIP,Debit Card,298,0.0,15
+2023-07-10,ORD000598,Laptop,Accessories,7,149,West,VIP,Credit Card,1043,0.0,10
+2023-07-10,ORD000326,Tablet,Accessories,1,699,East,New,PayPal,699,0.0,5
+2023-07-11,ORD000305,Phone,Electronics,1,999,North,VIP,Credit Card,999,10.0,999
+2023-07-11,ORD000024,Tablet,Accessories,5,699,East,VIP,Credit Card,3495,0.0,10
+2023-07-11,ORD000490,Tablet,Wearables,6,999,West,VIP,PayPal,5994,5.0,10
+2023-07-13,ORD000556,Camera,Accessories,9,899,North,New,Credit Card,8091,5.0,10
+2023-07-14,ORD000280,Watch,Electronics,6,149,East,New,PayPal,894,10.0,10
+2023-07-15,ORD000382,Watch,Wearables,3,699,North,VIP,PayPal,2097,10.0,5
+2023-07-15,ORD000479,Laptop,Accessories,9,899,West,New,PayPal,8091,0.0,15
+2023-07-17,ORD000210,Laptop,Accessories,9,999,North,New,Debit Card,8991,,0
+2023-07-20,ORD000108,Watch,Accessories,3,299,West,VIP,PayPal,897,0.0,15
+2023-07-20,ORD000646,Tablet,Electronics,6,149,North,VIP,Debit Card,894,0.0,15
+2023-07-20,ORD000214,Watch,Electronics,8,299,South,Returning,Bank Transfer,2392,0.0,5
+2023-07-21,ORD000073,Watch,Electronics,9,999,North,VIP,Credit Card,8991,20.0,5
+2023-07-22,ORD000203,Laptop,Accessories,1,699,East,VIP,Credit Card,699,0.0,10
+2023-07-22,ORD000610,Camera,Electronics,2,699,North,Returning,Debit Card,1398,0.0,5
+2023-07-23,ORD000428,Phone,Wearables,6,999,West,New,Bank Transfer,5994,15.0,999
+2023-07-25,ORD000061,Watch,Electronics,5,699,West,New,Bank Transfer,3495,20.0,0
+2023-07-26,ORD000124,Tablet,Accessories,6,699,South,Returning,Debit Card,4194,10.0,10
+2023-07-27,ORD000252,Tablet,Electronics,6,999,South,New,Debit Card,5994,0.0,10
+2023-08-01,ORD000609,Camera,Wearables,3,149,South,VIP,Credit Card,447,20.0,5
+2023-08-03,ORD000540,Phone,Wearables,7,699,South,New,Debit Card,4893,5.0,15
+2023-08-03,ORD000010,Tablet,Electronics,6,699,North,New,PayPal,4194,5.0,5
+2023-08-05,ORD000570,Headphones,Accessories,9,1299,North,Returning,PayPal,11691,15.0,15
+2023-08-05,ORD000082,Camera,Wearables,2,999,West,Returning,PayPal,1998,15.0,5
+2023-08-05,ORD000501,Headphones,Accessories,8,699,East,New,Bank Transfer,5592,10.0,15
+2023-08-06,ORD000429,Camera,Electronics,7,899,East,New,Credit Card,6293,15.0,5
+2023-08-06,ORD000120,Headphones,Accessories,5,1299,North,Returning,Bank Transfer,6495,0.0,5
+2023-08-08,ORD000586,Phone,Electronics,2,299,North,New,Credit Card,598,20.0,15
+2023-08-08,ORD000423,Tablet,Wearables,5,899,West,Returning,Bank Transfer,4495,10.0,10
+2023-08-08,ORD000192,Watch,Electronics,7,899,North,New,Credit Card,6293,20.0,10
+2023-08-08,ORD000310,Headphones,Electronics,3,299,West,Returning,Debit Card,897,15.0,10
+2023-08-11,ORD000536,Phone,Accessories,4,899,South,Returning,Debit Card,3596,0.0,15
+2023-08-11,ORD000442,Watch,Electronics,5,299,South,New,Bank Transfer,1495,15.0,10
+2023-08-13,ORD000158,Camera,Wearables,6,999,South,New,Credit Card,5994,0.0,5
+2023-08-13,ORD000194,Phone,Wearables,8,299,South,Returning,Credit Card,2392,0.0,10
+2023-08-13,ORD000170,Laptop,Accessories,7,299,North,Returning,Debit Card,2093,5.0,0
+2023-08-14,ORD000296,Tablet,Wearables,4,149,East,Returning,Debit Card,596,0.0,15
+2023-08-15,ORD000265,Camera,Electronics,1,1299,North,VIP,Credit Card,1299,,15
+2023-08-15,ORD000612,Phone,Accessories,5,699,West,New,Debit Card,3495,10.0,10
+2023-08-17,ORD000611,Laptop,Electronics,9,1299,North,VIP,Bank Transfer,11691,5.0,5
+2023-08-18,ORD000548,Tablet,Wearables,2,1299,West,Returning,Credit Card,2598,5.0,10
+2023-08-18,ORD000290,Camera,Electronics,2,299,East,VIP,Bank Transfer,598,15.0,5
+2023-08-19,ORD000156,Phone,Wearables,8,699,East,New,PayPal,5592,15.0,15
+2023-08-19,ORD000134,Tablet,Wearables,1,699,South,VIP,Credit Card,699,10.0,15
+2023-08-19,ORD000104,Tablet,Electronics,9,899,East,VIP,Debit Card,8091,0.0,10
+2023-08-21,ORD000512,Laptop,Electronics,4,149,South,New,Credit Card,596,0.0,5
+2023-08-21,ORD000176,Headphones,Accessories,5,899,North,VIP,Credit Card,4495,0.0,10
+2023-08-21,ORD000249,Camera,Electronics,5,999,West,VIP,Bank Transfer,4995,15.0,5
+2023-08-21,ORD000618,Camera,Accessories,4,149,South,New,PayPal,596,0.0,999
+2023-08-22,ORD000171,Phone,Accessories,5,699,North,New,Bank Transfer,3495,0.0,5
+2023-08-23,ORD000541,Phone,Accessories,2,299,East,Returning,PayPal,598,0.0,5
+2023-08-25,ORD000411,Headphones,Wearables,9,899,East,VIP,Debit Card,8091,5.0,10
+2023-08-29,ORD000129,Watch,Accessories,2,299,East,New,Credit Card,598,0.0,5
+2023-08-30,ORD000051,Camera,,2,899,North,New,Debit Card,1798,0.0,10
+2023-08-31,ORD000141,Headphones,Accessories,7,299,South,Returning,Debit Card,2093,15.0,15
+2023-09-01,ORD000039,Tablet,Accessories,6,999,North,VIP,Debit Card,5994,0.0,5
+2023-09-03,ORD000345,Headphones,Accessories,4,149,West,VIP,Credit Card,596,15.0,5
+2023-09-04,ORD000201,Watch,Electronics,7,699,West,New,Debit Card,4893,5.0,5
+2023-09-04,ORD000416,Watch,Wearables,7,999,North,Returning,PayPal,6993,5.0,5
+2023-09-09,ORD000078,Laptop,Accessories,6,699,West,Returning,Credit Card,4194,0.0,10
+2023-09-09,ORD000574,Watch,Wearables,8,149,East,VIP,Debit Card,1192,0.0,5
+2023-09-10,ORD000327,Laptop,Wearables,5,899,South,VIP,Bank Transfer,4495,5.0,5
+2023-09-10,ORD000030,Tablet,Accessories,3,1299,North,New,PayPal,3897,0.0,10
+2023-09-10,ORD000547,Camera,Accessories,5,999,West,Returning,Bank Transfer,4995,0.0,10
+2023-09-10,ORD000470,Headphones,Wearables,3,699,South,VIP,Credit Card,2097,0.0,0
+2023-09-10,ORD000650,Phone,Accessories,1,999,East,VIP,Credit Card,999,0.0,0
+2023-09-11,ORD000436,Laptop,Wearables,7,1299,East,New,Bank Transfer,9093,10.0,15
+2023-09-11,ORD000243,Camera,Wearables,9,899,North,New,Bank Transfer,8091,10.0,15
+2023-09-11,ORD000264,Laptop,Accessories,5,699,South,New,Debit Card,3495,0.0,5
+2023-09-13,ORD000329,Watch,Wearables,4,1299,East,VIP,Credit Card,5196,0.0,0
+2023-09-15,ORD000450,Laptop,Wearables,1,1299,South,VIP,Debit Card,1299,10.0,5
+2023-09-16,ORD000164,Laptop,Accessories,4,299,North,VIP,Bank Transfer,1196,10.0,999
+2023-09-16,ORD000626,Phone,Electronics,4,299,East,New,Debit Card,1196,0.0,5
+2023-09-20,ORD000236,Camera,Electronics,7,899,North,VIP,Bank Transfer,6293,0.0,0
+2023-09-21,ORD000376,Watch,Accessories,1,299,West,VIP,Debit Card,299,0.0,5
+2023-09-22,ORD000514,Laptop,Accessories,8,149,South,Returning,Debit Card,1192,0.0,10
+2023-09-25,ORD000181,Watch,Electronics,5,699,South,Returning,Credit Card,3495,0.0,10
+2023-09-25,ORD000459,Camera,Electronics,3,149,South,VIP,Credit Card,447,15.0,5
+2023-09-26,ORD000386,Laptop,Accessories,5,999,East,Returning,PayPal,4995,15.0,5
+2023-09-27,ORD000074,Headphones,Electronics,7,149,South,New,Debit Card,1043,10.0,0
+2023-09-28,ORD000075,Camera,Electronics,8,999,West,New,Credit Card,7992,,10
+2023-09-28,ORD000003,Tablet,Accessories,7,899,North,New,Bank Transfer,6293,10.0,5
+2023-09-29,ORD000412,Phone,Wearables,3,1299,South,Returning,Bank Transfer,3897,5.0,15
+2023-09-30,ORD000502,Laptop,Accessories,8,299,North,VIP,Debit Card,2392,0.0,15
+2023-10-01,ORD000046,Tablet,Wearables,1,299,West,New,PayPal,299,5.0,999
+2023-10-04,ORD000487,Phone,Electronics,7,149,North,VIP,Debit Card,1043,10.0,5
+2023-10-04,ORD000025,Laptop,Electronics,1,899,North,Returning,Credit Card,899,5.0,999
+2023-10-04,ORD000276,Headphones,Accessories,2,899,East,Returning,PayPal,1798,0.0,10
+2023-10-04,ORD000297,Tablet,Electronics,8,149,South,VIP,Bank Transfer,1192,0.0,5
+2023-10-06,ORD000500,Camera,Accessories,5,299,East,VIP,PayPal,1495,0.0,5
+2023-10-07,ORD000318,Laptop,Wearables,9,149,West,VIP,Debit Card,1341,20.0,5
+2023-10-07,ORD000208,Watch,Accessories,5,899,East,New,Debit Card,4495,0.0,15
+2023-10-10,ORD000161,Tablet,Wearables,5,299,West,New,Debit Card,1495,5.0,15
+2023-10-10,ORD000294,Watch,Accessories,2,299,North,New,Credit Card,598,,10
+2023-10-11,ORD000299,Camera,Wearables,4,149,East,VIP,PayPal,596,0.0,0
+2023-10-12,ORD000422,Watch,Electronics,1,299,South,New,Debit Card,299,,0
+2023-10-12,ORD000465,Camera,Electronics,4,299,South,New,Bank Transfer,1196,0.0,0
+2023-10-15,ORD000337,Laptop,Accessories,5,149,East,New,Credit Card,745,0.0,5
+2023-10-16,ORD000101,Watch,Accessories,8,899,East,VIP,Bank Transfer,7192,0.0,10
+2023-10-16,ORD000435,Phone,Accessories,6,1299,West,VIP,Credit Card,7794,5.0,10
+2023-10-21,ORD000207,Camera,Accessories,6,1299,West,Returning,Credit Card,7794,0.0,5
+2023-10-23,ORD000079,Laptop,Electronics,4,999,East,New,PayPal,3996,0.0,10
+2023-10-25,ORD000234,Tablet,Electronics,2,699,North,VIP,PayPal,1398,5.0,5
+2023-10-28,ORD000571,Tablet,Accessories,2,299,North,VIP,Debit Card,598,15.0,10
+2023-10-29,ORD000321,Watch,Accessories,6,1299,South,New,Debit Card,7794,0.0,5
+2023-10-29,ORD000469,Tablet,Wearables,8,1299,West,New,Credit Card,10392,5.0,999
+2023-10-31,ORD000242,Headphones,Electronics,7,999,East,VIP,Debit Card,6993,0.0,10
+2023-11-01,ORD000372,Camera,Electronics,9,699,East,Returning,Debit Card,6291,,15
+2023-11-01,ORD000619,Watch,Electronics,6,299,East,New,Debit Card,1794,,5
+2023-11-05,ORD000019,Headphones,Accessories,9,999,North,Returning,Bank Transfer,8991,5.0,10
+2023-11-10,ORD000028,Phone,Electronics,4,999,East,New,Debit Card,3996,10.0,10
+2023-11-10,ORD000369,Tablet,Electronics,2,1299,North,VIP,PayPal,2598,0.0,10
+2023-11-12,ORD000640,Phone,Accessories,6,149,West,VIP,Debit Card,894,10.0,0
+2023-11-12,ORD000049,Camera,Accessories,6,1299,East,Returning,Debit Card,7794,0.0,5
+2023-11-14,ORD000169,Headphones,Electronics,7,299,West,Returning,Bank Transfer,2093,0.0,5
+2023-11-17,ORD000355,Laptop,Wearables,6,999,East,VIP,Debit Card,5994,5.0,5
+2023-11-19,ORD000330,Tablet,Wearables,2,1299,East,New,PayPal,2598,10.0,0
+2023-11-19,ORD000335,Headphones,Electronics,2,1299,North,Returning,Credit Card,2598,5.0,10
+2023-11-21,ORD000446,Phone,Accessories,7,899,East,VIP,Debit Card,6293,20.0,999
+2023-11-22,ORD000217,Laptop,Wearables,5,699,East,New,Debit Card,3495,5.0,10
+2023-11-23,ORD000569,Laptop,Wearables,1,1299,North,Returning,Bank Transfer,1299,5.0,0
+2023-11-26,ORD000630,Laptop,Electronics,8,999,North,Returning,Credit Card,7992,0.0,10
+2023-11-27,ORD000005,Headphones,Accessories,8,899,South,Returning,Bank Transfer,7192,0.0,10
+2023-11-27,ORD000151,Headphones,Wearables,8,899,North,Returning,Bank Transfer,7192,0.0,5
+2023-12-02,ORD000449,Phone,Electronics,5,149,North,VIP,Credit Card,745,5.0,5
+2023-12-04,ORD000229,Camera,Wearables,7,299,North,New,PayPal,2093,5.0,5
+2023-12-04,ORD000271,Tablet,Accessories,6,149,West,New,Debit Card,894,0.0,10
+2023-12-04,ORD000080,Headphones,Wearables,7,899,South,VIP,Credit Card,6293,0.0,0
+2023-12-05,ORD000561,Phone,Accessories,5,149,West,VIP,Credit Card,745,15.0,15
+2023-12-06,ORD000054,Headphones,,5,999,South,VIP,Bank Transfer,4995,5.0,0
+2023-12-06,ORD000150,Laptop,Wearables,3,1299,South,VIP,Credit Card,3897,15.0,10
+2023-12-07,ORD000432,Phone,Accessories,4,699,South,Returning,Credit Card,2796,0.0,10
+2023-12-08,ORD000505,Tablet,Wearables,1,899,East,New,PayPal,899,5.0,5
+2023-12-08,ORD000371,Camera,Accessories,2,699,North,New,Bank Transfer,1398,15.0,15
+2023-12-08,ORD000565,Tablet,Wearables,5,899,East,VIP,PayPal,4495,0.0,10
+2023-12-10,ORD000020,Phone,Electronics,9,899,North,Returning,Bank Transfer,8091,10.0,10
+2023-12-10,ORD000091,Phone,Wearables,5,1299,West,New,Bank Transfer,6495,0.0,10
+2023-12-12,ORD000222,Phone,Wearables,4,149,South,Returning,Credit Card,596,0.0,10
+2023-12-12,ORD000052,Laptop,,2,899,South,New,Debit Card,1798,,10
+2023-12-12,ORD000238,Laptop,Wearables,1,1299,South,New,Debit Card,1299,5.0,10
+2023-12-12,ORD000396,Headphones,Accessories,6,299,East,New,Debit Card,1794,5.0,5
+2023-12-14,ORD000154,Phone,Wearables,3,699,West,Returning,Debit Card,2097,0.0,5
+2023-12-14,ORD000637,Tablet,Accessories,6,999,West,VIP,Debit Card,5994,10.0,10
+2023-12-14,ORD000595,Watch,Electronics,6,999,North,New,Debit Card,5994,0.0,0
+2023-12-15,ORD000219,Phone,Wearables,2,899,North,Returning,Credit Card,1798,15.0,0
+2023-12-15,ORD000319,Headphones,Accessories,5,999,East,New,Credit Card,4995,20.0,5
+2023-12-16,ORD000383,Headphones,Accessories,9,299,West,VIP,PayPal,2691,0.0,10
+2023-12-20,ORD000362,Laptop,Wearables,4,149,West,Returning,PayPal,596,10.0,5
+2023-12-23,ORD000437,Laptop,Wearables,5,149,South,VIP,Credit Card,745,10.0,5
+2023-12-24,ORD000631,Phone,Accessories,3,1299,West,Returning,Bank Transfer,3897,15.0,5
+2023-12-25,ORD000165,Laptop,Electronics,7,149,North,Returning,Credit Card,1043,0.0,5
+2023-12-27,ORD000592,Tablet,Electronics,1,999,East,VIP,Bank Transfer,999,15.0,5
+2023-12-31,ORD000291,Headphones,Wearables,6,1299,South,VIP,Credit Card,7794,,0
+2023-12-31,ORD000564,Laptop,Accessories,8,299,East,New,PayPal,2392,5.0,15
+2024-01-02,ORD000056,Watch,,1,699,West,VIP,Debit Card,699,0.0,5
+2024-01-02,ORD000519,Watch,Accessories,3,149,South,VIP,Credit Card,447,0.0,5
+2024-01-04,ORD000600,Watch,Accessories,5,1299,West,Returning,Debit Card,6495,0.0,5
+2024-01-04,ORD000498,Laptop,Electronics,1,1299,West,Returning,PayPal,1299,0.0,10
+2024-01-05,ORD000387,Headphones,Accessories,2,299,West,VIP,Debit Card,598,15.0,999
+2024-01-08,ORD000314,Tablet,Accessories,4,699,North,New,PayPal,2796,0.0,15
+2024-01-08,ORD000634,Laptop,Accessories,4,299,West,New,Debit Card,1196,0.0,5
+2024-01-08,ORD000624,Camera,Accessories,5,1299,West,New,PayPal,6495,0.0,10
+2024-01-08,ORD000005,Camera,Wearables,4,1299,East,New,Debit Card,5196,10.0,10
+2024-01-09,ORD000173,Laptop,Wearables,4,1299,West,New,Bank Transfer,5196,0.0,5
+2024-01-10,ORD000286,Watch,Electronics,6,899,East,VIP,Credit Card,5394,0.0,10
+2024-01-11,ORD000485,Camera,Electronics,8,149,East,New,Bank Transfer,1192,10.0,5
+2024-01-12,ORD000160,Headphones,Wearables,9,149,South,VIP,Credit Card,1341,0.0,5
+2024-01-14,ORD000102,Camera,Wearables,1,299,East,New,PayPal,299,0.0,5
+2024-01-15,ORD000455,Laptop,Wearables,2,1299,North,Returning,Bank Transfer,2598,,10
+2024-01-15,ORD000084,Tablet,Electronics,8,149,East,New,Debit Card,1192,,5
+2024-01-19,ORD000516,Watch,Electronics,4,899,North,VIP,Debit Card,3596,10.0,5
+2024-01-20,ORD000195,Phone,Electronics,1,699,North,VIP,PayPal,699,0.0,10
+2024-01-20,ORD000159,Phone,Wearables,5,699,West,New,Credit Card,3495,,10
+2024-01-21,ORD000183,Phone,Wearables,3,699,South,Returning,Credit Card,2097,0.0,10
+2024-01-21,ORD000023,Tablet,Wearables,5,899,East,VIP,Debit Card,4495,,5
+2024-01-21,ORD000342,Tablet,Electronics,3,1299,West,New,Bank Transfer,3897,10.0,15
+2024-01-22,ORD000594,Headphones,Wearables,3,999,West,New,Credit Card,2997,15.0,15
+2024-01-22,ORD000184,Headphones,Wearables,8,999,North,VIP,Credit Card,7992,0.0,10
+2024-01-23,ORD000047,Laptop,Wearables,8,899,East,Returning,PayPal,7192,5.0,5
+2024-01-23,ORD000064,Phone,Electronics,1,149,North,VIP,Bank Transfer,149,0.0,10
+2024-01-25,ORD000066,Camera,Accessories,4,299,East,VIP,PayPal,1196,20.0,10
+2024-01-27,ORD000278,Phone,Electronics,5,1299,West,New,Credit Card,6495,,5
+2024-01-27,ORD000099,Camera,Electronics,1,299,East,New,Credit Card,299,0.0,10
+2024-01-28,ORD000400,Camera,Accessories,3,699,West,VIP,Bank Transfer,2097,15.0,10
+2024-01-28,ORD000123,Tablet,Wearables,2,899,North,New,Debit Card,1798,0.0,5
+2024-01-28,ORD000344,Headphones,Electronics,7,699,North,Returning,PayPal,4893,,5
+2024-01-28,ORD000554,Phone,Accessories,9,299,East,Returning,PayPal,2691,,999
+2024-01-29,ORD000488,Tablet,Accessories,2,1299,East,Returning,PayPal,2598,15.0,15
+2024-01-31,ORD000510,Headphones,Electronics,1,699,North,Returning,PayPal,699,20.0,5
+2024-01-31,ORD000523,Headphones,Electronics,6,1299,North,VIP,Bank Transfer,7794,0.0,15
+2024-02-01,ORD000506,Camera,Accessories,3,1299,North,New,PayPal,3897,0.0,5
+2024-02-01,ORD000466,Laptop,Electronics,2,1299,South,VIP,PayPal,2598,15.0,10
+2024-02-02,ORD000535,Tablet,Accessories,4,299,East,New,Debit Card,1196,0.0,15
+2024-02-02,ORD000122,Tablet,Electronics,4,699,South,Returning,Credit Card,2796,5.0,999
+2024-02-02,ORD000275,Watch,Wearables,1,999,East,Returning,Debit Card,999,10.0,5
+2024-02-04,ORD000357,Camera,Accessories,3,699,East,VIP,Credit Card,2097,0.0,999
+2024-02-05,ORD000281,Tablet,Electronics,8,1299,North,VIP,Debit Card,10392,10.0,15
+2024-02-05,ORD000206,Phone,Electronics,6,899,North,Returning,Credit Card,5394,0.0,10
+2024-02-06,ORD000616,Watch,Wearables,9,899,North,Returning,PayPal,8091,5.0,10
+2024-02-06,ORD000070,Watch,Electronics,2,149,West,New,Credit Card,298,15.0,0
+2024-02-07,ORD000221,Camera,Electronics,3,899,West,VIP,Bank Transfer,2697,15.0,15
+2024-02-07,ORD000196,Camera,Accessories,8,149,North,New,Debit Card,1192,20.0,5
+2024-02-08,ORD000254,Headphones,Wearables,9,699,East,New,Debit Card,6291,5.0,0
+2024-02-11,ORD000133,Tablet,Electronics,3,1299,East,Returning,Bank Transfer,3897,5.0,10
+2024-02-11,ORD000112,Laptop,Electronics,2,149,West,New,PayPal,298,0.0,15
+2024-02-12,ORD000632,Headphones,Accessories,5,1299,West,Returning,Bank Transfer,6495,0.0,15
+2024-02-12,ORD000350,Camera,Accessories,6,149,East,VIP,Debit Card,894,0.0,10
+2024-02-13,ORD000601,Tablet,Wearables,8,999,South,New,Credit Card,7992,0.0,999
+2024-02-15,ORD000167,Camera,Accessories,2,299,East,VIP,Debit Card,598,0.0,10
+2024-02-17,ORD000484,Tablet,Wearables,2,699,South,VIP,Credit Card,1398,0.0,15
+2024-02-18,ORD000022,Camera,Electronics,3,1299,West,New,Bank Transfer,3897,0.0,5
+2024-02-19,ORD000575,Phone,Wearables,8,299,North,New,Credit Card,2392,0.0,15
+2024-02-19,ORD000622,Camera,Electronics,9,699,South,VIP,Credit Card,6291,5.0,10
+2024-02-19,ORD000233,Tablet,Accessories,3,299,West,VIP,Credit Card,897,5.0,999
+2024-02-20,ORD000200,Headphones,Wearables,6,299,North,Returning,Bank Transfer,1794,0.0,15
+2024-02-21,ORD000461,Headphones,Accessories,5,299,North,VIP,Debit Card,1495,10.0,5
+2024-02-22,ORD000476,Laptop,Electronics,9,149,South,VIP,Credit Card,1341,0.0,10
+2024-02-23,ORD000100,Laptop,Wearables,8,1299,East,Returning,Debit Card,10392,15.0,10
+2024-02-24,ORD000486,Phone,Accessories,5,149,West,New,Credit Card,745,0.0,5
+2024-02-24,ORD000261,Watch,Electronics,7,299,South,New,Bank Transfer,2093,15.0,15
+2024-02-26,ORD000262,Camera,Electronics,4,899,South,Returning,Bank Transfer,3596,0.0,15
+2024-02-26,ORD000560,Watch,Electronics,4,299,North,VIP,Debit Card,1196,0.0,5
+2024-03-02,ORD000457,Tablet,Electronics,4,899,North,New,Credit Card,3596,10.0,0
+2024-03-03,ORD000058,Laptop,Wearables,3,299,West,Returning,PayPal,897,5.0,10
+2024-03-07,ORD000431,Watch,Wearables,5,999,West,New,Bank Transfer,4995,0.0,0
+2024-03-10,ORD000420,Tablet,Accessories,7,1299,West,Returning,Credit Card,9093,0.0,10
+2024-03-11,ORD000002,Phone,Accessories,4,149,North,New,Debit Card,596,5.0,15
+2024-03-13,ORD000293,Tablet,Accessories,3,899,East,Returning,Bank Transfer,2697,0.0,10
+2024-03-14,ORD000202,Phone,Electronics,6,699,East,VIP,PayPal,4194,0.0,0
+2024-03-16,ORD000615,Tablet,Electronics,9,999,West,Returning,Debit Card,8991,0.0,10
+2024-03-17,ORD000179,Camera,Wearables,2,149,North,Returning,Debit Card,298,5.0,5
+2024-03-17,ORD000444,Headphones,Electronics,6,999,East,VIP,Debit Card,5994,5.0,10
+2024-03-19,ORD000374,Tablet,Accessories,9,1299,North,VIP,Bank Transfer,11691,,0
+2024-03-20,ORD000511,Laptop,Accessories,5,1299,South,VIP,PayPal,6495,0.0,10
+2024-03-20,ORD000576,Tablet,Wearables,7,899,West,VIP,Debit Card,6293,5.0,10
+2024-03-22,ORD000414,Tablet,Wearables,9,899,South,VIP,PayPal,8091,10.0,10
+2024-03-26,ORD000583,Camera,Wearables,2,149,East,VIP,Debit Card,298,10.0,15
+2024-03-28,ORD000427,Camera,Wearables,4,299,North,VIP,Debit Card,1196,5.0,10
+2024-03-28,ORD000245,Watch,Accessories,9,299,East,VIP,Bank Transfer,2691,0.0,0
+2024-03-28,ORD000301,Phone,Accessories,9,1299,East,New,Debit Card,11691,5.0,10
+2024-03-30,ORD000057,Camera,Wearables,7,149,South,New,PayPal,1043,0.0,10
+2024-03-30,ORD000515,Laptop,Wearables,4,999,South,New,PayPal,3996,10.0,15
+2024-03-31,ORD000076,Camera,Electronics,2,149,West,New,Bank Transfer,298,5.0,15
+2024-03-31,ORD000591,Headphones,Accessories,5,149,West,VIP,Bank Transfer,745,10.0,15
+2024-03-31,ORD000166,Camera,Electronics,6,1299,East,New,Credit Card,7794,5.0,5
+2024-04-01,ORD000489,Phone,Electronics,8,149,East,VIP,PayPal,1192,,10
+2024-04-03,ORD000005,Headphones,Accessories,7,699,North,Returning,Credit Card,4893,,999
+2024-04-04,ORD000284,Watch,Accessories,6,1299,East,VIP,Credit Card,7794,0.0,10
+2024-04-04,ORD000027,Laptop,Accessories,8,1299,North,Returning,Credit Card,10392,10.0,15
+2024-04-05,ORD000127,Tablet,Accessories,3,899,East,VIP,PayPal,2697,0.0,0
+2024-04-05,ORD000647,Camera,Wearables,4,699,West,New,Credit Card,2796,15.0,15
+2024-04-06,ORD000077,Tablet,Wearables,7,999,North,Returning,Bank Transfer,6993,15.0,999
+2024-04-06,ORD000117,Camera,Electronics,9,899,North,VIP,PayPal,8091,0.0,10
+2024-04-08,ORD000218,Headphones,Electronics,4,1299,North,Returning,Credit Card,5196,,10
+2024-04-11,ORD000009,Phone,Wearables,9,899,East,VIP,PayPal,8091,0.0,15
+2024-04-13,ORD000525,Tablet,Accessories,6,899,North,New,PayPal,5394,,15
+2024-04-14,ORD000285,Laptop,Wearables,3,899,East,Returning,PayPal,2697,0.0,0
+2024-04-15,ORD000359,Headphones,Accessories,6,299,West,New,PayPal,1794,0.0,15
+2024-04-15,ORD000628,Laptop,Electronics,7,699,North,New,Bank Transfer,4893,,10
+2024-04-16,ORD000175,Tablet,Accessories,4,299,West,Returning,PayPal,1196,15.0,999
+2024-04-16,ORD000094,Tablet,Electronics,1,1299,South,Returning,Bank Transfer,1299,0.0,999
+2024-04-17,ORD000231,Phone,Accessories,5,1299,North,New,Credit Card,6495,0.0,5
+2024-04-17,ORD000155,Camera,Electronics,5,149,North,New,Bank Transfer,745,5.0,0
+2024-04-17,ORD000268,Camera,Accessories,9,1299,South,VIP,Credit Card,11691,0.0,10
+2024-04-18,ORD000397,Tablet,Wearables,2,999,South,New,PayPal,1998,15.0,10
+2024-04-18,ORD000430,Tablet,Electronics,2,999,East,New,Bank Transfer,1998,10.0,10
+2024-04-19,ORD000032,Headphones,Accessories,9,299,South,Returning,Debit Card,2691,5.0,0
+2024-04-19,ORD000453,Headphones,Accessories,5,299,North,Returning,Credit Card,1495,20.0,10
+2024-04-20,ORD000035,Laptop,Electronics,4,1299,East,VIP,Debit Card,5196,5.0,999
+2024-04-20,ORD000590,Tablet,Wearables,6,299,South,Returning,Debit Card,1794,0.0,15
+2024-04-21,ORD000348,Camera,Wearables,6,899,North,New,Credit Card,5394,20.0,15
+2024-04-21,ORD000069,Phone,Accessories,8,899,West,New,Credit Card,7192,0.0,5
+2024-04-21,ORD000312,Laptop,Electronics,6,299,North,VIP,Credit Card,1794,0.0,0
+2024-04-25,ORD000300,Phone,Wearables,5,699,East,Returning,Credit Card,3495,,0
+2024-04-28,ORD000526,Tablet,Electronics,1,1299,West,Returning,PayPal,1299,5.0,5
+2024-04-29,ORD000132,Tablet,Wearables,7,999,South,VIP,Credit Card,6993,5.0,5
+2024-04-29,ORD000042,Headphones,Wearables,5,1299,North,Returning,PayPal,6495,10.0,999
+2024-05-02,ORD000410,Watch,Accessories,3,899,East,New,Debit Card,2697,0.0,10
+2024-05-03,ORD000226,Phone,Electronics,3,899,West,New,Bank Transfer,2697,5.0,10
+2024-05-04,ORD000103,Phone,Wearables,8,899,South,VIP,PayPal,7192,0.0,5
+2024-05-04,ORD000341,Camera,Wearables,1,1299,South,Returning,Debit Card,1299,0.0,10
+2024-05-06,ORD000546,Camera,Accessories,6,999,South,Returning,Bank Transfer,5994,5.0,10
+2024-05-06,ORD000021,Laptop,Electronics,2,149,South,VIP,Debit Card,298,10.0,10
+2024-05-07,ORD000482,Laptop,Accessories,2,999,East,Returning,Bank Transfer,1998,,0
+2024-05-07,ORD000085,Tablet,Wearables,2,149,West,VIP,Credit Card,298,0.0,5
+2024-05-10,ORD000563,Laptop,Accessories,1,899,South,Returning,Bank Transfer,899,5.0,15
+2024-05-11,ORD000320,Camera,Wearables,4,149,East,Returning,Debit Card,596,,10
+2024-05-11,ORD000451,Camera,Wearables,5,299,North,VIP,Debit Card,1495,,5
+2024-05-11,ORD000178,Camera,Wearables,3,299,North,VIP,PayPal,897,,10
+2024-05-13,ORD000471,Laptop,Accessories,9,299,West,Returning,PayPal,2691,,5
+2024-05-13,ORD000097,Watch,Electronics,2,999,West,New,Bank Transfer,1998,,5
+2024-05-14,ORD000566,Tablet,Wearables,3,299,North,Returning,Bank Transfer,897,0.0,5
+2024-05-15,ORD000480,Tablet,Wearables,9,1299,North,VIP,Bank Transfer,11691,0.0,5
+2024-05-16,ORD000644,Phone,Electronics,7,999,South,New,Credit Card,6993,5.0,0
+2024-05-17,ORD000111,Phone,Accessories,9,1299,South,New,Bank Transfer,11691,0.0,10
+2024-05-17,ORD000121,Camera,Wearables,9,899,North,Returning,Debit Card,8091,5.0,5
+2024-05-18,ORD000277,Camera,Electronics,5,299,South,New,Credit Card,1495,0.0,10
+2024-05-19,ORD000040,Headphones,Electronics,4,999,South,Returning,Bank Transfer,3996,15.0,10
+2024-05-19,ORD000597,Phone,Wearables,7,899,East,New,Bank Transfer,6293,10.0,10
+2024-05-20,ORD000352,Laptop,Wearables,5,1299,South,Returning,Credit Card,6495,15.0,999
+2024-05-20,ORD000518,Camera,Electronics,7,299,West,New,Credit Card,2093,0.0,5
+2024-05-20,ORD000153,Watch,Accessories,9,149,South,Returning,Bank Transfer,1341,5.0,0
+2024-05-22,ORD000599,Headphones,Accessories,9,299,South,VIP,PayPal,2691,10.0,5
+2024-05-23,ORD000059,Laptop,Wearables,6,1299,East,VIP,Credit Card,7794,0.0,5
+2024-05-24,ORD000182,Camera,Accessories,4,1299,North,Returning,Credit Card,5196,15.0,5
+2024-05-24,ORD000267,Tablet,Wearables,3,899,East,VIP,Debit Card,2697,,15
+2024-05-25,ORD000211,Headphones,Accessories,9,699,East,New,Credit Card,6291,5.0,10
+2024-05-25,ORD000223,Laptop,Accessories,7,899,West,New,PayPal,6293,0.0,15
+2024-05-25,ORD000568,Camera,Wearables,7,999,East,Returning,Credit Card,6993,0.0,5
+2024-05-25,ORD000034,Watch,Wearables,5,699,East,New,PayPal,3495,10.0,5
+2024-05-26,ORD000307,Phone,Accessories,4,149,West,Returning,Debit Card,596,15.0,0
+2024-05-26,ORD000356,Phone,Wearables,2,699,East,VIP,Debit Card,1398,5.0,15
+2024-05-27,ORD000404,Headphones,Wearables,9,999,North,New,Bank Transfer,8991,0.0,15
+2024-05-27,ORD000623,Tablet,Electronics,2,699,North,New,Debit Card,1398,15.0,10
+2024-05-30,ORD000303,Phone,Accessories,9,899,West,New,Credit Card,8091,0.0,15
+2024-05-30,ORD000447,Laptop,Wearables,8,899,North,Returning,Bank Transfer,7192,5.0,10
+2024-05-31,ORD000557,Phone,Electronics,2,999,North,VIP,Credit Card,1998,0.0,15
+2024-06-01,ORD000315,Camera,Electronics,8,699,North,VIP,Credit Card,5592,10.0,5
+2024-06-02,ORD000549,Watch,Electronics,1,699,West,New,Bank Transfer,699,15.0,5
+2024-06-04,ORD000090,Phone,Electronics,6,149,East,Returning,Debit Card,894,5.0,999
+2024-06-05,ORD000439,Tablet,Electronics,5,299,South,VIP,Debit Card,1495,0.0,15
+2024-06-08,ORD000139,Tablet,Accessories,5,1299,South,New,Credit Card,6495,0.0,5
+2024-06-08,ORD000351,Watch,Accessories,6,999,West,VIP,PayPal,5994,0.0,10
+2024-06-08,ORD000499,Watch,Electronics,7,999,South,New,PayPal,6993,,999
+2024-06-09,ORD000620,Laptop,Wearables,6,1299,South,New,Bank Transfer,7794,10.0,0
+2024-06-14,ORD000580,Watch,Wearables,9,899,North,Returning,PayPal,8091,0.0,10
+2024-06-15,ORD000614,Watch,Wearables,2,299,South,Returning,Credit Card,598,5.0,15
+2024-06-21,ORD000349,Phone,Wearables,3,299,West,New,Debit Card,897,0.0,10
+2024-06-23,ORD000642,Headphones,Electronics,6,699,West,New,Credit Card,4194,10.0,10
+2024-06-24,ORD000137,Headphones,Wearables,7,299,West,New,PayPal,2093,15.0,10
+2024-06-28,ORD000456,Camera,Accessories,5,299,East,Returning,PayPal,1495,10.0,10
+2024-06-30,ORD000304,Watch,Wearables,7,699,East,VIP,PayPal,4893,5.0,10
+2024-06-30,ORD000115,Headphones,Accessories,9,699,West,Returning,Credit Card,6291,0.0,0
+2024-06-30,ORD000649,Headphones,Wearables,4,699,West,New,Credit Card,2796,10.0,5
+2024-07-01,ORD000492,Tablet,Accessories,1,299,West,VIP,PayPal,299,0.0,15
+2024-07-04,ORD000228,Headphones,Accessories,1,149,East,New,PayPal,149,,15
+2024-07-04,ORD000433,Headphones,Wearables,3,999,East,Returning,PayPal,2997,0.0,10
+2024-07-07,ORD000126,Laptop,Accessories,6,149,West,New,PayPal,894,5.0,10
+2024-07-09,ORD000149,Camera,Accessories,6,699,North,New,Credit Card,4194,5.0,15
+2024-07-09,ORD000071,Laptop,Electronics,9,899,South,Returning,PayPal,8091,,15
+2024-07-09,ORD000605,Watch,Wearables,3,149,West,New,Debit Card,447,,5
+2024-07-09,ORD000464,Watch,Accessories,5,899,West,New,Credit Card,4495,15.0,15
+2024-07-10,ORD000144,Watch,Accessories,9,699,North,Returning,Debit Card,6291,0.0,15
+2024-07-11,ORD000648,Phone,Electronics,9,899,North,VIP,Bank Transfer,8091,0.0,5
+2024-07-13,ORD000408,Headphones,Wearables,9,699,North,VIP,Debit Card,6291,10.0,10
+2024-07-14,ORD000031,Laptop,Accessories,6,899,North,Returning,Bank Transfer,5394,10.0,0
+2024-07-15,ORD000063,Phone,Wearables,1,999,East,VIP,PayPal,999,10.0,999
+2024-07-16,ORD000292,Camera,Electronics,1,999,North,VIP,Credit Card,999,0.0,5
+2024-07-16,ORD000037,Headphones,Electronics,1,999,East,New,PayPal,999,15.0,5
+2024-07-17,ORD000130,Watch,Wearables,2,149,North,Returning,PayPal,298,15.0,10
+2024-07-17,ORD000180,Phone,Electronics,4,149,North,Returning,Bank Transfer,596,0.0,15
+2024-07-17,ORD000517,Camera,Electronics,3,1299,East,Returning,PayPal,3897,0.0,10
+2024-07-18,ORD000527,Tablet,Accessories,8,149,North,VIP,Credit Card,1192,0.0,999
+2024-07-18,ORD000053,Tablet,,9,1299,South,New,Credit Card,11691,5.0,10
+2024-07-19,ORD000193,Headphones,Electronics,7,699,East,Returning,PayPal,4893,0.0,10
+2024-07-19,ORD000333,Camera,Wearables,7,699,West,Returning,Bank Transfer,4893,5.0,10
+2024-07-19,ORD000067,Tablet,Electronics,5,899,West,New,PayPal,4495,0.0,15
+2024-07-19,ORD000625,Laptop,Accessories,9,899,North,VIP,PayPal,8091,15.0,15
+2024-07-20,ORD000038,Camera,Wearables,9,1299,West,Returning,Credit Card,11691,0.0,15
+2024-07-22,ORD000530,Headphones,Electronics,9,1299,North,Returning,Debit Card,11691,0.0,0
+2024-07-23,ORD000370,Tablet,Wearables,4,149,North,Returning,PayPal,596,,10
+2024-07-23,ORD000334,Watch,Electronics,2,1299,South,New,Bank Transfer,2598,0.0,10
+2024-07-25,ORD000240,Headphones,Wearables,5,699,East,VIP,PayPal,3495,0.0,999
+2024-07-25,ORD000378,Laptop,Accessories,1,1299,West,New,Bank Transfer,1299,0.0,10
+2024-07-27,ORD000113,Watch,Wearables,2,899,West,VIP,Bank Transfer,1798,20.0,10
+2024-07-27,ORD000145,Phone,Wearables,1,999,East,Returning,Bank Transfer,999,0.0,5
+2024-07-28,ORD000365,Laptop,Accessories,3,899,East,Returning,Bank Transfer,2697,5.0,5
+2024-07-28,ORD000128,Camera,Wearables,6,1299,East,Returning,Credit Card,7794,5.0,0
+2024-07-30,ORD000460,Headphones,Electronics,1,999,East,New,Bank Transfer,999,5.0,10
+2024-07-31,ORD000143,Phone,Wearables,3,899,East,Returning,Credit Card,2697,20.0,10
+2024-08-02,ORD000274,Headphones,Wearables,4,699,South,New,Bank Transfer,2796,20.0,10
+2024-08-03,ORD000415,Tablet,Accessories,3,999,West,VIP,Debit Card,2997,,10
+2024-08-09,ORD000259,Watch,Wearables,4,149,West,New,Debit Card,596,15.0,10
+2024-08-10,ORD000543,Watch,Accessories,4,1299,North,New,Bank Transfer,5196,0.0,999
+2024-08-15,ORD000098,Laptop,Wearables,2,299,East,Returning,Debit Card,598,5.0,5
+2024-08-18,ORD000504,Headphones,Wearables,7,1299,North,Returning,Debit Card,9093,5.0,999
+2024-08-23,ORD000409,Watch,Electronics,7,899,North,New,PayPal,6293,5.0,5
+2024-08-23,ORD000048,Headphones,Accessories,8,1299,North,New,Debit Card,10392,5.0,0
+2024-08-24,ORD000475,Watch,Electronics,1,299,South,VIP,PayPal,299,5.0,10
+2024-08-26,ORD000394,Phone,Electronics,4,1299,West,Returning,Debit Card,5196,0.0,10
+2024-08-27,ORD000474,Phone,Wearables,5,899,South,VIP,Bank Transfer,4495,5.0,10
+2024-08-29,ORD000468,Camera,Electronics,2,1299,West,New,PayPal,2598,15.0,15
+2024-08-29,ORD000323,Phone,Electronics,2,299,East,VIP,Credit Card,598,0.0,999
+2024-08-30,ORD000445,Headphones,Wearables,5,1299,North,Returning,Credit Card,6495,0.0,15
+2024-08-30,ORD000174,Laptop,Wearables,3,699,South,New,PayPal,2097,0.0,10
+2024-08-31,ORD000213,Laptop,Electronics,9,999,East,New,PayPal,8991,15.0,5
+2024-08-31,ORD000298,Laptop,Electronics,6,899,West,Returning,Bank Transfer,5394,5.0,10
+2024-09-01,ORD000209,Laptop,Accessories,6,1299,West,Returning,Credit Card,7794,0.0,10
+2024-09-02,ORD000235,Headphones,Accessories,1,299,North,Returning,Debit Card,299,15.0,15
+2024-09-03,ORD000434,Camera,Accessories,7,299,East,New,PayPal,2093,0.0,10
+2024-09-03,ORD000509,Phone,Electronics,8,999,South,New,Bank Transfer,7992,15.0,10
+2024-09-04,ORD000375,Phone,Wearables,6,899,West,Returning,Bank Transfer,5394,5.0,10
+2024-09-04,ORD000186,Camera,Accessories,2,899,East,VIP,PayPal,1798,15.0,0
+2024-09-04,ORD000116,Phone,Electronics,1,899,South,New,Debit Card,899,5.0,5
+2024-09-04,ORD000458,Laptop,Wearables,1,999,North,VIP,PayPal,999,5.0,0
+2024-09-06,ORD000007,Phone,Accessories,5,1299,West,Returning,Credit Card,6495,,15
+2024-09-08,ORD000478,Phone,Wearables,8,299,South,Returning,Debit Card,2392,0.0,999
+2024-09-11,ORD000148,Headphones,Electronics,3,699,South,Returning,Bank Transfer,2097,5.0,5
+2024-09-11,ORD000379,Watch,Electronics,6,299,West,Returning,Credit Card,1794,10.0,10
+2024-09-15,ORD000239,Laptop,Electronics,6,299,East,New,PayPal,1794,0.0,10
+2024-09-16,ORD000260,Tablet,Wearables,6,149,North,Returning,PayPal,894,5.0,0
+2024-09-16,ORD000187,Tablet,Electronics,2,299,East,New,Debit Card,598,15.0,15
+2024-09-17,ORD000336,Tablet,Electronics,9,299,South,New,Credit Card,2691,5.0,0
+2024-09-17,ORD000481,Watch,Electronics,1,999,West,VIP,Bank Transfer,999,0.0,15
+2024-09-19,ORD000163,Phone,Electronics,5,999,North,VIP,Bank Transfer,4995,5.0,10
+2024-09-19,ORD000258,Watch,Accessories,3,1299,West,Returning,PayPal,3897,0.0,5
+2024-09-24,ORD000162,Laptop,Electronics,2,999,North,Returning,PayPal,1998,5.0,10
+2024-09-25,ORD000403,Watch,Wearables,2,899,West,Returning,PayPal,1798,5.0,5
+2024-09-25,ORD000555,Tablet,Electronics,8,999,South,New,PayPal,7992,0.0,5
+2024-09-25,ORD000537,Laptop,Wearables,9,899,West,VIP,Bank Transfer,8091,5.0,5
+2024-09-27,ORD000388,Headphones,Wearables,8,149,East,Returning,Bank Transfer,1192,5.0,15
+2024-09-29,ORD000197,Tablet,Accessories,4,149,South,Returning,Credit Card,596,15.0,5
+2024-09-29,ORD000587,Phone,Wearables,3,149,South,Returning,Bank Transfer,447,0.0,10
+2024-09-29,ORD000406,Headphones,Wearables,2,999,West,VIP,Bank Transfer,1998,0.0,5
+2024-09-30,ORD000339,Camera,Wearables,9,899,South,New,Bank Transfer,8091,5.0,0
+2024-10-01,ORD000227,Laptop,Wearables,4,999,South,VIP,PayPal,3996,10.0,15
+2024-10-01,ORD000282,Watch,Accessories,2,999,South,VIP,Credit Card,1998,10.0,10
+2024-10-01,ORD000152,Laptop,Electronics,2,299,North,VIP,Bank Transfer,598,20.0,999
+2024-10-02,ORD000230,Watch,Wearables,2,699,East,Returning,PayPal,1398,5.0,999
+2024-10-02,ORD000401,Camera,Wearables,5,999,East,New,Debit Card,4995,15.0,10
+2024-10-03,ORD000191,Tablet,Accessories,7,899,West,VIP,PayPal,6293,0.0,5
+2024-10-04,ORD000118,Headphones,Accessories,9,1299,East,VIP,Bank Transfer,11691,5.0,10
+2024-10-07,ORD000146,Headphones,Accessories,1,1299,North,Returning,Debit Card,1299,5.0,10
+2024-10-08,ORD000043,Headphones,Wearables,5,899,South,VIP,Bank Transfer,4495,15.0,15
+2024-10-09,ORD000639,Watch,Wearables,5,699,West,Returning,Debit Card,3495,0.0,5
+2024-10-09,ORD000093,Camera,Electronics,2,699,North,VIP,PayPal,1398,0.0,15
+2024-10-09,ORD000562,Headphones,Accessories,3,149,East,Returning,Bank Transfer,447,0.0,5
+2024-10-10,ORD000168,Tablet,Electronics,5,149,South,VIP,PayPal,745,10.0,999
+2024-10-13,ORD000244,Camera,Electronics,9,1299,South,Returning,Debit Card,11691,0.0,999
+2024-10-14,ORD000551,Headphones,Electronics,2,299,North,New,Credit Card,598,0.0,15
+2024-10-14,ORD000585,Camera,Electronics,4,299,West,Returning,PayPal,1196,20.0,5
+2024-10-15,ORD000358,Tablet,Accessories,8,999,South,New,PayPal,7992,,5
+2024-10-16,ORD000135,Headphones,Accessories,8,699,South,New,Credit Card,5592,5.0,0
+2024-10-17,ORD000419,Tablet,Accessories,4,999,South,VIP,Credit Card,3996,5.0,10
+2024-10-17,ORD000385,Laptop,Electronics,9,149,South,Returning,Credit Card,1341,0.0,5
+2024-10-17,ORD000627,Tablet,Wearables,3,1299,North,Returning,PayPal,3897,20.0,15
+2024-10-18,ORD000392,Watch,Accessories,9,899,South,New,PayPal,8091,0.0,5
+2024-10-18,ORD000567,Headphones,Wearables,7,899,North,Returning,PayPal,6293,5.0,15
+2024-10-19,ORD000542,Camera,Accessories,5,149,East,Returning,Bank Transfer,745,10.0,10
+2024-10-20,ORD000251,Laptop,Electronics,3,999,North,Returning,PayPal,2997,15.0,10
+2024-10-20,ORD000443,Watch,Wearables,6,1299,North,New,Credit Card,7794,0.0,15
+2024-10-20,ORD000302,Headphones,Wearables,7,1299,East,New,Credit Card,9093,5.0,10
+2024-10-20,ORD000391,Camera,Electronics,4,1299,South,New,Debit Card,5196,15.0,5
+2024-10-20,ORD000613,Headphones,Wearables,7,149,East,VIP,Debit Card,1043,5.0,10
+2024-10-21,ORD000589,Headphones,Wearables,8,999,North,VIP,Bank Transfer,7992,5.0,5
+2024-10-21,ORD000220,Watch,Electronics,8,1299,East,VIP,Debit Card,10392,0.0,999
+2024-10-23,ORD000018,Tablet,Wearables,1,899,South,New,Debit Card,899,0.0,0
+2024-10-24,ORD000338,Headphones,Wearables,2,699,East,New,PayPal,1398,0.0,5
+2024-10-24,ORD000495,Tablet,Accessories,8,299,South,Returning,Debit Card,2392,10.0,10
+2024-10-25,ORD000454,Camera,Accessories,5,299,East,New,Debit Card,1495,,10
+2024-10-25,ORD000494,Watch,Electronics,7,149,East,VIP,Debit Card,1043,0.0,5
+2024-10-25,ORD000172,Watch,Accessories,9,149,West,VIP,Credit Card,1341,0.0,10
+2024-10-25,ORD000005,Phone,Wearables,7,999,South,Returning,Credit Card,6993,10.0,0
+2024-10-26,ORD000364,Laptop,Electronics,5,999,South,Returning,Bank Transfer,4995,10.0,999
+2024-10-29,ORD000633,Laptop,Wearables,4,299,East,Returning,Bank Transfer,1196,20.0,10
+2024-10-31,ORD000390,Laptop,Accessories,2,899,South,Returning,Credit Card,1798,0.0,999
+2024-10-31,ORD000288,Phone,Wearables,2,899,West,New,Debit Card,1798,0.0,5
