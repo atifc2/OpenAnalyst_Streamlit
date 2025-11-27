@@ -60,6 +60,44 @@ class VectorStore:
                 logger.info(f"Created collection: {self.collection_name}")
             else:
                 logger.info(f"Collection {self.collection_name} already exists")
+            
+            # Ensure payload indexes exist for filtered searches
+            self._ensure_payload_indexes()
+            
+        except Exception as e:
+            logger.error(f"Error ensuring collection exists: {e}")
+    
+    def _ensure_payload_indexes(self):
+        """Create payload indexes for efficient filtering"""
+        if not self.client:
+            return
+            
+        try:
+            from qdrant_client.models import PayloadSchemaType
+            
+            # Create indexes for commonly filtered fields
+            index_fields = {
+                "tier": PayloadSchemaType.KEYWORD,
+                "domain": PayloadSchemaType.KEYWORD,
+                "user_id": PayloadSchemaType.KEYWORD,
+                "role": PayloadSchemaType.KEYWORD,
+            }
+            
+            for field_name, field_type in index_fields.items():
+                try:
+                    self.client.create_payload_index(
+                        collection_name=self.collection_name,
+                        field_name=field_name,
+                        field_schema=field_type
+                    )
+                    logger.info(f"Created payload index for field: {field_name}")
+                except Exception as index_error:
+                    # Index might already exist, that's OK
+                    if "already exists" not in str(index_error).lower():
+                        logger.debug(f"Index for {field_name} might exist: {index_error}")
+                        
+        except Exception as e:
+            logger.warning(f"Error creating payload indexes: {e}")
         except Exception as e:
             logger.error(f"Error ensuring collection exists: {e}")
     
@@ -92,18 +130,29 @@ class VectorStore:
         dataset_name: Optional[str] = None,
         domain: Optional[str] = None,
         schema_signature: Optional[str] = None,
-        query_type: Optional[str] = None
+        query_type: Optional[str] = None,
+        tier: Optional[str] = None,
+        user_id: Optional[str] = None,
+        team_id: Optional[str] = None
     ) -> bool:
         """
-        Store a chat message with its embedding and domain metadata.
+        Store a chat message with its embedding and HYBRID MODEL metadata.
+        
+        HYBRID B2C/B2B MODEL:
+        - tier="public": Community templates (visible to all)
+        - tier="user": Personal workspace (user_id isolation)
+        - tier="team": Team collaboration (team_id isolation)
         
         Args:
             role: 'user' or 'assistant'
             content: The message content
             dataset_name: Optional dataset context
-            domain: Data domain (sales/marketing/hr/financial/survey/general)
+            domain: Data domain (sales/marketing/hr/financial/survey/product/business/operations/general)
             schema_signature: Column schema pattern
-            query_type: Type of query (simple/complex/chart)
+            query_type: Type of query (simple/complex/chart/aggregation/etc)
+            tier: Access tier ('public'/'user'/'team')
+            user_id: User identifier for user tier
+            team_id: Team identifier for team tier
             
         Returns:
             True if stored successfully, False otherwise
@@ -122,13 +171,15 @@ class VectorStore:
             # Generate unique ID
             point_id = str(uuid.uuid4())
             
-            # Create point with enhanced metadata
+            # Create point with HYBRID MODEL metadata
             payload = {
                 "role": role,
                 "content": content,
                 "dataset": dataset_name or "unknown",
                 "timestamp": datetime.now().isoformat(),
-                "type": "chat_message"
+                "type": "chat_message",
+                "tier": tier or "user",  # Default to user tier
+                "usage_count": 0  # Track how many times this analysis is used
             }
             
             # Add optional domain-aware metadata
@@ -138,6 +189,12 @@ class VectorStore:
                 payload["schema_signature"] = schema_signature
             if query_type:
                 payload["query_type"] = query_type
+            
+            # Add namespace isolation
+            if user_id:
+                payload["user_id"] = user_id
+            if team_id:
+                payload["team_id"] = team_id
             
             point = PointStruct(
                 id=point_id,
@@ -301,7 +358,7 @@ def _search_by_domain(self, query_text: str, domain: str, limit: int = 5, min_sc
         return []
 
 def _seed_example_analyses(self, examples: List[Dict]) -> bool:
-    """Pre-populate vector DB with example analyses"""
+    """Pre-populate vector DB with COMMUNITY EXPERT TEMPLATES (200+)"""
     if not self.client:
         return False
         
@@ -321,9 +378,12 @@ def _seed_example_analyses(self, examples: List[Dict]) -> bool:
                     "content": example['content'],
                     "domain": example.get('domain', 'general'),
                     "query_type": example.get('query_type', 'analysis'),
-                    "dataset": "example",
+                    "dataset": "community",
                     "timestamp": datetime.now().isoformat(),
                     "type": "example_analysis",
+                    "tier": example.get('tier', 'public'),  # Community templates are public
+                    "usage_count": 0,  # Will grow organically
+                    "is_verified": True,  # Expert-curated templates
                     "is_seed": True
                 }
             )
@@ -331,7 +391,7 @@ def _seed_example_analyses(self, examples: List[Dict]) -> bool:
         
         if points:
             self.client.upsert(collection_name=self.collection_name, points=points)
-            logger.info(f"Seeded {len(points)} example analyses")
+            logger.info(f"Seeded {len(points)} COMMUNITY expert templates 🚀")
             return True
         
         return False
@@ -340,9 +400,81 @@ def _seed_example_analyses(self, examples: List[Dict]) -> bool:
         logger.error(f"Error seeding examples: {e}")
         return False
 
+def _search_by_tier(self, query_text: str, tier: str, domain: Optional[str] = None, user_id: Optional[str] = None, limit: int = 10, min_score: float = 0.6) -> List[Dict]:
+    """
+    Search analyses filtered by HYBRID MODEL tier (public/user/team).
+    
+    Args:
+        query_text: Query to search for
+        tier: 'public' (community) or 'user' (personal) or 'team' (collaboration)
+        domain: Optional domain filter
+        user_id: Required for user/team tier to filter by ownership
+        limit: Max results
+        min_score: Minimum similarity score
+        
+    Returns:
+        List of similar analyses with metadata
+    """
+    if not self.client:
+        return []
+        
+    try:
+        from qdrant_client.models import Filter, FieldCondition, MatchValue
+        
+        query_embedding = self._generate_embedding(query_text)
+        if not query_embedding:
+            return []
+        
+        # Build filter conditions
+        filter_conditions = [FieldCondition(key="tier", match=MatchValue(value=tier))]
+        
+        # Add domain filter if specified
+        if domain:
+            filter_conditions.append(FieldCondition(key="domain", match=MatchValue(value=domain)))
+        
+        # Add user isolation for non-public tiers
+        if tier != "public" and user_id:
+            filter_conditions.append(FieldCondition(key="user_id", match=MatchValue(value=user_id)))
+        
+        results = self.client.search(
+            collection_name=self.collection_name,
+            query_vector=query_embedding,
+            query_filter=Filter(must=filter_conditions),
+            limit=limit
+        )
+        
+        similar_analyses = []
+        for hit in results:
+            if hit.score >= min_score:
+                similar_analyses.append({
+                    "score": hit.score,
+                    "content": hit.payload.get("content"),
+                    "domain": hit.payload.get("domain"),
+                    "query_type": hit.payload.get("query_type"),
+                    "tier": hit.payload.get("tier"),
+                    "usage_count": hit.payload.get("usage_count", 0),
+                    "is_verified": hit.payload.get("is_verified", False),
+                    "timestamp": hit.payload.get("timestamp")
+                })
+        
+        logger.info(f"Found {len(similar_analyses)} analyses (tier={tier}, domain={domain})")
+        return similar_analyses
+        
+    except Exception as e:
+        logger.error(f"Error searching by tier: {e}")
+        return []
+
+def _increment_usage_count(self, point_id: str) -> bool:
+    """Increment usage counter when an analysis is used"""
+    # This would need point_id to be stored and tracked - simplified for now
+    # In production, we'd track point IDs and update usage_count
+    return True
+
 # Monkey-patch the methods onto VectorStore class
 VectorStore.search_by_domain = _search_by_domain
 VectorStore.seed_example_analyses = _seed_example_analyses
+VectorStore.search_by_tier = _search_by_tier
+VectorStore.increment_usage_count = _increment_usage_count
 
 
 def index_sample_dataset(dataset_name: str, df, vector_store: VectorStore) -> bool:

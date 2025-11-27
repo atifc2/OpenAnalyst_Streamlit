@@ -14,97 +14,343 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Set the page configuration for a wide layout and a professional title.
-st.set_page_config(layout="wide", page_title="Open Analyst Workshop", initial_sidebar_state="expanded")
+st.set_page_config(layout="wide", page_title="OpenAnalyst - AI Data Analysis", initial_sidebar_state="expanded")
 
-# Custom CSS to ensure text visibility in both light and dark modes
+# ==================== ADAPTIVE THEME: WORKS IN DARK & LIGHT MODE ====================
+# Professional theme with Netflix red accent that adapts to system preference
 st.markdown("""
 <style>
-    /* Ensure text is visible in all system themes (light/dark) */
-    .stMarkdown, .stMarkdown p, .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
-        color: inherit !important;
+    /* ==================== NETFLIX COLOR PALETTE ==================== */
+    :root {
+        --netflix-red: #E50914;
+        --netflix-red-dark: #B20710;
+        --netflix-red-light: #F40612;
+        --netflix-black: #141414;
+        --netflix-dark: #1F1F1F;
+        --netflix-gray: #2F2F2F;
+        --netflix-light-gray: #808080;
+        --netflix-white: #FFFFFF;
+        --netflix-text: #E5E5E5;
     }
     
-    /* Force high contrast for step headers */
-    div[data-testid="stMarkdownContainer"] h2,
-    div[data-testid="stMarkdownContainer"] h3 {
-        opacity: 1 !important;
-        filter: none !important;
+    /* ==================== MAIN CONTENT ==================== */
+    .main .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
     
-    /* Ensure subheaders are always visible */
-    .stMarkdown h3 {
+    /* ==================== BUTTONS - Always Netflix Red ==================== */
+    .stButton > button {
+        background: linear-gradient(135deg, #E50914 0%, #B20710 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 4px !important;
+        font-weight: 600 !important;
+        padding: 0.5rem 1rem !important;
+        transition: all 0.3s ease !important;
+        box-shadow: 0 2px 8px rgba(229, 9, 20, 0.3) !important;
+    }
+    
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #F40612 0%, #E50914 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 16px rgba(229, 9, 20, 0.4) !important;
+    }
+    
+    /* Secondary buttons */
+    .stButton > button[kind="secondary"] {
+        background: transparent !important;
+        border: 2px solid #E50914 !important;
+        color: #E50914 !important;
+        box-shadow: none !important;
+    }
+    
+    .stButton > button[kind="secondary"]:hover {
+        background: rgba(229, 9, 20, 0.1) !important;
+    }
+    
+    /* ==================== INPUTS - Red focus accent ==================== */
+    .stTextInput > div > div > input:focus,
+    .stTextArea > div > div > textarea:focus {
+        border-color: #E50914 !important;
+        box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2) !important;
+    }
+    
+    /* Chat input focus */
+    .stChatInput > div:focus-within {
+        border-color: #E50914 !important;
+        box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2) !important;
+    }
+    
+    /* ==================== TABS - Netflix Red Active State ==================== */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 4px !important;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 8px 8px 0 0 !important;
+        padding: 10px 20px !important;
+        font-weight: 500 !important;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background-color: #E50914 !important;
+        color: white !important;
+    }
+    
+    /* ==================== FILE UPLOADER - Theme Adaptive with Red Hover ==================== */
+    [data-testid="stFileUploader"] {
+        border: 2px dashed #666 !important;
+        border-radius: 12px !important;
+        padding: 2rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    [data-testid="stFileUploader"]:hover {
+        border-color: #E50914 !important;
+        background-color: rgba(229, 9, 20, 0.05) !important;
+    }
+    
+    /* File uploader inner content - FORCE VISIBILITY */
+    [data-testid="stFileUploader"] section {
+        background: transparent !important;
+    }
+    
+    [data-testid="stFileUploader"] section > div {
+        padding: 1rem !important;
+    }
+    
+    [data-testid="stFileUploader"] button {
+        background: linear-gradient(135deg, #E50914 0%, #B20710 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 4px !important;
+    }
+    
+    /* ==================== PROGRESS BAR ==================== */
+    .stProgress > div > div {
+        background: linear-gradient(90deg, #E50914 0%, #F40612 100%) !important;
+        border-radius: 10px !important;
+    }
+    
+    /* ==================== ALERTS & MESSAGES ==================== */
+    .stAlert {
+        border-radius: 8px !important;
+    }
+    
+    [data-testid="stAlertSuccess"] {
+        border-left: 4px solid #22C55E !important;
+    }
+    
+    [data-testid="stAlertWarning"] {
+        border-left: 4px solid #F59E0B !important;
+    }
+    
+    [data-testid="stAlertError"] {
+        border-left: 4px solid #E50914 !important;
+    }
+    
+    [data-testid="stAlertInfo"] {
+        border-left: 4px solid #3B82F6 !important;
+    }
+    
+    /* ==================== METRIC CARDS - Red Accent ==================== */
+    [data-testid="stMetric"] {
+        padding: 1rem !important;
+        border-radius: 8px !important;
+        border-left: 4px solid #E50914 !important;
+    }
+    
+    /* ==================== CHAT MESSAGES ==================== */
+    [data-testid="stChatMessage"] {
+        border-radius: 12px !important;
+        padding: 1rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* ==================== ANIMATIONS ==================== */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .main .block-container > div {
+        animation: fadeIn 0.4s ease-out;
+    }
+    
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+    
+    .loading-pulse {
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+    
+    .loading-shimmer {
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+    
+    /* ==================== SCROLLBAR ==================== */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #666;
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: #E50914;
+    }
+    
+    /* ==================== CUSTOM COMPONENTS ==================== */
+    .oa-card {
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid rgba(128, 128, 128, 0.3);
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+    
+    .oa-card:hover {
+        border-color: #E50914;
+        box-shadow: 0 4px 20px rgba(229, 9, 20, 0.15);
+    }
+    
+    .oa-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
         font-weight: 600;
+    }
+    
+    .oa-badge-red {
+        background: rgba(229, 9, 20, 0.15);
+        color: #E50914;
+        border: 1px solid rgba(229, 9, 20, 0.3);
+    }
+    
+    .oa-badge-green {
+        background: rgba(34, 197, 94, 0.15);
+        color: #22C55E;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    
+    /* ==================== LOADING STATES ==================== */
+    .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        text-align: center;
+    }
+    
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(229, 9, 20, 0.2);
+        border-top-color: #E50914;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
     }
 </style>
 """, unsafe_allow_html=True)
 
 # --- Authentication Check ---
 if not check_authentication():
-    # Enhanced landing page with modern design
+    # Compact Landing Page - Login Above the Fold
     st.markdown("""
-    <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 10px; margin-bottom: 30px;'>
-        <h1 style='text-align: center; color: white; font-size: 48px; margin-bottom: 10px;'>
-            � OpenAnalyst
-        </h1>
-        <h3 style='text-align: center; color: #f0f0f0; font-weight: 300; margin-bottom: 5px;'>
-            AI-Powered Data Analysis Platform
-        </h3>
-        <p style='text-align: center; color: #e0e0e0; font-size: 16px;'>
-            Transform your data into insights with advanced AI. No coding required.
+    <div style='
+        padding: 15px 20px;
+        margin: -1rem -1rem 1rem -1rem;
+        border-bottom: 2px solid #E50914;
+        text-align: center;
+    '>
+        <h1 style='
+            color: #E50914;
+            font-size: 36px;
+            font-weight: 900;
+            margin: 0 0 5px 0;
+            letter-spacing: -1px;
+            font-family: Arial Black, sans-serif;
+        '>OPENANALYST</h1>
+        <p style='font-size: 14px; margin: 0; opacity: 0.85;'>
+            AI-Powered Data Analysis with <span style="color: #E50914; font-weight: 700;">Advanced RAG</span> • 
+            200+ templates • 8 domains
         </p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Two-column layout: Login OR Try Demo
+    # Two-column layout: Login OR Try Demo - IMMEDIATELY visible
     col_left, col_right = st.columns([1, 1], gap="large")
     
     with col_left:
-        st.markdown("### � Login to Your Account")
-        st.markdown("Upload your own data and get unlimited AI analysis")
-        
+        st.markdown("#### 🔐 Login")
         render_login()
     
     with col_right:
-        st.markdown("### 🎯 Try Without Login")
-        st.markdown("Explore OpenAnalyst with sample datasets")
-        st.markdown("")
+        st.markdown("#### 🚀 Try Demo")
         
-        # Sample data buttons with better styling
+        # Compact sample data buttons
         sample_datasets = [
-            ("🛒 E-commerce Sales", "sample_ecommerce_sales.csv", "Sales trends, product performance, customer behavior"),
-            ("😊 Customer Survey", "sample_customer_survey.csv", "Satisfaction scores, feedback patterns, sentiment analysis"),
-            ("� Financial Metrics", "sample_financial_metrics.csv", "Financial KPIs, budget tracking, forecasting")
+            ("🛒 E-commerce Sales", "sample_ecommerce_sales.csv"),
+            ("📊 Customer Survey", "sample_customer_survey.csv"),
+            ("💰 Financial Metrics", "sample_financial_metrics.csv")
         ]
         
-        for icon_name, filename, description in sample_datasets:
-            with st.container():
-                col_icon, col_content = st.columns([0.15, 0.85])
-                with col_icon:
-                    st.markdown(f"### {icon_name.split()[0]}")
-                with col_content:
-                    st.markdown(f"**{icon_name.split(' ', 1)[1]}**")
-                    st.caption(description)
-                
-                if st.button(f"Try {icon_name}", key=filename, use_container_width=True, type="secondary"):
-                    # Auto-login as demo user
+        for icon_name, filename in sample_datasets:
+            if st.button(f"{icon_name}", key=filename, use_container_width=True):
+                with st.spinner(f"Loading {icon_name}..."):
                     st.session_state['authenticated'] = True
                     st.session_state['username'] = 'demo_user'
                     st.session_state['name'] = 'Demo User'
                     st.session_state['authentication_status'] = True
-                    
-                    # Set loading state for sample data
                     st.session_state.demo_sample = filename
                     st.session_state.demo_sample_name = icon_name
                     st.session_state.loading_sample = True
-                    st.rerun()
-                
-                st.markdown("")
+                st.rerun()
     
+    # Feature highlights - inline compact
     st.markdown("---")
     st.markdown("""
-    <div style='text-align: center; color: #666; padding: 20px;'>
-        <p><strong>How it works:</strong></p>
-        <p>� Upload/Select Data → 💬 Ask Questions in Natural Language → 📈 Get AI-Powered Insights → 📄 Export Reports</p>
+    <div style='display: flex; justify-content: center; gap: 40px; padding: 15px 0; flex-wrap: wrap;'>
+        <span>🧠 <strong>Advanced RAG</strong></span>
+        <span>⚡ <strong>Instant Insights</strong></span>
+        <span>🎯 <strong>8 Expert Modes</strong></span>
+        <span>📚 <strong>200+ Templates</strong></span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # How it works - more compact
+    st.markdown("""
+    <div style='text-align: center; padding: 10px 20px; opacity: 0.8;'>
+        <span style='font-size: 13px;'>
+            📁 Upload Data → 💬 Ask Questions → 🧠 AI Learns → 📊 Get Insights
+        </span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Footer
+    st.markdown("""
+    <div style='text-align: center; padding: 10px; opacity: 0.6; font-size: 12px;'>
+        Powered by Google Gemini AI • Qdrant Vector DB • 🔒 Your data never leaves your machine
     </div>
     """, unsafe_allow_html=True)
     
@@ -127,13 +373,8 @@ with st.sidebar:
 
 # Initialize vector DB and index sample datasets (only once per session)
 if 'vector_db_initialized' not in st.session_state:
-    try:
-        from utils.vector_db import ensure_samples_indexed
-        ensure_samples_indexed()
-        st.session_state.vector_db_initialized = True
-    except Exception as e:
-        # Silent fail - vector DB is optional
-        st.session_state.vector_db_initialized = False
+    st.session_state.vector_db_initialized = False
+    st.session_state.vector_db_seeded = False  # Track seeding separately
 
 # --- Load Demo Sample if Selected ---
 if 'demo_sample' in st.session_state and st.session_state.demo_sample:
@@ -222,20 +463,100 @@ if "last_uploaded_files" not in st.session_state:
 
 # --- 1. Data Context Panel (Sidebar) ---
 with st.sidebar:
-    st.title("📊 Data Context")
+    # Netflix-style sidebar header
+    st.markdown("""
+    <div style='
+        text-align: center;
+        padding: 15px 0;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #E50914;
+    '>
+        <h2 style='
+            color: #E50914;
+            font-weight: 900;
+            font-size: 24px;
+            margin: 0;
+            letter-spacing: -1px;
+        '>OPENANALYST</h2>
+        <p style='color: #808080; font-size: 11px; margin: 5px 0 0 0;'>Advanced RAG • AI Analysis</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # ==================== 🏢 HYBRID TIER INDICATOR ====================
+    current_user = st.session_state.get('username', 'Guest')
+    user_tier = "free"  # Default tier (later: check from database)
+    
+    tier_config = {
+        "free": {
+            "badge": "🆓 FREE",
+            "color": "#E50914",
+            "workspace": "Personal Workspace",
+            "description": "200+ community templates + your private analyses"
+        },
+        "pro": {
+            "badge": "⭐ PRO",
+            "color": "#F59E0B",
+            "workspace": "Pro Workspace",
+            "description": "Unlimited analyses + priority support"
+        },
+        "team": {
+            "badge": "👥 TEAM",
+            "color": "#8B5CF6",
+            "workspace": "Team Workspace",
+            "description": "Share with your team + collaboration features"
+        }
+    }
+    
+    tier_info = tier_config.get(user_tier, tier_config["free"])
+    
+    st.markdown(
+        f"""
+        <div style='
+            padding: 12px;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #1a1a1a, #252525);
+            border-left: 4px solid {tier_info['color']};
+            margin-bottom: 15px;
+        '>
+            <div style='font-weight: 700; color: {tier_info['color']}; margin-bottom: 5px;'>
+                {tier_info['badge']} • {tier_info['workspace']}
+            </div>
+            <div style='font-size: 0.85em; color: #B3B3B3;'>
+                👤 {current_user}<br/>
+                {tier_info['description']}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
     
     # Model Selector
     st.divider()
     st.subheader("🤖 AI Model")
     
-    # Available models with status
+    # Available models with status - categorized
     model_options = {
-        "gemini-2.5-flash": "Gemini Flash (Fast, Balanced)",
-        "gemini-2.5-flash-lite": "Gemini Flash Lite (Current, Free)",
-        "gemini-2.5-flash-8b": "Gemini Flash-8B (Efficient)",
-        "gpt-4": "GPT-4 (No API Connected)",
-        "claude-3": "Claude 3 (No API Connected)"
+        # ===== ACTIVE MODELS (API Connected) =====
+        "gemini-2.5-flash": "✅ Gemini Flash (Fast)",
+        "gemini-2.5-flash-lite": "✅ Gemini Flash Lite (Free)",
+        "gemini-2.5-flash-8b": "✅ Gemini Flash-8B (Efficient)",
+        
+        # ===== PREMIUM MODELS (Coming Soon) =====
+        "gemini-2.0-pro": "⭐ Gemini 2.0 Pro (Coming Soon)",
+        "gpt-4o": "🔒 GPT-4o (Add API Key)",
+        "gpt-4o-mini": "🔒 GPT-4o Mini (Add API Key)",
+        "claude-3.5-sonnet": "🔒 Claude 3.5 Sonnet (Add API Key)",
+        "claude-3-opus": "🔒 Claude 3 Opus (Add API Key)",
+        
+        # ===== OPEN SOURCE (Self-Host) =====
+        "llama-3.2-70b": "🦙 Llama 3.2 70B (Self-Host)",
+        "mistral-large": "🌀 Mistral Large (Self-Host)",
+        "mixtral-8x7b": "🌀 Mixtral 8x7B (Self-Host)",
+        "qwen-2.5-72b": "🔮 Qwen 2.5 72B (Self-Host)",
     }
+    
+    # Models that are actually available
+    active_models = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.5-flash-8b"]
     
     if "selected_model" not in st.session_state:
         st.session_state.selected_model = "gemini-2.5-flash-lite"
@@ -250,13 +571,17 @@ with st.sidebar:
     
     # Check if model changed
     if selected_model != st.session_state.selected_model:
-        # Check if it's a non-Gemini model
-        if selected_model in ["gpt-4", "claude-3"]:
-            st.warning("🔌 No API connected for this model. Please use Gemini models.")
-            # Revert selection
-            st.session_state.selected_model = st.session_state.selected_model
+        if selected_model not in active_models:
+            # Show appropriate message based on model type
+            if "gpt" in selected_model or "claude" in selected_model:
+                st.warning("� Add your OpenAI/Anthropic API key in settings to use this model.")
+            elif "llama" in selected_model or "mistral" in selected_model or "mixtral" in selected_model or "qwen" in selected_model:
+                st.info("🖥️ Self-hosted models require local setup. Contact us for enterprise deployment.")
+            else:
+                st.info("🚀 This model is coming soon! Stay tuned.")
+            # Don't change selection for unavailable models
         else:
-            # Update model
+            # Update to active model
             st.session_state.selected_model = selected_model
             from utils.ai_core import client as gemini_client
             gemini_client.set_model(selected_model)
@@ -270,40 +595,90 @@ with st.sidebar:
     # Show Similar Analyses Widget (if data is loaded)
     if st.session_state.active_dataset_key and st.session_state.processed_data:
         try:
-            from utils.domain_detector import detect_data_domain
+            from utils.domain_detector import detect_data_domain, get_domain_emoji
             from utils.vector_db import get_vector_store
             from utils.similar_analyses_widget import render_similar_analyses_widget
-            from utils.seed_vector_db import seed_vector_db
             
             # Get active dataframe
             active_df = st.session_state.processed_data[st.session_state.active_dataset_key]["df"]
             
-            # Detect domain (cache it in session state)
+            # AUTO-DETECT domain (but allow manual override!)
             if 'current_domain_info' not in st.session_state or st.session_state.previous_dataset_key != st.session_state.active_dataset_key:
                 domain_info = detect_data_domain(active_df)
                 st.session_state.current_domain_info = domain_info
+                st.session_state.auto_detected_domain = domain_info['domain']  # Store auto-detected
             else:
                 domain_info = st.session_state.current_domain_info
             
-            # Seed vector DB on first load
-            if 'vector_db_seeded' not in st.session_state:
-                seed_vector_db()
-                st.session_state.vector_db_seeded = True
+            # ==================== 🎯 ANALYST MODE SELECTOR ====================
+            st.markdown("### 🎯 Select Analyst Mode")
             
-            # Render similar analyses widget
+            all_domains = ["sales", "marketing", "hr", "financial", "survey", "product", "business", "operations", "general"]
+            domain_labels = {
+                "sales": "🛒 Sales Analyst",
+                "marketing": "📢 Marketing Analyst", 
+                "hr": "👥 HR Analyst",
+                "financial": "💰 Financial Analyst",
+                "survey": "📋 Survey Analyst",
+                "product": "📦 Product Analyst",
+                "business": "💼 Business Analyst",
+                "operations": "🎯 Operations Analyst",
+                "general": "📊 General Analyst"
+            }
+            
+            # Get current mode (manual override or auto-detected)
+            current_mode = st.session_state.get('manual_domain_override', domain_info.get('domain', 'general'))
+            auto_detected = st.session_state.get('auto_detected_domain', domain_info.get('domain', 'general'))
+            
+            # Ensure current_mode is in the list
+            if current_mode not in all_domains:
+                current_mode = 'general'
+            
+            # Show selector
+            selected_domain = st.selectbox(
+                "Choose your analyst perspective:",
+                options=all_domains,
+                format_func=lambda x: domain_labels.get(x, x),
+                index=all_domains.index(current_mode) if current_mode in all_domains else 0,
+                help=f"🤖 Auto-detected: {domain_labels.get(auto_detected, 'General Analyst')}\n\n💡 Or choose a different analyst mode to get specialized templates!"
+            )
+            
+            # Store manual override
+            if selected_domain != auto_detected:
+                st.session_state.manual_domain_override = selected_domain
+                st.info(f"✨ Switched to {domain_labels[selected_domain]} mode (overriding auto-detection)")
+            else:
+                st.session_state.manual_domain_override = None
+            
+            # Use selected domain (not auto-detected)
+            domain_info['domain'] = selected_domain
+            st.session_state.current_domain_info = domain_info
+            
+            st.divider()
+            
+            # Vector DB is seeded at startup only - no need to seed here
+            # This makes data loading much faster!
+            
+            # Render similar analyses widget (HYBRID MODEL!)
             vector_store = get_vector_store()
+            current_user_id = st.session_state.get('username', 'anonymous')  # Get from auth
             render_similar_analyses_widget(
                 vector_store=vector_store,
                 current_domain=domain_info['domain'],
-                current_dataset_name=st.session_state.active_dataset_key
+                current_dataset_name=st.session_state.active_dataset_key,
+                user_id=current_user_id
             )
             
         except Exception as e:
+            import traceback
             logger.error(f"Error rendering similar analyses: {e}")
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            st.error(f"⚠️ Widget error: {str(e)}")
             st.divider()
     
     uploaded_files = st.file_uploader(
-        "Upload Files", type=["csv", "xlsx"], accept_multiple_files=True
+        "Upload Files", type=["csv", "xlsx"], accept_multiple_files=True,
+        help="Drop your CSV or Excel files here to start analysis"
     )
     
     # Only process if files have changed
@@ -312,13 +687,38 @@ with st.sidebar:
         
         if current_file_names != st.session_state.last_uploaded_files:
             debug_log("🔍 New files detected, processing...")
+            
+            # Show loading state with progress
+            loading_placeholder = st.empty()
+            with loading_placeholder.container():
+                st.markdown("""
+                <div style='
+                    text-align: center;
+                    padding: 20px;
+                    border-radius: 8px;
+                    border: 1px solid rgba(229, 9, 20, 0.3);
+                    background: rgba(229, 9, 20, 0.05);
+                '>
+                    <div style='font-size: 24px; margin-bottom: 10px;'>🔄</div>
+                    <div style='font-weight: 600; color: #E50914;'>Processing Your Data...</div>
+                    <div style='font-size: 12px; color: #808080; margin-top: 5px;'>Cleaning, validating, and preparing for analysis</div>
+                </div>
+                """, unsafe_allow_html=True)
+                
             try:
                 st.session_state.messages = []
                 # DON'T clear canvas_items - this keeps them persistent
                 st.session_state.processed_data = read_and_clean_files(tuple(uploaded_files))
                 st.session_state.last_uploaded_files = current_file_names
                 debug_log(f"✅ Processed {len(st.session_state.processed_data)} datasets")
+                
+                # Clear loading and show success
+                loading_placeholder.empty()
+                st.success(f"✅ Successfully loaded {len(st.session_state.processed_data)} dataset(s)!")
+                time.sleep(0.5)
+                st.rerun()
             except Exception as e:
+                loading_placeholder.empty()
                 st.error(f"Failed to process files: {e}")
     
     if st.session_state.processed_data:
@@ -328,9 +728,61 @@ with st.sidebar:
         if "previous_dataset_key" not in st.session_state:
             st.session_state.previous_dataset_key = st.session_state.active_dataset_key
         
-        # Radio button for dataset selection
-        selected_dataset = st.radio("📁 Select Dataset:", dataset_keys, 
-                                    index=dataset_keys.index(st.session_state.active_dataset_key) if st.session_state.active_dataset_key in dataset_keys else 0)
+        # Group datasets by file (for multi-tab Excel files)
+        files_dict = {}
+        for key in dataset_keys:
+            if '|' in key:
+                filename, sheetname = key.rsplit('|', 1)
+            else:
+                filename, sheetname = key, 'Sheet1'
+            
+            if filename not in files_dict:
+                files_dict[filename] = []
+            files_dict[filename].append((key, sheetname))
+        
+        # Smart selector: Use dropdown when many datasets, radio for few
+        if len(dataset_keys) > 5:
+            # Multi-tab Excel detected! Use hierarchical dropdown
+            st.markdown("### 📁 Select Dataset")
+            
+            # File selector
+            file_names = list(files_dict.keys())
+            current_key = st.session_state.active_dataset_key or dataset_keys[0]
+            current_file = current_key.rsplit('|', 1)[0] if '|' in current_key else current_key
+            
+            selected_file = st.selectbox(
+                "📄 File:",
+                options=file_names,
+                index=file_names.index(current_file) if current_file in file_names else 0,
+                key="file_selector"
+            )
+            
+            # Sheet selector (only show if multiple sheets in selected file)
+            sheets = files_dict[selected_file]
+            if len(sheets) > 1:
+                sheet_options = [s[0] for s in sheets]  # Full keys
+                sheet_labels = [s[1] for s in sheets]   # Sheet names only
+                
+                current_sheet_idx = 0
+                if current_key in sheet_options:
+                    current_sheet_idx = sheet_options.index(current_key)
+                
+                selected_dataset = st.selectbox(
+                    "📊 Sheet:",
+                    options=sheet_options,
+                    format_func=lambda x: x.rsplit('|', 1)[1] if '|' in x else 'Sheet1',
+                    index=current_sheet_idx,
+                    key="sheet_selector"
+                )
+                
+                # Show sheet count info
+                st.caption(f"📋 {len(sheets)} sheets in this file")
+            else:
+                selected_dataset = sheets[0][0]
+        else:
+            # Simple case: radio buttons for few datasets
+            selected_dataset = st.radio("📁 Select Dataset:", dataset_keys, 
+                                        index=dataset_keys.index(st.session_state.active_dataset_key) if st.session_state.active_dataset_key in dataset_keys else 0)
         
         # Detect dataset change
         if selected_dataset != st.session_state.active_dataset_key and st.session_state.messages:
@@ -338,19 +790,25 @@ with st.sidebar:
             col1, col2 = st.columns(2)
             with col1:
                 if st.button("✅ Switch & Clear Chat", type="primary", use_container_width=True):
-                    st.session_state.active_dataset_key = selected_dataset
-                    st.session_state.messages = []
-                    st.session_state.previous_dataset_key = selected_dataset
-                    st.success(f"Switched to {selected_dataset}")
+                    # Show switching loading state
+                    with st.spinner("🔄 Switching to new dataset..."):
+                        st.session_state.active_dataset_key = selected_dataset
+                        st.session_state.messages = []
+                        st.session_state.previous_dataset_key = selected_dataset
+                        time.sleep(0.3)  # Brief visual feedback
+                    st.success(f"✅ Switched to {selected_dataset}")
                     st.rerun()
             with col2:
                 if st.button("❌ Cancel", use_container_width=True):
                     # Keep current dataset
                     st.rerun()
         elif selected_dataset != st.session_state.active_dataset_key:
-            # No chat history, switch immediately
-            st.session_state.active_dataset_key = selected_dataset
-            st.session_state.previous_dataset_key = selected_dataset
+            # No chat history, switch immediately with loading state
+            with st.spinner("🔄 Loading dataset..."):
+                st.session_state.active_dataset_key = selected_dataset
+                st.session_state.previous_dataset_key = selected_dataset
+                time.sleep(0.2)  # Brief visual feedback
+            st.rerun()
         
         active_df = st.session_state.processed_data[st.session_state.active_dataset_key]["df"]
         
@@ -375,7 +833,7 @@ with st.sidebar:
     
     # Semantic Search Feature
     st.divider()
-    st.subheader("� Find Similar Analyses")
+    st.subheader("📚 Find Similar Analyses")
     
     with st.expander("ℹ️ How to use this feature", expanded=False):
         st.markdown("""
@@ -486,10 +944,33 @@ if st.session_state.report_mode:
 
 else:
     # --- WORKSHOP MODE ---
-    st.title("🚀 Open Analyst Workshop")
+    st.markdown("""
+    <h1 style='
+        color: #E50914;
+        font-weight: 900;
+        font-size: 42px;
+        margin-bottom: 5px;
+        letter-spacing: -1px;
+    '>
+        🚀 OpenAnalyst Workshop
+    </h1>
+    <p style='color: #808080; margin-bottom: 20px;'>Your AI-powered data analysis workspace with Advanced RAG</p>
+    """, unsafe_allow_html=True)
     
     if not st.session_state.active_dataset_key:
-        st.info("👆 Please upload a file to begin your analysis.")
+        st.markdown("""
+        <div style='
+            background: linear-gradient(145deg, #1a1a1a, #252525);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            text-align: center;
+        '>
+            <div style='font-size: 48px; margin-bottom: 15px;'>📚</div>
+            <h3 style='color: #fff; margin-bottom: 10px;'>Upload Your Data</h3>
+            <p style='color: #808080;'>Drop a CSV or Excel file in the sidebar to begin analysis</p>
+        </div>
+        """, unsafe_allow_html=True)
     else:
         if st.session_state.active_dataset_key in st.session_state.processed_data:
             active_df = st.session_state.processed_data[st.session_state.active_dataset_key]["df"]
@@ -501,31 +982,54 @@ else:
         tab1, tab2, tab3, tab4 = st.tabs(["💬 Chat & Analysis", "📊 Data Preview", "📌 Canvas", "🤖 AI Stats"])
         
         with tab1:
-            # Chat & Analysis Tab
-            st.subheader("Chat & Analysis")
+            # Chat & Analysis Tab - Netflix styled header
+            st.markdown("""
+            <div style='
+                background: linear-gradient(135deg, #E50914 0%, #B20710 100%);
+                padding: 15px 20px;
+                border-radius: 8px;
+                margin-bottom: 15px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            '>
+                <span style='font-size: 28px;'>💬</span>
+                <div>
+                    <h3 style='color: #fff; margin: 0; font-size: 20px;'>Chat with Your Data</h3>
+                    <p style='color: rgba(255,255,255,0.8); margin: 0; font-size: 12px;'>Ask questions in natural language • AI-powered analysis</p>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
             
-            # Auto-generate initial summary when dataset first loads
+            # Show "Generate Analysis" button when no messages (MANUAL trigger - no auto-generation!)
             if not st.session_state.messages:
-                # Check if we need to generate initial prompt for this dataset
-                if 'initial_prompt_generated' not in st.session_state:
-                    st.session_state.initial_prompt_generated = set()
+                # Welcome message and manual trigger
+                st.markdown("""
+                <div style='
+                    background: linear-gradient(145deg, #1a1a1a, #252525);
+                    padding: 30px;
+                    border-radius: 12px;
+                    border: 1px solid #333;
+                    text-align: center;
+                    margin-bottom: 20px;
+                '>
+                    <div style='font-size: 36px; margin-bottom: 10px;'>👋</div>
+                    <h3 style='color: #fff; margin-bottom: 10px;'>Ready to analyze your data!</h3>
+                    <p style='color: #808080;'>Click the button below or ask a question in the chat</p>
+                </div>
+                """, unsafe_allow_html=True)
                 
-                if st.session_state.active_dataset_key not in st.session_state.initial_prompt_generated:
-                    # Auto-trigger initial summary
-                    st.session_state.messages.append({
-                        "role": "user", 
-                        "content": f"Welcome! I just loaded the {st.session_state.active_dataset_key} dataset. Please provide:\n1. A brief overview of what's in this data\n2. Key metrics that stand out\n3. Suggest 3 specific, actionable questions I should ask about this data"
-                    })
-                    st.session_state.initial_prompt_generated.add(st.session_state.active_dataset_key)
-                    st.rerun()
-                else:
-                    # Show manual trigger button if messages were cleared but dataset was already initialized
-                    if st.button("🎯 Generate Initial Summary", use_container_width=True, type="primary"):
+                col_btn1, col_btn2, col_btn3 = st.columns([1, 2, 1])
+                with col_btn2:
+                    if st.button("🚀 Generate Analysis", use_container_width=True, type="primary", help="Get an AI overview of your dataset"):
                         st.session_state.messages.append({
                             "role": "user", 
                             "content": f"Welcome! I just loaded the {st.session_state.active_dataset_key} dataset. Please provide:\n1. A brief overview of what's in this data\n2. Key metrics that stand out\n3. Suggest 3 specific, actionable questions I should ask about this data"
                         })
                         st.rerun()
+                
+                st.markdown("---")
+                st.caption("💡 **Tip:** You can also just type a question below to get started!")
 
             # Chat history with cleaner styling
             for i, msg in enumerate(st.session_state.messages):
@@ -543,9 +1047,10 @@ else:
                             profile = create_data_profile(active_df, st.session_state.active_dataset_key)
                             history = st.session_state.messages
                             
-                            # Pass domain info to AI if available
+                            # Pass domain info and user_id to AI (HYBRID MODEL!)
                             domain_info = st.session_state.get('current_domain_info', {})
-                            ai_response = get_ai_response(profile, history, domain_info=domain_info)
+                            current_user_id = st.session_state.get('username', 'anonymous')
+                            ai_response = get_ai_response(profile, history, domain_info=domain_info, user_id=current_user_id)
                             
                             if not isinstance(ai_response, dict):
                                 ai_response = {"content": str(ai_response), "suggested_actions": []}

@@ -1,12 +1,47 @@
 """
 Onboarding and interactive tour module
 Shows first-time users how to use Open Analyst
+Persists onboarding completion using browser localStorage via query params workaround
 """
 
 import streamlit as st
+import os
+
+# File-based persistence for onboarding completion (per user)
+ONBOARDING_COMPLETION_DIR = os.path.join(os.path.dirname(__file__), '..', '.onboarding_cache')
+
+def _get_user_onboarding_file(username: str) -> str:
+    """Get path to user's onboarding completion file"""
+    os.makedirs(ONBOARDING_COMPLETION_DIR, exist_ok=True)
+    # Sanitize username for filename
+    safe_username = "".join(c for c in username if c.isalnum() or c in ('_', '-'))
+    return os.path.join(ONBOARDING_COMPLETION_DIR, f'{safe_username}.completed')
+
+def _has_completed_onboarding(username: str) -> bool:
+    """Check if user has previously completed onboarding (file-based persistence)"""
+    if not username:
+        return False
+    completion_file = _get_user_onboarding_file(username)
+    return os.path.exists(completion_file)
+
+def _persist_onboarding_completion(username: str):
+    """Persist onboarding completion to file"""
+    if not username:
+        return
+    completion_file = _get_user_onboarding_file(username)
+    with open(completion_file, 'w') as f:
+        f.write('completed')
 
 def should_show_onboarding():
-    """Check if user should see onboarding (first visit)"""
+    """Check if user should see onboarding (first visit only)"""
+    # Get current username from session
+    username = st.session_state.get('username', 'anonymous')
+    
+    # Check file-based persistence first (survives app restarts)
+    if _has_completed_onboarding(username):
+        st.session_state.onboarding_completed = True
+        return False
+    
     # Initialize onboarding state if not present
     if 'onboarding_completed' not in st.session_state:
         st.session_state.onboarding_completed = False
@@ -18,8 +53,12 @@ def should_show_onboarding():
     return not st.session_state.onboarding_completed and st.session_state.onboarding_ready
 
 def mark_onboarding_complete():
-    """Mark onboarding as completed"""
+    """Mark onboarding as completed and persist"""
     st.session_state.onboarding_completed = True
+    
+    # Persist to file for the current user
+    username = st.session_state.get('username', 'anonymous')
+    _persist_onboarding_completion(username)
 
 def render_onboarding_modal():
     """Render professional onboarding modal with interactive tour"""

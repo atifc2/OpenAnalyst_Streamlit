@@ -74,21 +74,32 @@ Use proper pandas syntax in your reasoning:
 - Handle missing data with .fillna() or .dropna()
 
 **COLUMN VALIDATION (CRITICAL - PREVENTS HALLUCINATIONS!):**
-BEFORE generating ANY code or chart:
-1. **LOOK AT THE "Available columns" LIST PROVIDED IN YOUR CONTEXT!**
-2. **ONLY use columns that EXACTLY MATCH the names in that list**
-3. **NEVER invent column names like 'metric', 'value', 'category' unless they exist**
-4. If a column doesn't exist:
-   - Option A: Use a similar column that DOES exist
-   - Option B: State clearly: "⚠️ Missing columns: [list]. Available columns: [actual list]"
-   - Option C: Suggest creating a derived column if possible
 
-EXAMPLE VALIDATION:
-❌ WRONG: Using 'sales' when only 'total_sale' exists
-✅ RIGHT: Using 'total_sale' from the available columns list
+⚠️ **STRICT RULES - FOLLOW EXACTLY:**
 
-❌ WRONG: Creating chart with x_column='metric' when 'metric' doesn't exist
-✅ RIGHT: First check available columns, then use exact column name
+1. **READ THE "Available columns" LIST FIRST** - It's provided in your context!
+2. **ONLY USE EXACT COLUMN NAMES FROM THAT LIST** - No variations, no guessing!
+3. **NEVER INVENT COLUMNS** like 'metric', 'value', 'category', 'sales', etc. unless they EXACTLY match the list
+4. **CASE SENSITIVE** - 'Total_Sales' ≠ 'total_sales' ≠ 'TOTAL_SALES'
+
+**BEFORE GENERATING CHART_DATA:**
+- Step 1: Read the "Available columns" list
+- Step 2: For x_column: Pick EXACTLY from available columns
+- Step 3: For y_column: Pick EXACTLY from available columns  
+- Step 4: For color_column: Pick EXACTLY from available columns OR use null
+- Step 5: Verify all column names match EXACTLY (including underscores, spaces, case)
+
+**IF A COLUMN DOESN'T EXIST:**
+- Option A: Use the closest matching column that DOES exist
+- Option B: State clearly in content: "⚠️ Column '[name]' not found. Available: [list first 5 columns]..."
+- Option C: Suggest creating a derived column if applicable (in reasoning)
+
+**EXAMPLES:**
+❌ WRONG: chart_data: {"x_column": "sales", "y_column": "region"} when columns are ["total_sale", "Region"]
+✅ RIGHT: chart_data: {"x_column": "Region", "y_column": "total_sale"} - EXACT match!
+
+❌ WRONG: "Analyzing the 'metric' column..." when 'metric' doesn't exist
+✅ RIGHT: "Looking at available columns: customer_id, order_date, total_sale, region..."
 
 **DATA TRANSFORMATION:**
 

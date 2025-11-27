@@ -244,12 +244,15 @@ class GeminiClient:
 client = GeminiClient()
 
 
-def get_ai_response(profile, history, domain_info=None):
+def get_ai_response(profile, history, domain_info=None, user_id=None):
     """AI response using the centralized system prompt with vector context and domain awareness"""
     start_time = time.time()  # Track response time
     
     # Extract domain info for vector storage
     current_domain = domain_info.get('domain', 'general') if domain_info else 'general'
+    
+    # Get user ID for personal workspace (HYBRID MODEL)
+    current_user = user_id or 'anonymous'
     
     try:
         # Read the main system prompt from file
@@ -259,23 +262,32 @@ def get_ai_response(profile, history, domain_info=None):
         # Add dynamic context to the existing prompt
         # FIX: Handle both string and dict profiles
         if isinstance(profile, dict):
-            available_columns = profile.get("columns", [])
+            columns_info = profile.get("columns", [])
+            # Handle both formats: list of dicts with 'name' key, or list of strings
+            if columns_info and isinstance(columns_info[0], dict):
+                available_columns = [col.get('name', '') for col in columns_info if isinstance(col, dict)]
+            else:
+                available_columns = [str(col) for col in columns_info]
             dataset_name = profile.get("filename", "unknown")
         else:
-            # If profile is a string, try to parse it or use empty list
+            # If profile is a string, try to parse it
             try:
                 import json
                 profile_dict = json.loads(profile) if isinstance(profile, str) else {}
-                available_columns = profile_dict.get("columns", [])
+                columns_info = profile_dict.get("columns", [])
+                # Handle both formats: list of dicts with 'name' key, or list of strings
+                if columns_info and isinstance(columns_info[0], dict):
+                    available_columns = [col.get('name', '') for col in columns_info if isinstance(col, dict)]
+                else:
+                    available_columns = [str(col) for col in columns_info]
                 dataset_name = profile_dict.get("filename", "unknown")
             except:
                 available_columns = []
                 dataset_name = "unknown"
+                profile_dict = {}
         
-        # FIX: Ensure available_columns contains only strings
-        if available_columns:
-            # Convert any non-string items to strings
-            available_columns = [str(col) if not isinstance(col, str) else col for col in available_columns]
+        # Clean up column names - remove any empty strings
+        available_columns = [col for col in available_columns if col]
         
         # Get the last user message for semantic search
         last_user_message = None
@@ -287,6 +299,9 @@ def get_ai_response(profile, history, domain_info=None):
         
         # Try to get relevant context from vector DB
         vector_context = ""
+        rag_context_used = False
+        rag_context_preview = ""
+        
         if VECTOR_DB_ENABLED and last_user_message:
             try:
                 vector_store = get_vector_store()
@@ -299,6 +314,8 @@ def get_ai_response(profile, history, domain_info=None):
 
 Use this context to provide more informed and consistent analysis.
 """
+                    rag_context_used = True
+                    rag_context_preview = relevant_context[:200] + "..." if len(relevant_context) > 200 else relevant_context
                     logger.info("Added vector context to prompt")
             except Exception as ve:
                 logger.warning(f"Could not retrieve vector context: {ve}")
@@ -406,14 +423,16 @@ Common derived columns (if available):
                         if ai_response.get("is_visualizable"):
                             query_type = "chart"
                         
-                        # Store user message with domain metadata
+                        # Store user message with HYBRID MODEL metadata
                         vector_store.store_chat_message(
                             role="user",
                             content=last_user_message,
                             dataset_name=dataset_name,
                             domain=current_domain,
                             schema_signature=schema_sig,
-                            query_type=query_type
+                            query_type=query_type,
+                            tier="user",  # Personal workspace
+                            user_id=current_user
                         )
                         # Store assistant response
                         assistant_content = ai_response.get("content", "")
@@ -423,7 +442,9 @@ Common derived columns (if available):
                                 content=assistant_content[:500],  # Store first 500 chars
                                 dataset_name=dataset_name,
                                 domain=current_domain,
-                                query_type=query_type
+                                query_type=query_type,
+                                tier="user",  # Personal workspace
+                                user_id=current_user
                             )
                         logger.info(f"Stored interaction in vector DB (domain: {current_domain})")
                         # Track embedding creation
@@ -449,6 +470,11 @@ Common derived columns (if available):
                     response_time=time.time() - start_time if 'start_time' in locals() else 0,
                     embeddings_created=embeddings_created
                 )
+                
+                # Add RAG context indicator to response
+                if rag_context_used:
+                    ai_response['_rag_context_used'] = True
+                    ai_response['_rag_context_preview'] = rag_context_preview
                 
                 return ai_response
 

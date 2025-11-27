@@ -28,7 +28,7 @@ def detect_data_domain(df):
     # Normalize column names for matching
     columns = set(df.columns.str.lower().str.replace('_', '').str.replace(' ', ''))
     
-    # Define domain patterns with weighted keywords
+    # Define domain patterns with weighted keywords - 8 DOMAINS!
     DOMAIN_PATTERNS = {
         "sales": [
             {"keywords": ['revenue', 'sales', 'orders', 'products', 'totalsale', 'orderid', 'invoice'], "weight": 3},
@@ -54,6 +54,21 @@ def detect_data_domain(df):
             {"keywords": ['rating', 'score', 'satisfaction', 'feedback', 'nps', 'response'], "weight": 3},
             {"keywords": ['question', 'answer', 'respondent', 'survey', 'poll', 'opinion'], "weight": 2},
             {"keywords": ['sentiment', 'comment', 'text', 'agree', 'disagree', 'likely'], "weight": 1}
+        ],
+        "product": [
+            {"keywords": ['feature', 'userid', 'engagement', 'adoption', 'retention', 'churn', 'active'], "weight": 3},
+            {"keywords": ['version', 'release', 'feedback', 'usage', 'session', 'event', 'funnel'], "weight": 2},
+            {"keywords": ['cohort', 'segment', 'experiment', 'variant', 'abtest', 'metric'], "weight": 1}
+        ],
+        "business": [
+            {"keywords": ['kpi', 'metric', 'target', 'actual', 'variance', 'goal', 'objective'], "weight": 3},
+            {"keywords": ['performance', 'trend', 'forecast', 'projection', 'growth', 'decline'], "weight": 2},
+            {"keywords": ['dashboard', 'report', 'analysis', 'insight', 'benchmark', 'scorecard'], "weight": 1}
+        ],
+        "operations": [
+            {"keywords": ['process', 'efficiency', 'throughput', 'cycletime', 'bottleneck', 'capacity'], "weight": 3},
+            {"keywords": ['utilization', 'productivity', 'downtime', 'uptime', 'sla', 'quality'], "weight": 2},
+            {"keywords": ['workflow', 'task', 'status', 'priority', 'resource', 'allocation'], "weight": 1}
         ]
     }
     
@@ -83,7 +98,8 @@ def detect_data_domain(df):
     
     # Calculate confidence (normalize to 0-1 range)
     # Confidence threshold: need at least score of 3 (one high-weight match)
-    max_possible_score = sum(sum(p["weight"] * len(p["keywords"]) for p in DOMAIN_PATTERNS[best_domain]))
+    # Calculate max possible score for this domain
+    max_possible_score = sum(p["weight"] * len(p["keywords"]) for p in DOMAIN_PATTERNS[best_domain])
     confidence = min(best_score / 10.0, 1.0) if best_score >= 3 else 0.0
     
     # If confidence is too low, return "general"
@@ -153,26 +169,32 @@ def calculate_schema_similarity(schema1, schema2):
 
 
 def get_domain_emoji(domain):
-    """Get emoji icon for domain type"""
+    """Get emoji icon for domain type - 8 DOMAINS!"""
     emoji_map = {
         "sales": "🛒",
         "marketing": "📢",
         "hr": "👥",
         "financial": "💰",
         "survey": "📋",
+        "product": "📦",
+        "business": "💼",
+        "operations": "🎯",
         "general": "📊"
     }
     return emoji_map.get(domain, "📊")
 
 
 def get_domain_color(domain):
-    """Get color for domain indicator"""
+    """Get color for domain indicator - 8 DOMAINS!"""
     color_map = {
         "sales": "#4CAF50",      # Green
         "marketing": "#FF9800",  # Orange
         "hr": "#2196F3",         # Blue
         "financial": "#9C27B0",  # Purple
         "survey": "#FF5722",     # Red
+        "product": "#00BCD4",    # Cyan
+        "business": "#795548",   # Brown
+        "operations": "#FFC107", # Amber
         "general": "#607D8B"     # Gray
     }
     return color_map.get(domain, "#607D8B")
