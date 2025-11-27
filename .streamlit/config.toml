@@ -1,0 +1,4 @@
+[theme]
+# Netflix red accent - Let background adapt to light/dark mode preference
+primaryColor = "#E50914"
+font = "sans serif"

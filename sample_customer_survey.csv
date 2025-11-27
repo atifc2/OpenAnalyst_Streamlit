@@ -1,0 +1,801 @@
+customer_id,age,gender,satisfaction_score,nps_score,product_quality,customer_service,delivery_speed,value_for_money,would_recommend,purchase_frequency,total_purchases
+CUST00001,35,Prefer not to say,3,3.0,2,4,5,4,Yes,Rarely,6
+CUST00002,24,Other,2,9.0,5,1,3,2,Maybe,Weekly,28
+CUST00003,18,Male,2,10.0,5,5,2,2,No,Rarely,45
+CUST00004,50,Female,4,1.0,2,3,2,5,Maybe,Rarely,26
+CUST00005,18,Female,5,1.0,2,5,3,2,No,Rarely,28
+CUST00006,41,Female,2,7.0,2,4,4,3,No,Daily,40
+CUST00007,21,Male,5,7.0,2,2,1,3,Yes,Daily,15
+CUST00008,21,Other,1,9.0,1,3,1,3,No,Daily,6
+CUST00009,35,Female,2,5.0,5,4,2,3,Maybe,Quarterly,27
+CUST00010,44,Male,2,4.0,1,3,2,5,Maybe,Weekly,38
+CUST00011,60,Prefer not to say,4,7.0,4,5,2,4,No,Daily,4
+CUST00012,49,Female,5,3.0,4,1,3,3,Yes,Rarely,11
+CUST00013,50,Female,2,10.0,5,4,4,2,No,Rarely,21
+CUST00014,45,Other,2,3.0,4,2,1,3,Maybe,Rarely,30
+CUST00015,59,Female,4,4.0,2,5,5,5,Maybe,Rarely,18
+CUST00016,58,Female,4,0.0,1,4,3,2,No,Monthly,35
+CUST00017,72,Prefer not to say,5,0.0,2,2,1,3,No,Quarterly,3
+CUST00018,53,Male,1,1.0,4,4,4,4,No,Weekly,12
+CUST00019,23,Male,1,7.0,1,5,3,2,Maybe,Weekly,27
+CUST00020,33,Other,3,6.0,2,4,1,2,Maybe,Daily,30
+CUST00021,150,Prefer not to say,2,9.0,5,3,3,4,Maybe,Monthly,21
+CUST00022,0,Male,5,8.0,2,5,1,2,Yes,Weekly,38
+CUST00023,0,Prefer not to say,2,4.0,4,4,1,3,Maybe,Quarterly,21
+CUST00024,-5,Male,5,1.0,1,1,4,2,Maybe,Rarely,38
+CUST00025,150,Prefer not to say,5,6.0,5,4,5,3,Yes,Daily,40
+CUST00026,0,Other,5,7.0,1,3,4,4,Yes,Quarterly,15
+CUST00027,66,Female,2,6.0,5,2,1,1,Yes,Weekly,18
+CUST00028,30,Other,4,6.0,1,2,3,4,Yes,Monthly,29
+CUST00029,73,Male,2,4.0,4,2,4,3,Yes,Daily,48
+CUST00030,35,Other,5,1.0,5,1,5,5,Yes,Weekly,38
+CUST00031,71,Female,3,5.0,3,3,1,4,No,Daily,21
+CUST00032,30,Other,1,3.0,1,5,4,5,No,Weekly,17
+CUST00033,66,Male,5,9.0,1,2,4,5,No,Rarely,41
+CUST00034,54,Male,3,1.0,2,3,4,3,No,Monthly,18
+CUST00035,60,Other,4,8.0,5,4,4,3,Maybe,Rarely,37
+CUST00036,56,Female,5,6.0,3,1,3,1,Yes,Weekly,38
+CUST00037,59,Other,3,5.0,4,3,5,2,Maybe,Quarterly,12
+CUST00038,34,Female,5,4.0,2,3,5,4,Yes,Rarely,11
+CUST00039,32,Prefer not to say,2,2.0,3,5,1,3,Yes,Quarterly,48
+CUST00040,35,Female,3,9.0,5,3,2,4,Maybe,Weekly,49
+CUST00041,40,Prefer not to say,2,9.0,3,5,3,5,No,Monthly,20
+CUST00042,71,Other,2,3.0,1,1,1,2,Maybe,Quarterly,9
+CUST00043,68,Female,3,2.0,1,1,1,1,Maybe,Weekly,1
+CUST00044,47,Prefer not to say,1,10.0,2,4,4,4,Yes,Quarterly,3
+CUST00045,51,Prefer not to say,3,7.0,5,5,2,2,Yes,Rarely,21
+CUST00046,21,Prefer not to say,1,2.0,5,5,2,1,Yes,Weekly,23
+CUST00047,20,Male,5,6.0,3,2,3,4,No,Rarely,9
+CUST00048,24,Other,5,6.0,2,2,2,2,Maybe,Daily,19
+CUST00049,73,Prefer not to say,3,6.0,5,4,1,3,Maybe,Weekly,45
+CUST00050,35,Female,5,6.0,1,1,2,4,No,Quarterly,46
+CUST00051,59,Prefer not to say,4,1.0,3,2,2,2,Maybe,Daily,19
+CUST00052,24,Male,2,9.0,4,3,5,1,Maybe,Rarely,23
+CUST00053,57,Other,2,2.0,1,1,1,2,Yes,Rarely,27
+CUST00054,23,Male,1,9.0,2,3,2,3,No,Quarterly,27
+CUST00055,39,Male,5,8.0,5,5,2,4,Yes,Daily,39
+CUST00056,18,Male,1,2.0,1,1,4,4,No,Monthly,36
+CUST00057,21,Female,2,1.0,4,4,2,4,Yes,Quarterly,12
+CUST00058,63,Other,2,8.0,4,5,2,3,Maybe,Rarely,27
+CUST00059,66,Other,5,9.0,2,5,5,1,No,Weekly,46
+CUST00060,69,Female,4,8.0,1,3,1,4,No,Daily,34
+CUST00061,67,Other,4,3.0,3,5,3,1,Yes,Monthly,33
+CUST00062,60,Male,5,8.0,1,2,1,2,No,Weekly,28
+CUST00063,46,Other,5,2.0,4,1,4,1,Maybe,Daily,31
+CUST00064,38,Female,1,6.0,2,2,1,1,Maybe,Quarterly,32
+CUST00065,43,Male,5,6.0,2,3,2,4,Maybe,Quarterly,20
+CUST00066,31,Female,4,10.0,3,3,4,5,Yes,Daily,40
+CUST00067,26,Prefer not to say,5,7.0,2,1,1,5,No,Monthly,35
+CUST00068,64,Male,1,9.0,2,5,4,3,Yes,Daily,31
+CUST00069,29,Male,1,3.0,2,4,3,3,Maybe,Weekly,31
+CUST00070,59,Other,1,2.0,2,3,1,5,No,Weekly,38
+CUST00071,68,Male,1,2.0,2,1,2,2,Maybe,Quarterly,22
+CUST00072,73,Female,3,4.0,4,4,4,4,No,Daily,45
+CUST00073,68,Other,5,10.0,1,5,5,4,No,Quarterly,41
+CUST00074,23,Prefer not to say,2,0.0,5,3,4,2,Yes,Monthly,9
+CUST00075,37,Female,5,9.0,2,1,5,2,No,Weekly,9
+CUST00076,41,Prefer not to say,3,2.0,5,1,2,5,Maybe,Rarely,15
+CUST00077,44,Prefer not to say,1,5.0,5,1,3,3,No,Rarely,13
+CUST00078,55,Prefer not to say,3,2.0,4,3,5,2,Maybe,Daily,22
+CUST00079,25,Male,4,4.0,2,4,3,3,Yes,Daily,16
+CUST00080,18,Female,4,8.0,5,1,4,1,Maybe,Rarely,32
+CUST00081,71,Female,5,1.0,2,5,2,4,No,Daily,2
+CUST00082,66,Male,5,10.0,3,1,5,5,Maybe,Weekly,26
+CUST00083,66,Other,2,1.0,3,4,4,4,Maybe,Monthly,14
+CUST00084,41,Prefer not to say,2,5.0,3,3,1,5,No,Monthly,38
+CUST00085,64,Female,4,5.0,5,1,4,1,Maybe,Quarterly,34
+CUST00086,24,Male,1,10.0,3,1,3,4,No,Weekly,8
+CUST00087,36,Prefer not to say,3,10.0,4,5,2,1,Yes,Daily,36
+CUST00088,39,Other,2,7.0,4,5,2,5,Maybe,Daily,21
+CUST00089,74,Other,2,10.0,5,1,4,2,Yes,Quarterly,46
+CUST00090,72,Prefer not to say,1,1.0,2,1,1,4,Maybe,Quarterly,43
+CUST00091,52,Other,1,8.0,1,5,3,1,Maybe,Daily,28
+CUST00092,47,Female,5,1.0,2,4,4,4,Yes,Daily,46
+CUST00093,46,Female,3,0.0,2,2,4,4,Maybe,Weekly,44
+CUST00094,39,Female,1,9.0,2,2,2,4,Maybe,Quarterly,48
+CUST00095,28,Other,2,1.0,2,1,3,3,Yes,Weekly,6
+CUST00096,37,Female,2,6.0,1,5,1,1,Maybe,Daily,20
+CUST00097,46,Male,4,7.0,3,3,2,1,No,Rarely,31
+CUST00098,68,Female,1,4.0,2,3,4,4,Maybe,Rarely,33
+CUST00099,58,Female,5,5.0,4,2,2,2,Maybe,Daily,44
+CUST00100,59,Other,3,0.0,5,4,2,4,Maybe,Quarterly,7
+CUST00101,51,Female,5,,5,2,5,3,Yes,Rarely,8
+CUST00102,18,Prefer not to say,2,,4,1,2,5,No,Quarterly,9
+CUST00103,48,Male,5,,2,4,2,3,No,Rarely,2
+CUST00104,47,Other,2,,1,3,3,2,Maybe,Quarterly,17
+CUST00105,65,Male,2,,3,5,2,4,Yes,Rarely,45
+CUST00106,35,Prefer not to say,2,,5,5,1,1,Yes,Quarterly,37
+CUST00107,72,Other,2,,3,1,4,4,No,Weekly,42
+CUST00108,34,Other,2,,1,2,3,2,Yes,Quarterly,44
+CUST00109,55,Female,4,,5,1,2,1,Maybe,Weekly,17
+CUST00110,31,Male,5,,3,5,1,3,Maybe,Weekly,38
+CUST00111,40,Prefer not to say,4,,1,3,4,5,Yes,Daily,35
+CUST00112,42,Prefer not to say,4,,3,5,3,5,Maybe,Weekly,47
+CUST00113,32,Other,1,,2,4,1,4,No,Monthly,39
+CUST00114,63,Female,1,,1,5,2,3,Maybe,Weekly,30
+CUST00115,73,Other,1,,3,5,5,2,Yes,Quarterly,6
+CUST00116,39,Other,3,,2,4,5,5,No,Weekly,4
+CUST00117,20,Other,1,,2,2,3,3,Maybe,Quarterly,37
+CUST00118,73,Other,5,,1,5,1,4,No,Quarterly,35
+CUST00119,72,Prefer not to say,4,,4,1,4,1,Yes,Monthly,9
+CUST00120,36,Prefer not to say,5,,5,5,1,4,Maybe,Weekly,6
+CUST00121,74,Other,1,,1,1,5,4,Maybe,Weekly,13
+CUST00122,61,Other,3,,2,4,3,3,No,Rarely,22
+CUST00123,51,Female,3,,2,5,2,5,Maybe,Rarely,28
+CUST00124,52,Other,4,,1,4,1,3,Maybe,Daily,30
+CUST00125,67,Prefer not to say,5,,4,4,5,1,Maybe,Quarterly,36
+CUST00126,18,Male,2,,5,2,4,3,Maybe,Monthly,2
+CUST00127,69,Prefer not to say,5,,3,5,3,2,Yes,Rarely,36
+CUST00128,38,Female,1,,1,1,2,4,Maybe,Weekly,8
+CUST00129,46,Prefer not to say,2,,5,1,1,5,No,Daily,45
+CUST00130,23,Male,3,,5,5,4,1,Yes,Monthly,42
+CUST00131,54,Other,4,,2,2,2,4,No,Weekly,9
+CUST00132,18,Male,4,,3,2,5,3,No,Weekly,1
+CUST00133,68,Other,3,,1,2,5,2,No,Quarterly,13
+CUST00134,18,Other,1,,2,1,4,3,Yes,Quarterly,15
+CUST00135,44,Prefer not to say,3,,2,4,5,4,Yes,Rarely,32
+CUST00136,38,Prefer not to say,1,,4,2,3,1,Yes,Rarely,34
+CUST00137,70,Prefer not to say,2,,5,1,4,5,Maybe,Weekly,43
+CUST00138,33,Female,3,,1,1,5,4,No,Weekly,31
+CUST00139,61,Prefer not to say,1,,1,4,1,1,Yes,Rarely,14
+CUST00140,71,Female,2,,1,5,5,4,No,Rarely,47
+CUST00141,57,Prefer not to say,3,,2,5,3,2,Yes,Weekly,14
+CUST00142,43,Other,4,,4,2,2,3,Yes,Monthly,48
+CUST00143,33,Female,3,,3,2,2,5,Yes,Weekly,29
+CUST00144,45,Male,5,,2,4,5,1,No,Monthly,47
+CUST00145,18,Female,3,,3,2,2,5,Maybe,Monthly,19
+CUST00146,53,Female,5,,4,4,5,5,Yes,Weekly,27
+CUST00147,27,Male,2,,5,1,3,5,Yes,Daily,9
+CUST00148,60,Female,3,,1,2,2,1,Yes,Rarely,37
+CUST00149,34,Other,2,,3,1,1,1,Maybe,Quarterly,37
+CUST00150,74,Prefer not to say,2,,2,3,5,5,No,Weekly,43
+CUST00151,40,Male,1,,3,4,2,3,No,Monthly,28
+CUST00152,24,Prefer not to say,2,4.0,5,3,3,4,No,Weekly,24
+CUST00153,61,Other,2,9.0,1,2,3,5,No,Rarely,28
+CUST00154,70,Male,3,4.0,3,1,1,2,Yes,Monthly,36
+CUST00155,24,Prefer not to say,3,4.0,5,2,3,5,Maybe,Quarterly,18
+CUST00156,61,Prefer not to say,4,9.0,2,3,3,1,Yes,Quarterly,25
+CUST00157,32,Other,1,5.0,4,2,2,4,Maybe,Quarterly,35
+CUST00158,51,Prefer not to say,2,7.0,2,5,5,2,No,Daily,4
+CUST00159,63,Other,1,2.0,1,3,4,4,Maybe,Monthly,14
+CUST00160,62,Female,5,8.0,2,2,3,4,Yes,Monthly,39
+CUST00161,21,Other,2,0.0,2,1,3,2,Yes,Daily,26
+CUST00162,31,Female,1,3.0,2,2,4,5,No,Monthly,8
+CUST00163,31,Male,4,8.0,2,1,3,5,Yes,Daily,24
+CUST00164,33,Prefer not to say,4,7.0,1,5,2,5,Yes,Weekly,16
+CUST00165,24,Other,2,9.0,5,2,2,3,Maybe,Rarely,20
+CUST00166,49,Other,5,8.0,3,5,4,5,Yes,Quarterly,15
+CUST00167,36,Prefer not to say,4,0.0,4,3,3,2,No,Daily,7
+CUST00168,19,Prefer not to say,4,8.0,3,1,3,3,No,Daily,17
+CUST00169,27,Male,5,2.0,3,3,5,5,Yes,Daily,22
+CUST00170,67,Male,1,10.0,4,1,3,3,No,Weekly,22
+CUST00171,34,Other,4,9.0,1,5,2,2,Maybe,Daily,12
+CUST00172,54,Male,3,8.0,4,4,1,5,Maybe,Rarely,18
+CUST00173,29,Female,4,0.0,1,2,1,1,Yes,Rarely,46
+CUST00174,23,Male,1,0.0,3,5,1,2,Yes,Quarterly,47
+CUST00175,39,Male,1,8.0,1,1,1,4,Maybe,Weekly,15
+CUST00176,49,Other,2,10.0,5,1,3,4,No,Rarely,37
+CUST00177,58,Female,3,5.0,4,1,3,2,Yes,Monthly,16
+CUST00178,37,Male,1,3.0,5,1,5,4,Yes,Monthly,5
+CUST00179,18,Female,5,6.0,3,2,3,2,No,Monthly,2
+CUST00180,71,Female,3,4.0,4,3,1,1,Yes,Daily,28
+CUST00181,64,Female,3,9.0,3,4,4,2,No,Daily,41
+CUST00182,70,Prefer not to say,5,6.0,5,2,4,5,No,Monthly,27
+CUST00183,23,Prefer not to say,4,7.0,3,1,2,5,No,Quarterly,31
+CUST00184,36,Prefer not to say,5,7.0,4,2,2,3,No,Quarterly,41
+CUST00185,35,Prefer not to say,5,0.0,4,5,3,4,No,Daily,36
+CUST00186,23,Other,4,7.0,3,1,4,4,Maybe,Monthly,47
+CUST00187,62,Male,4,5.0,4,4,1,2,No,Quarterly,43
+CUST00188,50,Prefer not to say,4,3.0,4,1,1,4,Maybe,Daily,1
+CUST00189,40,Other,4,7.0,3,4,1,5,No,Monthly,29
+CUST00190,40,Male,4,2.0,5,4,3,1,Yes,Weekly,1
+CUST00191,43,Prefer not to say,5,3.0,4,3,3,2,Maybe,Monthly,8
+CUST00192,30,Male,2,5.0,4,3,5,4,Yes,Monthly,16
+CUST00193,24,Prefer not to say,2,10.0,4,2,1,5,No,Rarely,28
+CUST00194,32,Other,1,6.0,4,2,1,3,No,Rarely,22
+CUST00195,61,Female,2,3.0,3,4,3,4,Yes,Weekly,18
+CUST00196,44,Female,2,3.0,5,1,3,1,No,Weekly,22
+CUST00197,43,Male,5,6.0,5,5,5,1,Yes,Monthly,41
+CUST00198,50,Other,4,5.0,1,5,5,4,No,Quarterly,12
+CUST00199,32,Female,4,10.0,4,1,2,4,No,Weekly,19
+CUST00200,53,Prefer not to say,5,7.0,4,1,4,5,Maybe,Monthly,25
+CUST00201,62,Female,2,0.0,1,3,1,4,yes,Daily,5
+CUST00202,72,Male,5,9.0,5,5,1,3,no,Rarely,34
+CUST00203,44,Male,1,10.0,2,4,5,5,yes,Quarterly,39
+CUST00204,74,Other,4,6.0,2,2,5,2,maybe,Monthly,10
+CUST00205,22,Male,3,6.0,5,3,2,3,yes,Daily,47
+CUST00206,19,Female,1,10.0,4,5,4,5,maybe,Rarely,7
+CUST00207,72,Female,1,6.0,2,1,2,5,yes,Daily,37
+CUST00208,50,Female,5,6.0,3,5,4,1,yes,Monthly,47
+CUST00209,33,Female,2,9.0,3,4,1,5,maybe,Weekly,15
+CUST00210,40,Other,4,9.0,1,3,2,3,no,Rarely,42
+CUST00211,55,Prefer not to say,3,7.0,5,1,5,4,no,Daily,24
+CUST00212,72,Prefer not to say,1,8.0,5,4,2,3,No,Weekly,26
+CUST00213,33,Other,3,8.0,2,2,2,2,Yes,Quarterly,26
+CUST00214,31,Male,2,1.0,4,3,1,5,Yes,Monthly,46
+CUST00215,46,Prefer not to say,2,6.0,5,4,5,5,No,Monthly,26
+CUST00216,43,Male,3,6.0,2,4,5,5,Yes,Rarely,10
+CUST00217,52,Prefer not to say,4,3.0,2,1,3,5,Yes,Daily,17
+CUST00218,32,Male,2,8.0,5,2,3,1,No,Quarterly,14
+CUST00219,20,Other,3,7.0,2,4,3,1,Maybe,Rarely,2
+CUST00220,40,Female,1,0.0,1,3,1,4,Yes,Rarely,48
+CUST00221,46,Male,3,1.0,1,4,2,5,Yes,Daily,13
+CUST00222,51,Female,3,1.0,5,5,5,2,Yes,Quarterly,27
+CUST00223,50,Male,5,10.0,4,3,5,4,Yes,Daily,9
+CUST00224,58,Male,2,7.0,1,3,2,5,Maybe,Monthly,7
+CUST00225,58,Male,4,0.0,1,4,5,1,No,Weekly,48
+CUST00226,40,Male,4,3.0,5,1,2,2,Yes,Monthly,10
+CUST00227,24,Male,5,9.0,3,3,1,4,No,Monthly,9
+CUST00228,20,Female,4,4.0,2,5,1,2,Yes,Rarely,22
+CUST00229,49,Male,3,8.0,1,1,1,5,Maybe,Monthly,23
+CUST00230,48,Female,5,6.0,3,1,2,3,No,Quarterly,7
+CUST00231,35,Other,1,7.0,4,1,2,2,Maybe,Monthly,48
+CUST00232,60,Prefer not to say,2,10.0,3,3,4,2,Yes,Quarterly,9
+CUST00233,24,Male,2,8.0,5,1,5,1,Maybe,Daily,27
+CUST00234,58,Prefer not to say,2,6.0,4,4,5,5,Maybe,Rarely,24
+CUST00235,18,Female,3,4.0,4,1,4,2,Yes,Quarterly,29
+CUST00236,31,Other,1,4.0,3,5,4,5,Yes,Monthly,17
+CUST00237,69,Other,5,9.0,5,2,1,1,No,Rarely,20
+CUST00238,49,Other,5,10.0,1,5,4,5,Yes,Rarely,7
+CUST00239,23,Prefer not to say,2,5.0,3,3,2,1,No,Quarterly,43
+CUST00240,56,Female,1,4.0,1,1,3,1,Maybe,Quarterly,40
+CUST00241,27,Male,1,10.0,3,1,2,4,Maybe,Weekly,7
+CUST00242,24,Male,1,8.0,1,4,4,5,No,Weekly,28
+CUST00243,43,Female,4,2.0,3,1,5,3,Yes,Rarely,19
+CUST00244,51,Prefer not to say,4,2.0,4,5,2,4,Yes,Weekly,20
+CUST00245,47,Male,2,6.0,2,3,5,1,Maybe,Monthly,44
+CUST00246,53,Female,1,6.0,4,2,2,3,No,Daily,39
+CUST00247,38,Male,1,5.0,1,1,5,2,Maybe,Rarely,40
+CUST00248,34,Other,5,2.0,5,2,2,2,Maybe,Daily,7
+CUST00249,50,Male,5,6.0,4,1,5,4,Yes,Weekly,6
+CUST00250,27,Prefer not to say,2,4.0,2,3,3,3,No,Quarterly,25
+CUST00251,68,Female,1,6.0,1,5,1,5,Maybe,Rarely,41
+CUST00252,64,Prefer not to say,2,1.0,4,3,2,3,Yes,Weekly,13
+CUST00253,59,Female,5,5.0,3,2,3,4,Maybe,Monthly,39
+CUST00254,68,Other,5,7.0,5,1,1,5,Maybe,Rarely,40
+CUST00255,29,Female,4,0.0,1,2,2,5,Yes,Rarely,22
+CUST00256,73,Male,2,3.0,4,5,3,2,Yes,Quarterly,49
+CUST00257,33,Male,2,10.0,1,3,3,3,No,Rarely,17
+CUST00258,58,Other,1,0.0,3,2,3,5,Maybe,Quarterly,48
+CUST00259,49,Female,1,0.0,2,2,4,4,No,Weekly,22
+CUST00260,32,Other,4,9.0,4,5,5,2,Yes,Monthly,34
+CUST00261,44,Male,3,10.0,1,1,1,5,Yes,Monthly,8
+CUST00262,45,Prefer not to say,3,7.0,1,2,5,3,Maybe,Rarely,49
+CUST00263,34,Other,3,6.0,1,5,5,2,No,Rarely,45
+CUST00264,63,Prefer not to say,2,9.0,2,1,5,3,No,Weekly,18
+CUST00265,67,Prefer not to say,2,0.0,1,1,3,3,Maybe,Quarterly,24
+CUST00266,19,Female,5,10.0,5,3,5,3,Maybe,Monthly,42
+CUST00267,53,Other,2,1.0,5,5,4,2,No,Quarterly,2
+CUST00268,67,Prefer not to say,2,3.0,1,1,2,5,Yes,Weekly,2
+CUST00269,24,Prefer not to say,2,0.0,5,3,3,1,Yes,Monthly,27
+CUST00270,30,Female,4,2.0,4,4,1,5,Maybe,Monthly,14
+CUST00271,32,Female,2,7.0,5,5,2,2,No,Daily,48
+CUST00272,42,Male,1,7.0,1,4,2,1,No,Weekly,39
+CUST00273,40,Prefer not to say,1,7.0,3,1,2,1,No,Weekly,12
+CUST00274,39,Male,5,5.0,4,5,5,1,Yes,Daily,32
+CUST00275,43,Prefer not to say,4,5.0,2,3,5,4,Yes,Quarterly,28
+CUST00276,50,Male,1,4.0,1,1,3,2,No,Daily,28
+CUST00277,28,Female,4,8.0,2,5,5,4,No,Weekly,46
+CUST00278,27,Other,4,3.0,3,5,5,1,Maybe,Quarterly,25
+CUST00279,42,Female,5,9.0,2,4,5,4,Maybe,Monthly,4
+CUST00280,54,Male,4,6.0,1,1,3,4,No,Daily,26
+CUST00281,65,Male,2,0.0,1,3,3,2,No,Quarterly,36
+CUST00282,60,Other,4,8.0,3,3,4,3,Yes,Quarterly,3
+CUST00283,70,Prefer not to say,5,6.0,1,1,4,4,No,Quarterly,1
+CUST00284,55,Male,5,9.0,3,1,4,4,Maybe,Daily,17
+CUST00285,58,Male,5,8.0,3,2,4,1,Yes,Monthly,7
+CUST00286,62,Male,1,6.0,1,4,2,1,Maybe,Quarterly,48
+CUST00287,41,Other,2,1.0,5,1,2,1,Maybe,Daily,5
+CUST00288,57,Female,1,5.0,3,1,4,5,Yes,Weekly,19
+CUST00289,63,Male,3,9.0,1,2,4,4,Maybe,Daily,39
+CUST00290,73,Other,2,10.0,5,2,1,1,No,Daily,46
+CUST00291,50,Male,4,3.0,3,5,2,2,Maybe,Daily,34
+CUST00292,34,Prefer not to say,5,2.0,5,3,1,5,Yes,Quarterly,35
+CUST00293,41,Other,3,1.0,4,4,1,3,Yes,Daily,49
+CUST00294,54,Male,2,5.0,4,5,5,4,Yes,Weekly,16
+CUST00295,74,Other,1,7.0,5,1,3,4,Maybe,Quarterly,40
+CUST00296,19,Male,5,5.0,3,2,2,2,No,Weekly,47
+CUST00297,49,Female,1,8.0,1,3,4,3,Yes,Rarely,39
+CUST00298,74,Male,2,4.0,2,5,4,3,No,Daily,27
+CUST00299,41,Other,2,1.0,1,3,3,5,Yes,Quarterly,41
+CUST00300,26,Prefer not to say,3,7.0,2,2,2,4,No,Quarterly,38
+CUST00301,21,Prefer not to say,4,8.0,2,5,4,1,No,Daily,1888
+CUST00302,34,Prefer not to say,1,9.0,3,5,4,2,No,Monthly,3923
+CUST00303,34,Male,3,3.0,5,3,5,2,Yes,Monthly,3724
+CUST00304,70,Female,5,5.0,1,2,1,2,Maybe,Weekly,1320
+CUST00305,67,Male,4,10.0,5,1,4,2,Maybe,Daily,4957
+CUST00306,65,Prefer not to say,3,9.0,4,5,2,1,Maybe,Daily,3382
+CUST00307,47,Other,1,7.0,3,1,3,1,No,Rarely,36
+CUST00308,57,Prefer not to say,2,8.0,3,2,5,5,Yes,Monthly,4
+CUST00309,28,Other,5,4.0,4,5,2,4,No,Monthly,47
+CUST00310,38,Female,1,5.0,1,5,5,1,Yes,Daily,15
+CUST00311,38,Other,4,10.0,4,1,1,5,No,Weekly,32
+CUST00312,35,Male,4,3.0,1,4,4,3,Yes,Daily,18
+CUST00313,72,Male,2,4.0,2,1,2,4,Yes,Weekly,14
+CUST00314,46,Male,2,6.0,3,1,3,1,Yes,Monthly,1
+CUST00315,41,Other,5,8.0,1,4,1,3,No,Rarely,42
+CUST00316,27,Male,5,9.0,5,2,1,5,Maybe,Quarterly,20
+CUST00317,62,Male,2,10.0,5,2,5,1,No,Monthly,10
+CUST00318,34,Male,2,5.0,3,5,1,1,No,Weekly,10
+CUST00319,35,Female,4,5.0,4,3,2,3,Yes,Daily,24
+CUST00320,59,Other,2,7.0,4,3,5,1,Yes,Monthly,34
+CUST00321,65,Other,3,10.0,1,5,1,2,Maybe,Rarely,28
+CUST00322,37,Prefer not to say,1,3.0,4,3,3,1,Maybe,Weekly,27
+CUST00323,54,Other,2,2.0,3,1,2,4,Yes,Daily,40
+CUST00324,62,Female,5,6.0,1,1,3,3,Maybe,Quarterly,1
+CUST00325,35,Other,3,4.0,2,4,3,4,Maybe,Weekly,33
+CUST00326,34,Female,5,1.0,4,4,5,5,Yes,Daily,4
+CUST00327,26,Female,3,1.0,4,5,4,4,No,Quarterly,7
+CUST00328,31,Other,2,10.0,1,5,5,2,Maybe,Daily,9
+CUST00329,66,Prefer not to say,1,5.0,5,5,2,2,Yes,Quarterly,16
+CUST00330,46,Male,5,7.0,4,1,2,4,Maybe,Quarterly,5
+CUST00331,48,Male,3,0.0,3,3,5,5,Maybe,Quarterly,34
+CUST00332,21,Other,4,10.0,4,5,4,1,Yes,Daily,23
+CUST00333,35,Other,2,5.0,2,5,5,2,Maybe,Quarterly,43
+CUST00334,37,Female,1,1.0,4,1,2,4,Maybe,Weekly,25
+CUST00335,73,Other,2,1.0,5,1,4,4,Maybe,Rarely,13
+CUST00336,73,Female,4,6.0,4,1,2,4,No,Rarely,24
+CUST00337,64,Prefer not to say,1,9.0,1,3,4,1,No,Quarterly,11
+CUST00338,60,Other,4,0.0,4,5,4,3,Maybe,Rarely,17
+CUST00339,61,Male,2,5.0,5,2,5,5,Yes,Rarely,37
+CUST00340,26,Male,3,6.0,1,2,5,3,Maybe,Quarterly,13
+CUST00341,30,Other,2,7.0,3,5,5,5,Maybe,Quarterly,27
+CUST00342,32,Female,2,6.0,1,5,4,5,No,Weekly,20
+CUST00343,44,Male,2,5.0,2,5,4,4,No,Monthly,33
+CUST00344,32,Female,5,8.0,1,5,2,2,No,Daily,42
+CUST00345,45,Other,4,2.0,3,3,3,4,Maybe,Quarterly,32
+CUST00346,54,Other,4,10.0,4,2,5,1,Maybe,Quarterly,8
+CUST00347,72,Male,4,5.0,1,4,2,5,Yes,Rarely,29
+CUST00348,36,Other,5,3.0,1,2,2,2,Maybe,Weekly,40
+CUST00349,43,Prefer not to say,3,1.0,1,2,1,5,Maybe,Rarely,19
+CUST00350,69,Prefer not to say,2,0.0,1,1,5,5,No,Quarterly,6
+CUST00351,43,Male,3,0.0,3,5,2,4,No,Quarterly,44
+CUST00352,42,Prefer not to say,5,10.0,5,5,1,2,No,Rarely,39
+CUST00353,43,Female,4,9.0,5,5,5,2,No,Quarterly,48
+CUST00354,43,Male,2,2.0,1,1,4,5,No,Monthly,41
+CUST00355,63,Male,1,3.0,3,3,1,2,Yes,Daily,21
+CUST00356,45,Female,1,1.0,3,3,4,2,Yes,Daily,22
+CUST00357,66,Prefer not to say,3,10.0,1,4,3,4,Yes,Daily,42
+CUST00358,35,Prefer not to say,4,10.0,2,3,3,3,No,Monthly,10
+CUST00359,49,Prefer not to say,1,10.0,1,3,3,1,No,Quarterly,10
+CUST00360,70,Male,3,0.0,2,5,3,3,No,Rarely,29
+CUST00361,20,Male,5,3.0,1,2,2,2,Yes,Weekly,16
+CUST00362,19,Prefer not to say,3,6.0,2,3,3,5,No,Quarterly,1
+CUST00363,50,Other,3,9.0,2,3,2,1,Yes,Monthly,17
+CUST00364,59,Prefer not to say,3,10.0,1,1,2,1,No,Monthly,30
+CUST00365,36,Female,2,5.0,2,4,5,5,Maybe,Daily,26
+CUST00366,34,Male,3,5.0,4,1,2,1,Yes,Quarterly,46
+CUST00367,61,Female,3,10.0,5,5,2,5,Maybe,Daily,19
+CUST00368,50,Female,2,8.0,3,2,3,1,Yes,Weekly,21
+CUST00369,29,Male,2,1.0,2,4,2,3,No,Daily,17
+CUST00370,66,Other,5,3.0,2,1,4,1,No,Weekly,46
+CUST00371,73,Prefer not to say,4,4.0,3,3,3,4,Maybe,Monthly,40
+CUST00372,20,Female,1,0.0,2,3,1,5,No,Daily,21
+CUST00373,60,Male,1,7.0,3,4,3,1,Yes,Daily,41
+CUST00374,66,Female,3,7.0,1,3,2,5,No,Rarely,40
+CUST00375,72,Prefer not to say,5,5.0,4,1,4,4,No,Monthly,45
+CUST00376,43,Other,3,4.0,4,1,3,1,Yes,Rarely,49
+CUST00377,52,Other,1,7.0,5,3,4,1,Maybe,Weekly,19
+CUST00378,25,Other,2,2.0,2,3,1,4,Maybe,Weekly,7
+CUST00379,69,Male,4,2.0,5,5,1,4,No,Monthly,17
+CUST00380,53,Male,5,1.0,1,2,5,4,Yes,Weekly,1
+CUST00381,70,Other,2,4.0,4,4,5,5,Maybe,Monthly,37
+CUST00382,71,Prefer not to say,4,2.0,1,1,3,4,Maybe,Weekly,6
+CUST00383,24,Prefer not to say,5,2.0,1,4,5,5,No,Quarterly,26
+CUST00384,63,Male,5,5.0,2,5,4,3,Yes,Daily,2
+CUST00385,63,Other,1,7.0,1,1,5,1,Maybe,Quarterly,32
+CUST00386,53,Prefer not to say,2,1.0,4,5,4,1,No,Monthly,48
+CUST00387,33,Prefer not to say,5,3.0,5,5,5,2,No,Monthly,5
+CUST00388,41,Prefer not to say,5,10.0,4,3,5,3,No,Quarterly,37
+CUST00389,71,Male,4,6.0,2,4,5,4,No,Daily,31
+CUST00390,18,Other,1,0.0,4,4,2,4,Maybe,Daily,12
+CUST00391,66,Female,3,0.0,3,3,2,3,Yes,Rarely,35
+CUST00392,42,Other,1,9.0,5,4,5,4,No,Weekly,30
+CUST00393,27,Other,3,6.0,3,3,4,2,No,Rarely,48
+CUST00394,71,Male,2,6.0,3,1,3,5,Maybe,Daily,6
+CUST00395,33,Prefer not to say,2,0.0,2,5,1,1,No,Quarterly,15
+CUST00396,33,Prefer not to say,5,0.0,1,5,2,3,No,Weekly,15
+CUST00397,25,Male,2,3.0,3,4,5,1,Yes,Quarterly,16
+CUST00398,46,Male,5,4.0,4,2,1,5,No,Rarely,20
+CUST00399,56,Male,1,4.0,1,5,2,3,Maybe,Monthly,13
+CUST00400,45,Male,2,3.0,4,3,3,5,Yes,Quarterly,44
+CUST00401,23,Male,1,7.0,4,2,4,4,Maybe,Rarely,42
+CUST00402,33,Female,1,6.0,1,2,5,4,Yes,Rarely,46
+CUST00403,37,Other,2,8.0,1,5,3,4,Yes,Rarely,31
+CUST00404,33,Other,1,6.0,4,5,2,5,No,Monthly,34
+CUST00405,24,Other,2,9.0,2,5,5,5,No,Monthly,29
+CUST00406,58,Prefer not to say,2,0.0,5,3,1,5,No,Monthly,3
+CUST00407,31,Female,2,6.0,5,2,4,1,Maybe,Weekly,9
+CUST00408,60,Other,3,0.0,2,4,2,5,No,Monthly,11
+CUST00409,43,Prefer not to say,1,6.0,1,3,4,4,No,Monthly,11
+CUST00410,43,Female,4,9.0,4,1,5,2,Yes,Monthly,25
+CUST00411,31,Female,2,7.0,5,5,3,5,No,Quarterly,22
+CUST00412,24,Prefer not to say,1,10.0,4,2,4,2,No,Monthly,42
+CUST00413,50,Female,5,8.0,2,3,1,4,No,Weekly,46
+CUST00414,43,Prefer not to say,2,2.0,4,1,2,5,No,Rarely,9
+CUST00415,74,Other,2,3.0,2,3,1,1,Yes,Quarterly,20
+CUST00416,62,Prefer not to say,4,3.0,1,3,4,1,No,Daily,21
+CUST00417,37,Female,3,8.0,2,4,3,2,Yes,Monthly,10
+CUST00418,20,Other,3,6.0,2,4,3,1,Maybe,Rarely,22
+CUST00419,69,Other,2,2.0,5,3,1,1,No,Rarely,29
+CUST00420,21,Male,1,9.0,4,1,5,1,No,Quarterly,9
+CUST00421,43,Male,5,4.0,5,2,5,4,No,Daily,5
+CUST00422,28,Female,5,6.0,3,2,3,1,Yes,Weekly,40
+CUST00423,19,Prefer not to say,1,7.0,2,5,1,3,No,Rarely,11
+CUST00424,31,Prefer not to say,2,0.0,3,5,1,5,No,Rarely,1
+CUST00425,61,Female,5,1.0,5,2,1,1,Maybe,Rarely,42
+CUST00426,47,Other,3,6.0,4,3,4,1,Yes,Rarely,1
+CUST00427,66,Female,1,10.0,5,3,5,1,Yes,Quarterly,39
+CUST00428,29,Female,4,1.0,4,4,5,3,Maybe,Daily,46
+CUST00429,43,Other,2,6.0,4,4,4,1,Yes,Rarely,5
+CUST00430,61,Prefer not to say,1,8.0,1,5,2,1,No,Weekly,49
+CUST00431,50,Female,5,10.0,2,2,4,5,No,Weekly,22
+CUST00432,30,Prefer not to say,2,1.0,5,3,1,3,Maybe,Monthly,26
+CUST00433,31,Female,3,6.0,4,2,4,3,Yes,Rarely,6
+CUST00434,41,Other,2,3.0,5,1,1,1,Yes,Rarely,32
+CUST00435,51,Other,2,10.0,5,2,3,3,Yes,Rarely,48
+CUST00436,61,Male,3,1.0,4,1,1,2,Maybe,Rarely,11
+CUST00437,43,Other,3,6.0,3,4,5,3,No,Rarely,10
+CUST00438,38,Male,2,4.0,2,4,4,3,Maybe,Weekly,47
+CUST00439,45,Female,3,0.0,2,5,1,3,No,Daily,39
+CUST00440,65,Prefer not to say,1,4.0,1,2,2,4,Maybe,Daily,34
+CUST00441,53,Other,3,2.0,1,2,3,4,No,Monthly,31
+CUST00442,57,Other,3,6.0,1,1,2,4,Yes,Weekly,12
+CUST00443,19,Other,2,5.0,2,4,2,3,Yes,Rarely,44
+CUST00444,59,Female,1,7.0,3,1,2,2,Yes,Daily,16
+CUST00445,26,Male,4,4.0,2,4,3,3,Maybe,Quarterly,38
+CUST00446,40,Female,4,1.0,2,1,3,1,Maybe,Quarterly,3
+CUST00447,32,Prefer not to say,5,8.0,2,4,3,2,Maybe,Quarterly,2
+CUST00448,30,Female,3,10.0,2,1,3,4,Yes,Rarely,5
+CUST00449,40,Prefer not to say,3,7.0,3,4,2,5,No,Rarely,11
+CUST00450,34,Other,1,5.0,1,1,5,2,Yes,Monthly,25
+CUST00451,65,Prefer not to say,4,9.0,5,2,5,4,Yes,Monthly,35
+CUST00452,19,Prefer not to say,5,6.0,1,5,3,2,No,Monthly,35
+CUST00453,37,Male,1,8.0,1,1,4,2,No,Quarterly,22
+CUST00454,37,Prefer not to say,3,6.0,5,5,1,3,No,Rarely,37
+CUST00455,63,Prefer not to say,4,2.0,2,2,4,1,No,Quarterly,22
+CUST00456,20,Female,5,5.0,3,2,4,5,Yes,Monthly,11
+CUST00457,72,Other,2,10.0,3,4,4,4,Maybe,Rarely,32
+CUST00458,29,Female,4,10.0,1,5,5,2,Yes,Weekly,35
+CUST00459,57,Female,5,6.0,5,3,1,5,No,Daily,31
+CUST00460,19,Other,1,1.0,4,4,4,2,Maybe,Daily,45
+CUST00461,53,Other,2,2.0,2,5,3,1,Maybe,Monthly,8
+CUST00462,31,Prefer not to say,5,3.0,1,1,5,5,Yes,Quarterly,20
+CUST00463,33,Prefer not to say,5,9.0,3,1,3,4,Yes,Weekly,42
+CUST00464,36,Male,3,5.0,5,2,3,2,Yes,Rarely,34
+CUST00465,51,Female,4,0.0,5,3,4,1,Maybe,Quarterly,4
+CUST00466,61,Other,3,8.0,1,1,3,5,Maybe,Monthly,18
+CUST00467,63,Prefer not to say,2,4.0,4,5,1,2,Maybe,Quarterly,4
+CUST00468,23,Other,5,6.0,3,5,3,2,No,Monthly,20
+CUST00469,30,Prefer not to say,3,8.0,1,1,4,4,No,Daily,9
+CUST00470,53,Male,4,8.0,4,5,3,1,Yes,Daily,16
+CUST00471,39,Male,2,0.0,5,5,5,3,Maybe,Quarterly,26
+CUST00472,35,Other,1,0.0,2,2,5,2,Yes,Weekly,38
+CUST00473,29,Male,3,2.0,3,3,5,5,Maybe,Rarely,25
+CUST00474,69,Other,2,5.0,3,2,2,4,Yes,Monthly,4
+CUST00475,71,Prefer not to say,1,1.0,4,3,5,4,No,Rarely,41
+CUST00476,47,Female,3,9.0,1,5,5,2,Maybe,Daily,45
+CUST00477,70,Male,2,10.0,5,3,2,2,No,Weekly,41
+CUST00478,68,Prefer not to say,2,0.0,4,5,5,2,Maybe,Weekly,38
+CUST00479,57,Female,3,0.0,2,5,4,3,Yes,Rarely,19
+CUST00480,24,Female,2,4.0,2,2,5,2,Maybe,Daily,14
+CUST00481,49,Female,5,3.0,2,2,5,1,No,Rarely,21
+CUST00482,65,Prefer not to say,3,0.0,4,4,2,5,Maybe,Quarterly,15
+CUST00483,36,Prefer not to say,2,3.0,5,1,4,2,Yes,Weekly,3
+CUST00484,23,Other,1,2.0,3,4,3,3,Maybe,Weekly,37
+CUST00485,37,Female,1,1.0,1,4,1,5,No,Quarterly,46
+CUST00486,44,Female,5,8.0,3,3,4,4,Yes,Daily,16
+CUST00487,70,Female,3,10.0,5,5,3,2,No,Weekly,14
+CUST00488,60,Other,2,0.0,3,5,4,5,Maybe,Monthly,9
+CUST00489,54,Female,2,6.0,4,5,3,4,No,Monthly,47
+CUST00490,65,Prefer not to say,1,3.0,2,1,3,3,Maybe,Daily,7
+CUST00491,24,Female,5,4.0,5,3,4,1,Yes,Quarterly,14
+CUST00492,22,Male,1,9.0,5,3,2,2,No,Rarely,6
+CUST00493,28,Prefer not to say,1,4.0,3,5,4,1,No,Daily,21
+CUST00494,32,Other,5,0.0,4,4,4,3,Maybe,Rarely,15
+CUST00495,20,Female,3,5.0,3,1,3,5,No,Daily,8
+CUST00496,22,Male,2,8.0,3,4,1,5,No,Monthly,34
+CUST00497,40,Other,3,1.0,5,2,3,3,Yes,Quarterly,40
+CUST00498,70,Other,4,6.0,3,3,5,3,Maybe,Monthly,1
+CUST00499,54,Prefer not to say,4,5.0,2,3,4,2,Maybe,Quarterly,32
+CUST00500,26,Other,4,4.0,3,4,4,4,Yes,Rarely,49
+CUST00501,32,Other,5,3.0,2,1,2,1,Yes,Daily,5
+CUST00502,20,Other,1,3.0,5,3,3,1,Maybe,Weekly,30
+CUST00503,46,Other,3,5.0,4,4,2,5,Yes,Weekly,22
+CUST00504,23,Female,2,3.0,2,1,4,5,Yes,Quarterly,20
+CUST00505,34,Female,4,4.0,4,4,3,2,Yes,Quarterly,16
+CUST00506,43,Female,3,5.0,4,1,3,3,Maybe,Monthly,7
+CUST00507,38,Female,4,4.0,2,5,5,1,Yes,Weekly,7
+CUST00508,25,Male,4,6.0,5,1,5,2,No,Monthly,2
+CUST00509,38,Female,2,8.0,1,2,1,5,No,Rarely,47
+CUST00510,74,Other,5,9.0,4,5,5,5,Maybe,Weekly,14
+CUST00511,28,Female,1,6.0,4,4,3,1,Yes,Rarely,31
+CUST00512,55,Female,5,6.0,5,5,5,5,No,Daily,41
+CUST00513,25,Prefer not to say,3,3.0,5,5,1,5,Maybe,Monthly,14
+CUST00514,59,Other,5,0.0,3,4,4,4,No,Quarterly,5
+CUST00515,41,Female,3,7.0,5,4,5,3,Yes,Weekly,11
+CUST00516,52,Female,3,3.0,4,2,3,5,Maybe,Monthly,40
+CUST00517,72,Female,1,0.0,2,4,4,4,No,Quarterly,5
+CUST00518,31,Male,2,4.0,1,3,3,2,Maybe,Daily,29
+CUST00519,72,Female,1,7.0,3,3,4,5,No,Weekly,11
+CUST00520,31,Prefer not to say,5,3.0,2,2,3,2,No,Rarely,5
+CUST00521,27,Other,3,7.0,1,1,5,5,Yes,Daily,49
+CUST00522,29,Other,4,7.0,1,1,5,1,Yes,Quarterly,32
+CUST00523,55,Female,4,2.0,1,3,1,4,No,Weekly,36
+CUST00524,61,Female,3,8.0,2,4,4,4,Maybe,Weekly,15
+CUST00525,72,Female,1,2.0,3,2,1,1,Maybe,Daily,19
+CUST00526,63,Other,2,0.0,3,1,2,3,Yes,Weekly,22
+CUST00527,51,Other,1,1.0,1,1,5,4,No,Quarterly,34
+CUST00528,58,Male,3,5.0,2,5,4,2,Yes,Daily,17
+CUST00529,27,Prefer not to say,3,9.0,1,3,1,4,No,Rarely,12
+CUST00530,34,Male,2,1.0,5,4,1,3,No,Daily,25
+CUST00531,34,Prefer not to say,5,5.0,3,2,2,2,Yes,Daily,17
+CUST00532,20,Male,5,0.0,4,1,1,2,Maybe,Rarely,10
+CUST00533,48,Other,2,10.0,1,5,3,1,Yes,Quarterly,28
+CUST00534,68,Male,5,0.0,5,3,5,5,No,Monthly,18
+CUST00535,18,Prefer not to say,4,4.0,3,3,1,1,Yes,Monthly,18
+CUST00536,29,Female,5,9.0,2,2,1,5,Maybe,Rarely,45
+CUST00537,56,Prefer not to say,5,10.0,3,1,2,1,Maybe,Quarterly,32
+CUST00538,21,Female,5,8.0,2,2,3,5,No,Weekly,14
+CUST00539,59,Other,4,7.0,2,2,1,4,Yes,Rarely,16
+CUST00540,30,Prefer not to say,5,2.0,1,5,5,2,Maybe,Monthly,18
+CUST00541,51,Male,4,2.0,1,3,5,5,Yes,Quarterly,16
+CUST00542,59,Prefer not to say,2,0.0,3,4,1,4,Maybe,Daily,17
+CUST00543,38,Female,1,2.0,5,3,3,3,No,Quarterly,7
+CUST00544,39,Other,2,10.0,3,3,5,1,No,Quarterly,12
+CUST00545,74,Male,1,0.0,4,5,5,3,Yes,Monthly,34
+CUST00546,21,Prefer not to say,2,7.0,2,4,3,4,No,Monthly,10
+CUST00547,35,Female,1,0.0,2,1,3,3,Maybe,Weekly,5
+CUST00548,22,Male,1,4.0,1,4,1,3,No,Weekly,21
+CUST00549,36,Other,3,8.0,5,1,4,4,Maybe,Rarely,3
+CUST00550,19,Male,1,6.0,1,4,2,2,Maybe,Daily,19
+CUST00551,29,Other,1,3.0,4,2,4,5,No,Weekly,45
+CUST00552,34,Male,3,10.0,3,4,4,1,Maybe,Monthly,44
+CUST00553,27,Prefer not to say,5,8.0,3,5,5,5,Maybe,Quarterly,35
+CUST00554,51,Female,5,8.0,5,1,3,1,Yes,Rarely,6
+CUST00555,23,Prefer not to say,3,1.0,1,3,5,5,Yes,Weekly,14
+CUST00556,25,Prefer not to say,4,9.0,1,5,2,3,Yes,Quarterly,4
+CUST00557,68,Other,1,9.0,4,1,1,2,No,Quarterly,45
+CUST00558,28,Other,1,10.0,3,1,2,3,Yes,Weekly,18
+CUST00559,74,Other,3,5.0,1,3,5,2,Maybe,Daily,29
+CUST00560,29,Prefer not to say,3,3.0,5,2,5,4,No,Daily,35
+CUST00561,26,Male,4,7.0,3,5,5,1,No,Rarely,38
+CUST00562,19,Male,5,10.0,4,3,5,1,No,Daily,16
+CUST00563,25,Prefer not to say,2,6.0,5,3,4,4,No,Rarely,20
+CUST00564,28,Prefer not to say,5,6.0,2,2,1,5,Maybe,Monthly,24
+CUST00565,70,Female,1,10.0,4,5,4,4,Maybe,Weekly,35
+CUST00566,53,Other,3,9.0,5,3,5,4,Yes,Quarterly,44
+CUST00567,27,Other,4,8.0,1,2,3,2,No,Rarely,19
+CUST00568,38,Prefer not to say,5,4.0,2,5,4,4,Yes,Daily,4
+CUST00569,37,Prefer not to say,4,5.0,4,4,5,1,Maybe,Rarely,33
+CUST00570,65,Male,5,0.0,1,1,5,3,No,Rarely,2
+CUST00571,25,Prefer not to say,1,5.0,2,2,1,2,Maybe,Daily,13
+CUST00572,53,Male,2,1.0,3,1,2,2,Yes,Daily,45
+CUST00573,46,Prefer not to say,4,5.0,1,4,4,5,Maybe,Weekly,30
+CUST00574,59,Female,4,8.0,5,3,4,3,No,Quarterly,34
+CUST00575,29,Female,2,7.0,4,3,4,2,No,Weekly,30
+CUST00576,31,Male,4,8.0,2,5,5,4,Yes,Weekly,24
+CUST00577,65,Other,4,9.0,1,2,1,2,No,Daily,48
+CUST00578,71,Female,5,7.0,3,2,5,2,Maybe,Daily,44
+CUST00579,67,Male,5,2.0,4,5,5,2,Maybe,Quarterly,33
+CUST00580,38,Prefer not to say,2,7.0,4,1,3,5,Maybe,Rarely,41
+CUST00581,39,Prefer not to say,1,5.0,1,3,1,2,Maybe,Weekly,49
+CUST00582,38,Male,4,5.0,3,3,4,2,Yes,Quarterly,10
+CUST00583,61,Other,1,5.0,2,2,2,5,Maybe,Weekly,18
+CUST00584,67,Male,2,2.0,1,2,4,3,Yes,Rarely,19
+CUST00585,47,Male,2,9.0,2,5,5,1,Maybe,Weekly,7
+CUST00586,56,Female,5,0.0,4,4,1,5,Yes,Monthly,19
+CUST00587,37,Male,4,3.0,2,1,1,5,Maybe,Quarterly,24
+CUST00588,41,Male,3,9.0,3,4,1,2,Maybe,Daily,15
+CUST00589,40,Prefer not to say,2,5.0,5,4,3,2,Yes,Weekly,41
+CUST00590,24,Female,4,10.0,3,2,4,1,No,Quarterly,42
+CUST00591,26,Prefer not to say,1,9.0,2,2,3,2,No,Quarterly,23
+CUST00592,18,Prefer not to say,5,1.0,1,2,2,4,No,Weekly,4
+CUST00593,43,Other,1,6.0,4,4,5,2,Yes,Daily,38
+CUST00594,55,Other,2,6.0,5,1,3,2,No,Daily,4
+CUST00595,55,Female,2,10.0,1,2,3,4,No,Weekly,5
+CUST00596,71,Female,1,3.0,1,3,5,1,Yes,Quarterly,41
+CUST00597,61,Other,2,3.0,3,1,1,4,No,Daily,44
+CUST00598,39,Other,4,0.0,2,3,5,5,No,Weekly,23
+CUST00599,61,Other,2,1.0,3,1,4,4,No,Weekly,40
+CUST00600,27,Other,5,8.0,2,2,5,3,Yes,Weekly,37
+CUST00601,72,Other,4,9.0,3,5,1,5,Yes,Quarterly,11
+CUST00602,23,Prefer not to say,3,7.0,1,2,5,2,No,Daily,11
+CUST00603,34,Female,2,7.0,4,4,3,5,No,Quarterly,13
+CUST00604,68,Prefer not to say,2,8.0,2,4,2,1,Yes,Monthly,14
+CUST00605,67,Prefer not to say,5,6.0,5,1,3,1,No,Daily,8
+CUST00606,55,Male,5,8.0,5,4,2,4,Yes,Quarterly,25
+CUST00607,41,Prefer not to say,1,9.0,1,2,5,5,No,Daily,18
+CUST00608,68,Other,1,1.0,3,3,4,2,Yes,Monthly,44
+CUST00609,27,Other,1,5.0,3,2,5,1,Maybe,Rarely,44
+CUST00610,73,Male,5,2.0,1,1,1,2,Maybe,Weekly,18
+CUST00611,25,Male,1,10.0,5,4,5,3,Yes,Quarterly,10
+CUST00612,38,Male,1,5.0,5,3,2,1,Maybe,Monthly,7
+CUST00613,73,Male,3,2.0,3,5,3,4,No,Monthly,44
+CUST00614,23,Male,1,7.0,2,3,4,3,Yes,Daily,14
+CUST00615,38,Prefer not to say,2,10.0,4,3,5,5,Yes,Daily,15
+CUST00616,74,Male,5,3.0,2,2,5,2,No,Weekly,16
+CUST00617,56,Prefer not to say,4,9.0,5,5,3,1,No,Daily,2
+CUST00618,41,Female,3,5.0,2,1,4,3,Yes,Quarterly,30
+CUST00619,50,Male,5,8.0,4,1,5,3,No,Quarterly,30
+CUST00620,35,Male,5,1.0,2,3,5,1,Yes,Quarterly,18
+CUST00621,73,Prefer not to say,2,1.0,2,3,2,5,No,Rarely,31
+CUST00622,45,Female,1,6.0,2,4,2,5,Yes,Quarterly,44
+CUST00623,74,Prefer not to say,2,1.0,2,5,1,4,No,Daily,48
+CUST00624,69,Prefer not to say,1,1.0,1,3,3,5,No,Daily,13
+CUST00625,49,Male,1,3.0,5,4,4,4,Maybe,Quarterly,20
+CUST00626,29,Other,5,8.0,4,5,5,3,Maybe,Monthly,49
+CUST00627,65,Other,1,7.0,5,1,5,1,Maybe,Monthly,35
+CUST00628,59,Prefer not to say,3,1.0,1,4,1,5,No,Monthly,23
+CUST00629,44,Male,3,7.0,1,5,5,4,Yes,Weekly,42
+CUST00630,27,Female,3,3.0,1,4,3,3,No,Rarely,33
+CUST00631,63,Other,5,1.0,1,3,1,5,Maybe,Quarterly,38
+CUST00632,74,Female,2,10.0,2,2,3,2,No,Weekly,35
+CUST00633,69,Other,4,9.0,5,1,1,3,Maybe,Monthly,36
+CUST00634,59,Male,1,6.0,3,3,5,5,Maybe,Quarterly,20
+CUST00635,49,Prefer not to say,4,5.0,4,3,1,3,Yes,Weekly,3
+CUST00636,59,Female,2,9.0,1,5,2,1,Yes,Daily,8
+CUST00637,43,Female,2,4.0,5,4,4,1,Maybe,Monthly,40
+CUST00638,42,Prefer not to say,5,10.0,1,1,5,1,Maybe,Weekly,32
+CUST00639,28,Female,3,0.0,1,3,4,2,No,Daily,29
+CUST00640,40,Other,3,1.0,1,5,5,1,Maybe,Monthly,7
+CUST00641,51,Prefer not to say,2,7.0,1,1,4,2,No,Rarely,2
+CUST00642,74,Other,5,0.0,1,4,2,1,Maybe,Monthly,21
+CUST00643,69,Other,5,2.0,4,3,4,3,Yes,Rarely,6
+CUST00644,57,Male,1,1.0,5,3,1,5,Yes,Rarely,28
+CUST00645,40,Other,3,4.0,1,3,4,5,Maybe,Rarely,48
+CUST00646,46,Male,2,3.0,1,1,5,1,No,Quarterly,42
+CUST00647,48,Female,4,6.0,1,1,3,5,No,Quarterly,36
+CUST00648,24,Female,3,4.0,1,1,4,1,No,Rarely,32
+CUST00649,57,Male,1,7.0,2,1,4,1,Maybe,Daily,45
+CUST00650,50,Other,5,3.0,2,5,4,4,Maybe,Rarely,42
+CUST00651,38,Prefer not to say,2,5.0,3,2,5,4,Yes,Weekly,46
+CUST00652,19,Prefer not to say,3,3.0,1,5,4,4,Yes,Rarely,9
+CUST00653,35,Male,4,1.0,3,3,5,2,Maybe,Quarterly,11
+CUST00654,64,Female,1,0.0,4,5,5,4,Yes,Quarterly,23
+CUST00655,50,Female,1,0.0,3,4,3,1,No,Weekly,11
+CUST00656,54,Prefer not to say,3,7.0,5,1,1,3,No,Weekly,49
+CUST00657,51,Male,4,3.0,2,4,5,4,Maybe,Monthly,2
+CUST00658,37,Prefer not to say,1,4.0,2,4,2,4,No,Daily,3
+CUST00659,52,Other,2,10.0,1,3,4,3,Maybe,Daily,11
+CUST00660,68,Other,1,7.0,1,1,2,1,No,Daily,35
+CUST00661,67,Male,4,6.0,4,4,4,2,Maybe,Quarterly,15
+CUST00662,71,Male,5,7.0,4,3,3,4,No,Daily,43
+CUST00663,35,Other,5,7.0,5,1,5,3,No,Monthly,11
+CUST00664,63,Female,3,5.0,1,2,1,1,Yes,Monthly,31
+CUST00665,41,Male,4,9.0,1,3,5,5,Yes,Daily,28
+CUST00666,25,Other,1,1.0,4,5,4,2,Yes,Weekly,28
+CUST00667,47,Other,1,5.0,4,1,1,3,Yes,Monthly,32
+CUST00668,61,Female,5,0.0,4,4,5,3,Yes,Weekly,25
+CUST00669,70,Female,5,0.0,2,4,1,3,Yes,Quarterly,20
+CUST00670,27,Female,2,10.0,3,5,4,4,Maybe,Monthly,28
+CUST00671,40,Female,5,2.0,3,5,3,5,Maybe,Weekly,25
+CUST00672,69,Prefer not to say,2,2.0,1,4,3,2,Yes,Daily,11
+CUST00673,66,Female,1,10.0,2,1,5,1,Maybe,Quarterly,19
+CUST00674,28,Prefer not to say,2,4.0,4,3,2,1,Yes,Rarely,28
+CUST00675,19,Male,2,0.0,1,5,4,5,Maybe,Rarely,1
+CUST00676,43,Other,3,9.0,2,5,5,3,No,Daily,5
+CUST00677,53,Prefer not to say,5,5.0,5,5,5,3,Maybe,Quarterly,10
+CUST00678,50,Male,2,6.0,2,2,3,3,Maybe,Quarterly,42
+CUST00679,64,Male,1,9.0,1,1,1,3,Maybe,Quarterly,46
+CUST00680,30,Prefer not to say,4,10.0,3,1,4,3,No,Quarterly,34
+CUST00681,57,Male,2,2.0,4,1,1,5,Yes,Rarely,36
+CUST00682,42,Male,5,3.0,5,1,4,4,Maybe,Weekly,2
+CUST00683,21,Prefer not to say,3,9.0,2,1,2,2,Maybe,Quarterly,18
+CUST00684,59,Male,1,10.0,1,4,3,3,No,Weekly,13
+CUST00685,36,Female,3,9.0,1,5,2,4,Yes,Quarterly,5
+CUST00686,35,Female,4,9.0,4,4,5,1,Maybe,Monthly,20
+CUST00687,54,Other,2,9.0,1,2,3,5,No,Monthly,2
+CUST00688,47,Male,2,9.0,1,3,5,4,Yes,Monthly,11
+CUST00689,36,Other,5,2.0,4,5,2,3,Yes,Quarterly,30
+CUST00690,40,Female,2,0.0,5,2,4,3,Maybe,Weekly,32
+CUST00691,71,Female,1,7.0,3,4,5,3,Maybe,Rarely,32
+CUST00692,33,Female,4,9.0,3,3,1,4,Maybe,Daily,38
+CUST00693,18,Male,3,9.0,2,2,4,3,Maybe,Rarely,28
+CUST00694,29,Male,4,1.0,5,3,4,4,No,Quarterly,10
+CUST00695,41,Female,2,0.0,2,2,2,3,No,Monthly,22
+CUST00696,51,Other,3,7.0,3,4,2,1,Maybe,Monthly,17
+CUST00697,70,Other,5,6.0,4,3,3,1,Yes,Weekly,22
+CUST00698,74,Prefer not to say,4,6.0,1,2,3,2,Maybe,Quarterly,43
+CUST00699,25,Female,3,3.0,3,4,1,3,Yes,Rarely,19
+CUST00700,35,Other,3,10.0,5,5,4,3,Yes,Quarterly,17
+CUST00701,74,Female,3,8.0,3,4,1,4,Yes,Quarterly,24
+CUST00702,65,Other,1,5.0,5,4,1,4,No,Monthly,36
+CUST00703,22,Prefer not to say,4,1.0,5,5,2,3,Yes,Rarely,32
+CUST00704,43,Prefer not to say,3,0.0,5,4,1,2,Yes,Daily,46
+CUST00705,47,Female,4,0.0,2,5,1,3,No,Monthly,36
+CUST00706,71,Other,3,8.0,4,5,5,4,Yes,Rarely,28
+CUST00707,30,Male,5,3.0,3,5,3,3,Yes,Weekly,14
+CUST00708,36,Prefer not to say,5,4.0,4,2,3,4,Maybe,Monthly,36
+CUST00709,46,Female,5,2.0,1,3,4,3,Yes,Weekly,6
+CUST00710,20,Female,2,3.0,3,2,3,5,Yes,Monthly,9
+CUST00711,43,Other,3,7.0,4,5,4,4,Yes,Quarterly,21
+CUST00712,57,Female,2,3.0,4,3,5,2,Yes,Rarely,12
+CUST00713,29,Prefer not to say,4,8.0,1,3,3,5,Yes,Weekly,30
+CUST00714,19,Female,2,8.0,5,5,5,3,No,Monthly,31
+CUST00715,28,Female,4,5.0,3,3,3,4,Yes,Weekly,40
+CUST00716,61,Male,4,1.0,3,3,3,5,Yes,Monthly,4
+CUST00717,45,Male,4,9.0,1,2,5,2,No,Monthly,31
+CUST00718,35,Prefer not to say,2,10.0,5,3,1,4,No,Daily,27
+CUST00719,30,Other,3,6.0,3,5,1,5,Yes,Daily,25
+CUST00720,54,Male,2,8.0,3,1,1,5,Yes,Daily,5
+CUST00721,39,Other,3,5.0,3,1,1,5,Yes,Weekly,6
+CUST00722,29,Prefer not to say,3,2.0,5,1,3,1,Maybe,Quarterly,5
+CUST00723,19,Male,4,6.0,1,5,2,3,Maybe,Monthly,27
+CUST00724,54,Other,2,4.0,3,1,5,4,Yes,Rarely,8
+CUST00725,24,Male,3,0.0,4,2,2,4,No,Daily,9
+CUST00726,43,Prefer not to say,5,2.0,5,5,2,4,Yes,Weekly,15
+CUST00727,43,Prefer not to say,3,4.0,2,5,4,5,No,Weekly,36
+CUST00728,41,Male,5,6.0,1,5,1,3,No,Weekly,41
+CUST00729,29,Other,2,2.0,4,3,3,2,No,Rarely,7
+CUST00730,33,Female,2,5.0,3,3,1,4,Yes,Rarely,32
+CUST00731,40,Female,2,4.0,2,3,1,3,Yes,Daily,8
+CUST00732,57,Male,3,0.0,1,4,2,3,No,Rarely,47
+CUST00733,26,Other,1,9.0,5,2,4,1,Maybe,Daily,15
+CUST00734,49,Female,3,5.0,2,5,1,4,Maybe,Rarely,37
+CUST00735,32,Prefer not to say,3,7.0,2,5,5,5,Maybe,Rarely,19
+CUST00736,54,Other,4,0.0,4,3,5,3,No,Rarely,39
+CUST00737,30,Female,4,1.0,1,5,1,3,Yes,Daily,6
+CUST00738,22,Other,3,3.0,4,5,2,2,No,Monthly,19
+CUST00739,28,Male,5,1.0,4,1,2,1,Maybe,Daily,28
+CUST00740,27,Other,4,10.0,3,5,3,3,Yes,Monthly,17
+CUST00741,69,Female,3,8.0,5,4,4,3,No,Weekly,42
+CUST00742,30,Male,1,9.0,2,3,2,5,No,Weekly,19
+CUST00743,58,Other,5,7.0,1,2,3,5,Maybe,Daily,31
+CUST00744,70,Prefer not to say,2,7.0,5,2,5,2,No,Monthly,11
+CUST00745,63,Female,3,3.0,5,1,5,2,Yes,Monthly,15
+CUST00746,67,Male,3,4.0,1,2,5,2,Maybe,Monthly,10
+CUST00747,32,Other,5,3.0,5,2,1,5,Maybe,Weekly,43
+CUST00748,59,Prefer not to say,4,8.0,3,3,4,5,Yes,Daily,23
+CUST00749,73,Female,4,1.0,5,3,3,1,Maybe,Quarterly,3
+CUST00750,24,Prefer not to say,4,10.0,3,4,4,4,No,Monthly,3
+CUST00751,57,Other,2,7.0,2,1,1,4,No,Monthly,18
+CUST00752,45,Other,5,1.0,2,2,3,1,Maybe,Quarterly,25
+CUST00753,49,Male,5,0.0,4,4,3,4,Yes,Daily,43
+CUST00754,52,Prefer not to say,4,9.0,3,1,2,5,No,Monthly,20
+CUST00755,32,Male,4,2.0,2,2,4,4,Yes,Daily,29
+CUST00756,65,Female,1,8.0,5,2,4,5,No,Monthly,22
+CUST00757,53,Male,1,2.0,1,3,2,1,No,Rarely,15
+CUST00758,38,Female,3,8.0,1,5,5,2,Maybe,Monthly,39
+CUST00759,23,Other,3,6.0,3,1,1,1,Maybe,Rarely,10
+CUST00760,18,Other,5,9.0,4,2,4,4,Yes,Daily,21
+CUST00761,21,Prefer not to say,5,0.0,5,1,2,5,Maybe,Monthly,29
+CUST00762,28,Female,2,9.0,3,4,3,4,No,Weekly,32
+CUST00763,61,Other,2,4.0,1,4,2,4,No,Weekly,10
+CUST00764,43,Prefer not to say,1,8.0,3,5,5,2,Yes,Quarterly,13
+CUST00765,54,Prefer not to say,3,2.0,5,2,1,4,Yes,Weekly,47
+CUST00766,40,Male,1,8.0,2,3,5,2,No,Rarely,23
+CUST00767,46,Prefer not to say,1,4.0,5,2,3,5,Maybe,Weekly,23
+CUST00768,38,Other,3,8.0,2,1,3,5,Maybe,Weekly,31
+CUST00769,65,Male,2,9.0,2,4,3,2,Yes,Weekly,4
+CUST00770,62,Female,3,5.0,2,1,3,1,Yes,Monthly,49
+CUST00771,62,Female,4,8.0,3,5,2,5,No,Quarterly,3
+CUST00772,66,Other,4,6.0,1,4,3,1,No,Daily,21
+CUST00773,44,Other,4,6.0,3,3,3,5,Yes,Quarterly,2
+CUST00774,56,Male,5,7.0,1,4,2,5,No,Rarely,4
+CUST00775,57,Male,2,6.0,5,2,3,3,Yes,Monthly,1
+CUST00776,30,Other,2,8.0,4,2,5,4,Yes,Monthly,15
+CUST00777,40,Other,5,10.0,5,4,5,4,Maybe,Weekly,33
+CUST00778,33,Female,1,8.0,3,5,4,1,Yes,Weekly,6
+CUST00779,47,Female,4,5.0,3,2,5,4,No,Rarely,7
+CUST00780,21,Female,4,6.0,1,2,1,1,Maybe,Monthly,19
+CUST00781,57,Other,1,1.0,3,3,1,5,Maybe,Daily,44
+CUST00782,33,Prefer not to say,3,8.0,2,4,1,3,No,Quarterly,1
+CUST00783,48,Other,3,0.0,3,2,2,3,No,Monthly,39
+CUST00784,70,Other,2,0.0,1,5,5,5,No,Daily,19
+CUST00785,59,Female,5,2.0,1,1,1,2,Yes,Daily,45
+CUST00786,42,Other,2,5.0,2,4,4,2,Maybe,Quarterly,26
+CUST00787,61,Male,3,4.0,1,3,2,4,Yes,Daily,44
+CUST00788,29,Other,1,1.0,4,2,4,1,Yes,Rarely,12
+CUST00789,43,Other,2,8.0,5,5,5,3,Yes,Daily,22
+CUST00790,54,Other,4,9.0,3,4,3,4,Yes,Rarely,13
+CUST00791,65,Other,4,3.0,4,5,4,5,Maybe,Daily,28
+CUST00792,50,Prefer not to say,1,3.0,3,5,3,3,Maybe,Weekly,14
+CUST00793,45,Other,3,4.0,4,3,2,1,Yes,Daily,22
+CUST00794,26,Male,4,7.0,3,4,4,1,No,Rarely,30
+CUST00795,29,Male,4,9.0,2,2,4,2,Maybe,Daily,44
+CUST00796,22,Other,5,3.0,1,3,2,4,Yes,Daily,20
+CUST00797,71,Female,2,4.0,1,2,2,5,No,Daily,44
+CUST00798,69,Prefer not to say,3,3.0,2,1,1,3,No,Rarely,27
+CUST00799,71,Other,2,5.0,4,5,5,1,Yes,Daily,38
+CUST00800,45,Other,3,2.0,5,1,4,3,Maybe,Quarterly,42

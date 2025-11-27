@@ -10,7 +10,11 @@ import numpy as np
 def read_and_clean_files(uploaded_files):
     """
     Reads and cleans uploaded CSV/Excel files.
-    Returns a dict where keys are "filename|sheetname" and values are dicts with cleaned DataFrames and junk logs.
+    Returns a dict where keys are "filename|sheetname" and values are dicts with:
+    - df: cleaned DataFrame
+    - raw_df: original DataFrame before cleaning
+    - junk_log: cleaning operations log
+    - derived_columns: list of auto-generated column names
     """
     all_dfs = {}
     for uploaded_file in uploaded_files:
@@ -18,22 +22,49 @@ def read_and_clean_files(uploaded_files):
             if uploaded_file.name.endswith(".csv"):
                 # Read CSV with error handling for different encodings
                 try:
-                    df = pd.read_csv(uploaded_file, encoding='utf-8')
+                    raw_df = pd.read_csv(uploaded_file, encoding='utf-8')
                 except UnicodeDecodeError:
                     uploaded_file.seek(0)  # Reset file pointer
-                    df = pd.read_csv(uploaded_file, encoding='latin-1')
-                cleaned_df, junk_log = clean_df(df)
-                # Create derived columns for better analysis
+                    raw_df = pd.read_csv(uploaded_file, encoding='latin-1')
+                
+                # Track original columns
+                original_columns = set(raw_df.columns)
+                
+                # Clean and derive
+                cleaned_df, junk_log = clean_df(raw_df)
                 cleaned_df = create_derived_columns(cleaned_df)
-                all_dfs[f"{uploaded_file.name}|Sheet1"] = {"df": cleaned_df, "junk_log": junk_log}
+                
+                # Identify derived columns
+                derived_columns = list(set(cleaned_df.columns) - original_columns)
+                
+                all_dfs[f"{uploaded_file.name}|Sheet1"] = {
+                    "df": cleaned_df,
+                    "raw_df": raw_df,
+                    "junk_log": junk_log,
+                    "derived_columns": derived_columns
+                }
+                
             elif uploaded_file.name.endswith(".xlsx"):
                 xls = pd.ExcelFile(uploaded_file)
                 for sheet in xls.sheet_names:
-                    df = pd.read_excel(xls, sheet_name=sheet)
-                    cleaned_df, junk_log = clean_df(df)
-                    # Create derived columns for better analysis
+                    raw_df = pd.read_excel(xls, sheet_name=sheet)
+                    
+                    # Track original columns
+                    original_columns = set(raw_df.columns)
+                    
+                    # Clean and derive
+                    cleaned_df, junk_log = clean_df(raw_df)
                     cleaned_df = create_derived_columns(cleaned_df)
-                    all_dfs[f"{uploaded_file.name}|{sheet}"] = {"df": cleaned_df, "junk_log": junk_log}
+                    
+                    # Identify derived columns
+                    derived_columns = list(set(cleaned_df.columns) - original_columns)
+                    
+                    all_dfs[f"{uploaded_file.name}|{sheet}"] = {
+                        "df": cleaned_df,
+                        "raw_df": raw_df,
+                        "junk_log": junk_log,
+                        "derived_columns": derived_columns
+                    }
         except Exception as e:
             st.error(f"Failed to process {uploaded_file.name}: {e}")
             # Log the full error for debugging

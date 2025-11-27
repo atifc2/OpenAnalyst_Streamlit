@@ -1,5 +1,5 @@
 # Core
-streamlit==1.33.0
+streamlit==1.50.0
 python-dotenv==1.0.0
 google-generativeai>=0.3.2
 
@@ -10,6 +10,17 @@ openpyxl==3.1.3
 
 # Charts & dashboards
 plotly==5.18.0
+
+# PDF/HTML Export
+kaleido==1.2.0
+reportlab==4.4.5
+
+# Vector Database
+qdrant-client==1.6.9
+
+# Authentication
+streamlit-authenticator==0.3.1
+pyyaml==6.0.1
 
 
 
