@@ -313,9 +313,9 @@ def add_sample_datasets_section():
     st.sidebar.subheader("📚 Sample Datasets")
     
     sample_files = {
-        "🛒 E-commerce Sales": "sample_ecommerce_sales.csv",
-        "😊 Customer Survey": "sample_customer_survey.csv",
-        "💰 Financial Metrics": "sample_financial_metrics.csv"
+        "🛒 E-commerce Sales": "Sample_Datasets/sample_ecommerce_sales.csv",
+        "😊 Customer Survey": "Sample_Datasets/sample_customer_survey.csv",
+        "💰 Financial Metrics": "Sample_Datasets/sample_financial_metrics.csv"
     }
     
     for name, filename in sample_files.items():

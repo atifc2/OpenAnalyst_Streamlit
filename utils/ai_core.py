@@ -16,6 +16,16 @@ except ImportError as e:
     logging.warning(f"Vector DB not available: {e}")
     VECTOR_DB_ENABLED = False
 
+# Import query classifier for cost optimization
+try:
+    from utils.query_classifier import classify_query, QueryClassifier
+    from utils.pandas_executor import PandasExecutor
+    from utils.template_engine import TemplateEngine
+    QUERY_CLASSIFIER_ENABLED = True
+except ImportError as e:
+    logging.warning(f"Query classifier not available: {e}")
+    QUERY_CLASSIFIER_ENABLED = False
+
 def update_ai_stats(response_type='text', input_tokens=0, output_tokens=0, response_time=0, embeddings_created=0):
     """Update AI usage statistics in session state"""
     if 'ai_stats' not in st.session_state:
@@ -244,8 +254,22 @@ class GeminiClient:
 client = GeminiClient()
 
 
-def get_ai_response(profile, history, domain_info=None, user_id=None):
-    """AI response using the centralized system prompt with vector context and domain awareness"""
+def get_ai_response(profile, history, domain_info=None, user_id=None, df=None):
+    """
+    AI response using the centralized system prompt with vector context and domain awareness.
+    
+    NEW: Includes smart query routing for cost optimization!
+    - Simple queries (count, sum, avg) → Execute with Pandas directly (no AI call)
+    - Template queries → Use cached community templates
+    - Complex queries → Route to Gemini AI
+    
+    Args:
+        profile: Data profile dict or JSON string
+        history: Chat message history
+        domain_info: Dict with domain detection info
+        user_id: User ID for personal workspace
+        df: Optional DataFrame for direct Pandas execution (cost savings!)
+    """
     start_time = time.time()  # Track response time
     
     # Extract domain info for vector storage
@@ -253,6 +277,88 @@ def get_ai_response(profile, history, domain_info=None, user_id=None):
     
     # Get user ID for personal workspace (HYBRID MODEL)
     current_user = user_id or 'anonymous'
+    
+    # Get the last user message
+    last_user_message = None
+    if history:
+        for msg in reversed(history):
+            if msg.get("role") == "user":
+                last_user_message = msg.get("content")
+                break
+    
+    # ============= SMART QUERY ROUTING FOR COST OPTIMIZATION =============
+    # Try to handle simple queries with Pandas directly (saves API costs!)
+    if QUERY_CLASSIFIER_ENABLED and df is not None and last_user_message:
+        try:
+            # Get available columns for classification
+            available_columns = df.columns.tolist() if hasattr(df, 'columns') else []
+            
+            # Classify the query
+            classification = classify_query(last_user_message, available_columns, current_domain)
+            
+            if classification.get("query_type") == "simple" and classification.get("confidence", 0) >= 0.8:
+                # Execute with Pandas directly - NO AI CALL NEEDED! 💰
+                logger.info(f"⚡ Simple query detected: '{last_user_message}' → Executing with Pandas")
+                
+                executor = PandasExecutor(df)
+                operation = classification.get("operation")
+                column = classification.get("column")
+                
+                result = executor.execute(operation, column)
+                
+                # Add metadata about cost savings
+                result["_query_type"] = "simple"
+                result["_cost_savings"] = True
+                result["_classification"] = classification
+                
+                # Update AI stats (no AI tokens used!)
+                update_ai_stats(
+                    response_type='text',
+                    input_tokens=0,  # No AI call!
+                    output_tokens=0,
+                    response_time=time.time() - start_time,
+                    embeddings_created=0
+                )
+                
+                logger.info(f"✅ Simple query executed in {time.time() - start_time:.2f}s (no AI call)")
+                return result
+            
+            elif classification.get("query_type") == "template" and classification.get("confidence", 0) >= 0.7:
+                # Execute with Template Engine - Uses community templates! 📚
+                template_key = classification.get("template_key")
+                logger.info(f"📚 Template query detected: '{last_user_message}' → Using template '{template_key}'")
+                
+                engine = TemplateEngine(df)
+                can_execute, missing = engine.can_execute_template(template_key)
+                
+                if can_execute:
+                    result = engine.execute_template(template_key)
+                    
+                    # Add metadata
+                    result["_query_type"] = "template"
+                    result["_cost_savings"] = True
+                    result["_template_key"] = template_key
+                    result["_classification"] = classification
+                    
+                    # Update AI stats (no AI tokens used!)
+                    update_ai_stats(
+                        response_type='visualization' if result.get('is_visualizable') else 'text',
+                        input_tokens=0,
+                        output_tokens=0,
+                        response_time=time.time() - start_time,
+                        embeddings_created=0
+                    )
+                    
+                    logger.info(f"✅ Template executed in {time.time() - start_time:.2f}s (no AI call)")
+                    return result
+                else:
+                    logger.info(f"Template '{template_key}' missing columns: {missing}, falling back to AI")
+                
+        except Exception as e:
+            logger.warning(f"Query classification failed, falling back to AI: {e}")
+            # Fall through to AI processing
+    
+    # ============= COMPLEX QUERY → ROUTE TO AI =============
     
     try:
         # Read the main system prompt from file

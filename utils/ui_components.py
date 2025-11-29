@@ -193,7 +193,7 @@ def render_chat_response(ai_response, active_df, msg_key):
             pin_key = f"pin_canvas_{msg_key}_{hash(str(content) + str(chart_data))}"
             if st.button(f"📌 Add to Canvas", key=pin_key, type="secondary"):
                 add_to_canvas(content, chart_data, active_df)
-                st.success("✅ Added to canvas!")
+                st.toast("📌 Added to Canvas!", icon="✅")
                 st.rerun()
         
         with col2:
@@ -245,7 +245,7 @@ def render_chat_response(ai_response, active_df, msg_key):
         simple_pin_key = f"pin_simple_{msg_key}_{hash(str(ai_response))}"
         if st.button(f"📌 Add to Canvas", key=simple_pin_key, type="secondary"):
             add_to_canvas(str(ai_response), None, active_df)
-            st.success("✅ Added to canvas!")
+            st.toast("📌 Added to Canvas!", icon="✅")
             st.rerun()
 
 def generate_chart_from_insight(insight_text, active_df, msg_key):

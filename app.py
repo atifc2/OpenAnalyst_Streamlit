@@ -310,9 +310,9 @@ if not check_authentication():
         
         # Compact sample data buttons
         sample_datasets = [
-            ("🛒 E-commerce Sales", "sample_ecommerce_sales.csv"),
-            ("📊 Customer Survey", "sample_customer_survey.csv"),
-            ("💰 Financial Metrics", "sample_financial_metrics.csv")
+            ("🛒 E-commerce Sales", "Sample_Datasets/sample_ecommerce_sales.csv"),
+            ("📊 Customer Survey", "Sample_Datasets/sample_customer_survey.csv"),
+            ("💰 Financial Metrics", "Sample_Datasets/sample_financial_metrics.csv")
         ]
         
         for icon_name, filename in sample_datasets:
@@ -374,7 +374,7 @@ with st.sidebar:
 # Initialize vector DB and index sample datasets (only once per session)
 if 'vector_db_initialized' not in st.session_state:
     st.session_state.vector_db_initialized = False
-    st.session_state.vector_db_seeded = False  # Track seeding separately
+    st.session_state.vector_db_seeded = True  # Skip seeding by default - do it lazily
 
 # --- Load Demo Sample if Selected ---
 if 'demo_sample' in st.session_state and st.session_state.demo_sample:
@@ -706,6 +706,19 @@ with st.sidebar:
                 """, unsafe_allow_html=True)
                 
             try:
+                # Archive current chat before clearing (if it has messages)
+                if st.session_state.messages and st.session_state.active_dataset_key:
+                    if "chat_archives" not in st.session_state:
+                        st.session_state.chat_archives = []
+                    
+                    archive = {
+                        "dataset": st.session_state.active_dataset_key,
+                        "messages": st.session_state.messages.copy(),
+                        "archived_at": datetime.datetime.now().strftime("%H:%M:%S"),
+                        "message_count": len(st.session_state.messages)
+                    }
+                    st.session_state.chat_archives.append(archive)
+                
                 st.session_state.messages = []
                 # DON'T clear canvas_items - this keeps them persistent
                 st.session_state.processed_data = read_and_clean_files(tuple(uploaded_files))
@@ -786,17 +799,30 @@ with st.sidebar:
         
         # Detect dataset change
         if selected_dataset != st.session_state.active_dataset_key and st.session_state.messages:
-            st.warning("⚠️ **Switching datasets will clear your chat history** (Canvas is preserved)")
+            st.warning("⚠️ **Switching datasets will archive your chat history** (Canvas is preserved)")
             col1, col2 = st.columns(2)
             with col1:
-                if st.button("✅ Switch & Clear Chat", type="primary", use_container_width=True):
+                if st.button("✅ Switch & Archive Chat", type="primary", use_container_width=True):
+                    # Archive current chat before switching
+                    if st.session_state.messages:
+                        if "chat_archives" not in st.session_state:
+                            st.session_state.chat_archives = []
+                        
+                        archive = {
+                            "dataset": st.session_state.active_dataset_key,
+                            "messages": st.session_state.messages.copy(),
+                            "archived_at": datetime.datetime.now().strftime("%H:%M:%S"),
+                            "message_count": len(st.session_state.messages)
+                        }
+                        st.session_state.chat_archives.append(archive)
+                    
                     # Show switching loading state
                     with st.spinner("🔄 Switching to new dataset..."):
                         st.session_state.active_dataset_key = selected_dataset
                         st.session_state.messages = []
                         st.session_state.previous_dataset_key = selected_dataset
                         time.sleep(0.3)  # Brief visual feedback
-                    st.success(f"✅ Switched to {selected_dataset}")
+                    st.toast(f"📦 Chat archived! Switched to {selected_dataset}", icon="✅")
                     st.rerun()
             with col2:
                 if st.button("❌ Cancel", use_container_width=True):
@@ -815,6 +841,37 @@ with st.sidebar:
         # Visual indicator for active dataset
         st.success(f"**Active:** {st.session_state.active_dataset_key} ✓")
         
+        # Multi-dataset toggles (when multiple datasets loaded)
+        if len(dataset_keys) > 1:
+            with st.expander("🗂️ All Loaded Datasets", expanded=False):
+                st.caption("Toggle datasets to include in analysis context")
+                
+                # Initialize enabled datasets if not exists
+                if "enabled_datasets" not in st.session_state:
+                    st.session_state.enabled_datasets = set(dataset_keys)
+                
+                for ds_key in dataset_keys:
+                    ds_info = st.session_state.processed_data[ds_key]
+                    ds_df = ds_info["df"]
+                    is_active = ds_key == st.session_state.active_dataset_key
+                    
+                    col1, col2 = st.columns([3, 1])
+                    with col1:
+                        enabled = st.checkbox(
+                            f"{'🟢' if is_active else '⚪'} {ds_key}",
+                            value=ds_key in st.session_state.enabled_datasets,
+                            key=f"ds_toggle_{ds_key}",
+                            disabled=is_active  # Can't disable active dataset
+                        )
+                        if enabled:
+                            st.session_state.enabled_datasets.add(ds_key)
+                        else:
+                            st.session_state.enabled_datasets.discard(ds_key)
+                    with col2:
+                        st.caption(f"{ds_df.shape[0]}×{ds_df.shape[1]}")
+                
+                st.caption(f"📊 {len(st.session_state.enabled_datasets)}/{len(dataset_keys)} datasets enabled")
+        
         # Clean data preview
         with st.expander("🔍 Data Preview", expanded=False):
             st.dataframe(active_df.head(10), use_container_width=True)
@@ -827,6 +884,53 @@ with st.sidebar:
             mime="text/csv",
             use_container_width=True
         )
+        
+        # Chat Archives UI
+        if st.session_state.get("chat_archives"):
+            with st.expander(f"📦 Chat Archives ({len(st.session_state.chat_archives)})", expanded=False):
+                st.caption("Previous chat sessions are saved here")
+                
+                for i, archive in enumerate(reversed(st.session_state.chat_archives)):
+                    with st.container():
+                        st.markdown(f"""
+                        <div style='
+                            background: rgba(255,255,255,0.05);
+                            border-radius: 6px;
+                            padding: 8px 10px;
+                            margin-bottom: 8px;
+                            border-left: 3px solid #666;
+                        '>
+                            <div style='font-size: 12px; color: #808080;'>
+                                📁 {archive['dataset'][:25]}{'...' if len(archive['dataset']) > 25 else ''}
+                            </div>
+                            <div style='font-size: 11px; color: #606060;'>
+                                💬 {archive['message_count']} messages • ⏰ {archive['archived_at']}
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            if st.button("👁️ View", key=f"view_archive_{i}", use_container_width=True):
+                                st.session_state[f"show_archive_{i}"] = True
+                        with col2:
+                            if st.button("🗑️", key=f"del_archive_{i}", use_container_width=True):
+                                actual_idx = len(st.session_state.chat_archives) - 1 - i
+                                st.session_state.chat_archives.pop(actual_idx)
+                                st.rerun()
+                        
+                        # Show archive content if expanded
+                        if st.session_state.get(f"show_archive_{i}"):
+                            st.divider()
+                            for msg in archive['messages'][:5]:  # Show first 5 messages
+                                role_icon = "👤" if msg['role'] == 'user' else "🤖"
+                                content_preview = str(msg.get('content', ''))[:100]
+                                st.caption(f"{role_icon} {content_preview}...")
+                            if len(archive['messages']) > 5:
+                                st.caption(f"... and {len(archive['messages']) - 5} more messages")
+                            if st.button("Hide", key=f"hide_archive_{i}"):
+                                st.session_state[f"show_archive_{i}"] = False
+                                st.rerun()
     
     # Add sample datasets section
     add_sample_datasets_section()
@@ -954,7 +1058,10 @@ else:
     '>
         🚀 OpenAnalyst Workshop
     </h1>
-    <p style='color: #808080; margin-bottom: 20px;'>Your AI-powered data analysis workspace with Advanced RAG</p>
+    <p style='color: #808080; margin-bottom: 8px;'>Your AI-powered data analysis workspace with Advanced RAG</p>
+    <p style='color: #a0a0a0; font-size: 13px; margin-bottom: 20px;'>
+        � <em>Try: "Predict next month's sales" • "Forecast revenue" • "Compare regions" • "What drives growth?"</em>
+    </p>
     """, unsafe_allow_html=True)
     
     if not st.session_state.active_dataset_key:
@@ -978,17 +1085,19 @@ else:
             st.warning("Selected dataset is not available. Please check your upload.")
             st.stop()
         
-        # Tab-based layout
-        tab1, tab2, tab3, tab4 = st.tabs(["💬 Chat & Analysis", "📊 Data Preview", "📌 Canvas", "🤖 AI Stats"])
+        # Tab-based layout with dynamic canvas count
+        canvas_count = len(st.session_state.get("canvas_items", []))
+        canvas_label = f"📌 Canvas ({canvas_count})" if canvas_count > 0 else "📌 Canvas"
+        tab1, tab2, tab3, tab4 = st.tabs(["💬 Chat & Analysis", "📊 Data Preview", canvas_label, "🤖 AI Stats"])
         
         with tab1:
-            # Chat & Analysis Tab - Netflix styled header
+            # Chat & Analysis Tab - Clean Netflix styled header
             st.markdown("""
             <div style='
                 background: linear-gradient(135deg, #E50914 0%, #B20710 100%);
                 padding: 15px 20px;
                 border-radius: 8px;
-                margin-bottom: 15px;
+                margin-bottom: 8px;
                 display: flex;
                 align-items: center;
                 gap: 12px;
@@ -1048,9 +1157,10 @@ else:
                             history = st.session_state.messages
                             
                             # Pass domain info and user_id to AI (HYBRID MODEL!)
+                            # Also pass df for smart query routing (cost optimization!)
                             domain_info = st.session_state.get('current_domain_info', {})
                             current_user_id = st.session_state.get('username', 'anonymous')
-                            ai_response = get_ai_response(profile, history, domain_info=domain_info, user_id=current_user_id)
+                            ai_response = get_ai_response(profile, history, domain_info=domain_info, user_id=current_user_id, df=active_df)
                             
                             if not isinstance(ai_response, dict):
                                 ai_response = {"content": str(ai_response), "suggested_actions": []}
