@@ -162,16 +162,26 @@ def render_chat_response(ai_response, active_df, msg_key):
         chart_data = None
         chart_created = False
         
+        # Determine the DataFrame to use for charting
+        # Priority: executed result > original DataFrame
+        chart_df = active_df
+        if ai_response.get("_execution_success") and ai_response.get("_result_data"):
+            # Use the AI-executed result DataFrame for charting
+            import pandas as pd
+            chart_df = pd.DataFrame(ai_response["_result_data"])
+            import logging
+            logging.getLogger(__name__).info(f"Using AI-executed result DataFrame: {len(chart_df)} rows")
+        
         if ai_response.get("is_visualizable") and ai_response.get("chart_data"):
             chart_data = ai_response["chart_data"]
             
-            # Validate columns exist
+            # Validate columns exist in the chart DataFrame
             x_col = chart_data.get("x_column")
             y_col = chart_data.get("y_column")
             color_col = chart_data.get("color_column")
             
             required_cols = [col for col in [x_col, y_col, color_col] if col]
-            missing_cols = [col for col in required_cols if col and col not in active_df.columns]
+            missing_cols = [col for col in required_cols if col and col not in chart_df.columns]
             
             if missing_cols:
                 # DON'T show error - just log it and skip chart (text answer is still good!)
@@ -180,10 +190,10 @@ def render_chat_response(ai_response, active_df, msg_key):
                 # Show a subtle info instead of scary red error
                 with st.expander("ℹ️ Chart not available", expanded=False):
                     st.caption(f"Missing columns: {', '.join(missing_cols)}")
-                    st.caption(f"Available: {', '.join(active_df.columns[:10])}...")
+                    st.caption(f"Available: {', '.join(chart_df.columns[:10])}...")
             else:
-                # Create chart with type selection
-                chart_created = create_chart(chart_data, active_df, msg_key, allow_chart_selection=True)
+                # Create chart with type selection using the appropriate DataFrame
+                chart_created = create_chart(chart_data, chart_df, msg_key, allow_chart_selection=True)
         
         # Button row
         col1, col2 = st.columns(2)
@@ -192,7 +202,7 @@ def render_chat_response(ai_response, active_df, msg_key):
             # Add to Canvas button - ALWAYS show
             pin_key = f"pin_canvas_{msg_key}_{hash(str(content) + str(chart_data))}"
             if st.button(f"📌 Add to Canvas", key=pin_key, type="secondary"):
-                add_to_canvas(content, chart_data, active_df)
+                add_to_canvas(content, chart_data, chart_df)
                 st.toast("📌 Added to Canvas!", icon="✅")
                 st.rerun()
         
@@ -209,7 +219,8 @@ def render_chat_response(ai_response, active_df, msg_key):
                     chart_keywords = [
                         'trend', 'distribution', 'comparison', 'over time', 'by category',
                         'highest', 'lowest', 'increase', 'decrease', 'sales from', 'performance',
-                        'across', 'between', 'among', 'top', 'bottom', 'most', 'least'
+                        'across', 'between', 'among', 'top', 'bottom', 'most', 'least',
+                        'forecast', 'predict', 'projection', 'age group', 'by age', 'price range'
                     ]
                     if any(keyword in content.lower() for keyword in chart_keywords):
                         show_generate_chart = True
@@ -217,7 +228,16 @@ def render_chat_response(ai_response, active_df, msg_key):
             if show_generate_chart:
                 chart_gen_key = f"gen_chart_{msg_key}_{hash(content)}"
                 if st.button("📊 Generate Chart from Insight", key=chart_gen_key, type="primary"):
-                    generate_chart_from_insight(content, active_df, msg_key)
+                    # Try to get the original user query for smart chart generation
+                    original_query = None
+                    if msg_key > 0 and len(st.session_state.messages) > msg_key:
+                        # Look for the user message before this assistant message
+                        for i in range(msg_key - 1, -1, -1):
+                            if st.session_state.messages[i].get("role") == "user":
+                                original_query = st.session_state.messages[i].get("content", "")
+                                break
+                    
+                    generate_chart_from_insight(content, active_df, msg_key, original_query)
                     st.rerun()
         
         # Show suggested actions as clickable buttons
@@ -248,18 +268,98 @@ def render_chat_response(ai_response, active_df, msg_key):
             st.toast("📌 Added to Canvas!", icon="✅")
             st.rerun()
 
-def generate_chart_from_insight(insight_text, active_df, msg_key):
-    """Generate chart based on AI insight using another AI call"""
-    
-    # Create a focused prompt for chart generation
-    chart_prompt = f"""
-    Based on this insight: "{insight_text}"
-    
-    Create a chart that best visualizes this analysis using the available data.
-    Focus on creating a specific, actionable visualization.
+def generate_chart_from_insight(insight_text, active_df, msg_key, original_query=None):
     """
+    Generate chart based on AI insight using smart chart generation.
     
-    # Add as a new message to trigger AI response
+    This function:
+    1. Tries to parse forecast data from AI text
+    2. Tries auto-binning if query mentions age groups, price ranges, etc.
+    3. Falls back to AI call if parsing fails
+    """
+    try:
+        from utils.smart_chart_generator import get_smart_chart_data
+        
+        # Get the original query if available
+        query = original_query or insight_text
+        
+        # Try smart chart generation first
+        chart_result = get_smart_chart_data(active_df, insight_text, query)
+        
+        if chart_result['source'] in ['parsed', 'binned'] and chart_result['df'] is not None:
+            # We have parsed/binned data - create chart directly!
+            import plotly.express as px
+            
+            df_chart = chart_result['df']
+            x_col = chart_result['x_column']
+            y_col = chart_result['y_column']
+            chart_type = chart_result['chart_type']
+            title = chart_result['title']
+            
+            # Create the chart
+            if chart_type == 'line':
+                if y_col:
+                    fig = px.line(df_chart, x=x_col, y=y_col, title=title, markers=True)
+                else:
+                    # Count-based
+                    counts = df_chart[x_col].value_counts().reset_index()
+                    counts.columns = [x_col, 'count']
+                    fig = px.line(counts, x=x_col, y='count', title=title, markers=True)
+            elif chart_type == 'bar':
+                if y_col:
+                    # Aggregate by x_col
+                    agg_df = df_chart.groupby(x_col)[y_col].sum().reset_index()
+                    fig = px.bar(agg_df, x=x_col, y=y_col, title=title)
+                else:
+                    # Count-based
+                    counts = df_chart[x_col].value_counts().reset_index()
+                    counts.columns = [x_col, 'count']
+                    fig = px.bar(counts, x=x_col, y='count', title=title)
+            else:
+                # Default to bar
+                counts = df_chart[x_col].value_counts().reset_index()
+                counts.columns = [x_col, 'count']
+                fig = px.bar(counts, x=x_col, y='count', title=title)
+            
+            # Style the chart
+            fig.update_layout(
+                template="plotly_dark",
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)'
+            )
+            
+            # Store the generated chart in session state for display
+            st.session_state[f"generated_chart_{msg_key}"] = {
+                'figure': fig,
+                'data': chart_result,
+                'source': chart_result['source']
+            }
+            
+            # Also add an AI message showing the chart was generated
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": {
+                    "content": f"📊 **{title}**\n\nChart generated from {chart_result['source']} data.",
+                    "reasoning": f"Source: {chart_result['source']}. X: {x_col}, Y: {y_col}",
+                    "is_visualizable": True,
+                    "chart_data": {
+                        "title": title,
+                        "chart_type": chart_type,
+                        "x_column": x_col,
+                        "y_column": y_col or "count",
+                        "data": df_chart.to_dict('records') if len(df_chart) <= 100 else None
+                    },
+                    "suggested_actions": []
+                }
+            })
+            
+            return  # Success!
+            
+    except Exception as e:
+        import logging
+        logging.getLogger(__name__).warning(f"Smart chart generation failed: {e}, falling back to AI")
+    
+    # Fallback: Use AI to generate chart
     st.session_state.messages.append({
         "role": "user", 
         "content": f"Create a visualization for this insight: {insight_text}"
@@ -501,8 +601,9 @@ def create_plotly_chart(df, chart_type, x_col, y_col, color_col, title, color_se
                     agg_df = plot_df.groupby(x_col)[y_col].sum().reset_index()
                     fig = px.bar(agg_df, x=x_col, y=y_col, title=title, color_discrete_sequence=color_sequence)
             else:
-                fig = px.bar(plot_df[x_col].value_counts().reset_index(), 
-                           x='index', y=x_col, title=title, color_discrete_sequence=color_sequence)
+                # Pandas 2.x: value_counts().reset_index() returns [column_name, 'count']
+                counts_df = plot_df[x_col].value_counts().reset_index()
+                fig = px.bar(counts_df, x=x_col, y='count', title=title, color_discrete_sequence=color_sequence)
         
         elif chart_type == "line":
             if color_col:
@@ -542,8 +643,8 @@ def create_plotly_chart(df, chart_type, x_col, y_col, color_col, title, color_se
             if y_col:
                 fig = px.treemap(plot_df, path=[x_col], values=y_col, title=title, color_discrete_sequence=color_sequence)
             else:
+                # Pandas 2.x: value_counts returns [column_name, 'count'] 
                 counts = plot_df[x_col].value_counts().reset_index()
-                counts.columns = [x_col, 'count']
                 fig = px.treemap(counts, path=[x_col], values='count', title=title, color_discrete_sequence=color_sequence)
         
         elif chart_type == "sunburst":
@@ -585,8 +686,8 @@ def create_plotly_chart(df, chart_type, x_col, y_col, color_col, title, color_se
                 agg_df = plot_df.groupby(x_col)[y_col].sum().reset_index().sort_values(y_col, ascending=False)
                 fig = px.funnel(agg_df, x=y_col, y=x_col, title=title, color_discrete_sequence=color_sequence)
             else:
+                # Pandas 2.x: value_counts returns [column_name, 'count']
                 counts = plot_df[x_col].value_counts().reset_index()
-                counts.columns = [x_col, 'count']
                 fig = px.funnel(counts, x='count', y=x_col, title=title, color_discrete_sequence=color_sequence)
         
         elif chart_type == "waterfall":

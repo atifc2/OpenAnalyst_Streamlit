@@ -356,20 +356,8 @@ if not check_authentication():
     
     st.stop()
 
-# User is authenticated, show logout button
+# User is authenticated
 authenticator, config = initialize_authenticator()
-with st.sidebar:
-    st.write(f"👤 **{st.session_state.get('name', 'User')}**")
-    
-    # Custom logout button with proper session clearing
-    if st.button("🚪 Logout", use_container_width=True, type="secondary"):
-        # Clear ALL session state to ensure clean logout
-        for key in list(st.session_state.keys()):
-            del st.session_state[key]
-        # Force re-authentication check
-        st.session_state['authenticated'] = False
-        st.session_state['authentication_status'] = None
-        st.rerun()
 
 # Initialize vector DB and index sample datasets (only once per session)
 if 'vector_db_initialized' not in st.session_state:
@@ -463,132 +451,127 @@ if "last_uploaded_files" not in st.session_state:
 
 # --- 1. Data Context Panel (Sidebar) ---
 with st.sidebar:
-    # Netflix-style sidebar header
-    st.markdown("""
+    # ==================== UNIFIED HEADER: User + Tier + Model ====================
+    current_user = st.session_state.get('username', 'Guest')
+    user_name = st.session_state.get('name', 'User')
+    user_tier = "free"  # Default tier (later: check from database)
+    
+    # Unified header card
+    st.markdown(f"""
     <div style='
-        text-align: center;
-        padding: 15px 0;
+        padding: 15px;
+        border-radius: 10px;
+        background: linear-gradient(145deg, #1a1a1a, #252525);
+        border: 1px solid #E50914;
         margin-bottom: 15px;
-        border-bottom: 2px solid #E50914;
     '>
-        <h2 style='
-            color: #E50914;
-            font-weight: 900;
-            font-size: 24px;
-            margin: 0;
-            letter-spacing: -1px;
-        '>OPENANALYST</h2>
-        <p style='color: #808080; font-size: 11px; margin: 5px 0 0 0;'>Advanced RAG • AI Analysis</p>
+        <div style='display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;'>
+            <span style='font-weight: 900; color: #E50914; font-size: 18px; letter-spacing: -1px;'>OPENANALYST</span>
+            <span style='background: rgba(229, 9, 20, 0.2); color: #E50914; padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: 600;'>🆓 FREE</span>
+        </div>
+        <div style='border-top: 1px solid #333; padding-top: 10px;'>
+            <div style='font-size: 14px; color: #fff; font-weight: 600;'>👤 {user_name}</div>
+            <div style='font-size: 11px; color: #888; margin-top: 3px;'>200+ templates • AI Analysis</div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
-    # ==================== 🏢 HYBRID TIER INDICATOR ====================
-    current_user = st.session_state.get('username', 'Guest')
-    user_tier = "free"  # Default tier (later: check from database)
+    # ==================== DATA STATUS INDICATOR ====================
+    has_data = st.session_state.processed_data is not None and len(st.session_state.processed_data) > 0
+    active_dataset = st.session_state.get('active_dataset_key', None)
     
-    tier_config = {
-        "free": {
-            "badge": "🆓 FREE",
-            "color": "#E50914",
-            "workspace": "Personal Workspace",
-            "description": "200+ community templates + your private analyses"
-        },
-        "pro": {
-            "badge": "⭐ PRO",
-            "color": "#F59E0B",
-            "workspace": "Pro Workspace",
-            "description": "Unlimited analyses + priority support"
-        },
-        "team": {
-            "badge": "👥 TEAM",
-            "color": "#8B5CF6",
-            "workspace": "Team Workspace",
-            "description": "Share with your team + collaboration features"
-        }
-    }
-    
-    tier_info = tier_config.get(user_tier, tier_config["free"])
-    
-    st.markdown(
-        f"""
+    if has_data and active_dataset:
+        # Show current data status
+        active_df = st.session_state.processed_data[active_dataset]["df"]
+        st.markdown(f"""
         <div style='
             padding: 12px;
             border-radius: 8px;
-            background: linear-gradient(145deg, #1a1a1a, #252525);
-            border-left: 4px solid {tier_info['color']};
-            margin-bottom: 15px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            margin-bottom: 10px;
         '>
-            <div style='font-weight: 700; color: {tier_info['color']}; margin-bottom: 5px;'>
-                {tier_info['badge']} • {tier_info['workspace']}
-            </div>
-            <div style='font-size: 0.85em; color: #B3B3B3;'>
-                👤 {current_user}<br/>
-                {tier_info['description']}
+            <div style='font-weight: 600; color: #22C55E; margin-bottom: 5px;'>📊 Data Loaded</div>
+            <div style='font-size: 12px; color: #ccc;'>
+                <strong>{active_dataset}</strong><br/>
+                {len(active_df):,} rows × {len(active_df.columns)} columns
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+        """, unsafe_allow_html=True)
+        
+        # Upload More Data option
+        with st.expander("➕ Upload More Data", expanded=False):
+            more_files = st.file_uploader(
+                "Add more files",
+                type=["csv", "xlsx"],
+                accept_multiple_files=True,
+                key="sidebar_more_upload",
+                label_visibility="collapsed"
+            )
+            if more_files:
+                current_file_names = tuple(f.name for f in more_files)
+                if current_file_names != st.session_state.get('last_more_upload'):
+                    with st.spinner("🔄 Processing..."):
+                        try:
+                            new_data = read_and_clean_files(tuple(more_files))
+                            # Merge with existing data
+                            if st.session_state.processed_data:
+                                st.session_state.processed_data.update(new_data)
+                            else:
+                                st.session_state.processed_data = new_data
+                            st.session_state.last_more_upload = current_file_names
+                            st.success(f"✅ Added {len(new_data)} dataset(s)!")
+                            time.sleep(0.5)
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Failed: {e}")
+    else:
+        # No data - prompt to upload
+        st.markdown("""
+        <div style='
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(229, 9, 20, 0.1);
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            margin-bottom: 15px;
+        '>
+            <div style='font-weight: 600; color: #E50914; margin-bottom: 5px;'>📁 No Data Loaded</div>
+            <div style='font-size: 12px; color: #ccc;'>Upload a file in the main area to get started</div>
+        </div>
+        """, unsafe_allow_html=True)
     
-    # Model Selector
     st.divider()
-    st.subheader("🤖 AI Model")
     
-    # Available models with status - categorized
+    # ==================== AI MODEL SELECTOR (Compact) ====================
     model_options = {
-        # ===== ACTIVE MODELS (API Connected) =====
-        "gemini-2.5-flash": "✅ Gemini Flash (Fast)",
         "gemini-2.5-flash-lite": "✅ Gemini Flash Lite (Free)",
-        "gemini-2.5-flash-8b": "✅ Gemini Flash-8B (Efficient)",
-        
-        # ===== PREMIUM MODELS (Coming Soon) =====
-        "gemini-2.0-pro": "⭐ Gemini 2.0 Pro (Coming Soon)",
-        "gpt-4o": "🔒 GPT-4o (Add API Key)",
-        "gpt-4o-mini": "🔒 GPT-4o Mini (Add API Key)",
-        "claude-3.5-sonnet": "🔒 Claude 3.5 Sonnet (Add API Key)",
-        "claude-3-opus": "🔒 Claude 3 Opus (Add API Key)",
-        
-        # ===== OPEN SOURCE (Self-Host) =====
-        "llama-3.2-70b": "🦙 Llama 3.2 70B (Self-Host)",
-        "mistral-large": "🌀 Mistral Large (Self-Host)",
-        "mixtral-8x7b": "🌀 Mixtral 8x7B (Self-Host)",
-        "qwen-2.5-72b": "🔮 Qwen 2.5 72B (Self-Host)",
+        "gemini-2.5-flash": "✅ Gemini Flash (Fast)",
+        "gemini-2.5-flash-8b": "✅ Gemini Flash-8B",
+        "gpt-4o": "🔒 GPT-4o (Add Key)",
+        "claude-3.5-sonnet": "🔒 Claude 3.5 (Add Key)",
     }
-    
-    # Models that are actually available
     active_models = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.5-flash-8b"]
     
     if "selected_model" not in st.session_state:
         st.session_state.selected_model = "gemini-2.5-flash-lite"
     
     selected_model = st.selectbox(
-        "Select Model:",
+        "🤖 AI Model:",
         options=list(model_options.keys()),
         format_func=lambda x: model_options[x],
-        index=list(model_options.keys()).index(st.session_state.selected_model),
-        key="model_selector"
+        index=list(model_options.keys()).index(st.session_state.selected_model) if st.session_state.selected_model in model_options else 0,
+        key="model_selector_unified"
     )
     
-    # Check if model changed
     if selected_model != st.session_state.selected_model:
-        if selected_model not in active_models:
-            # Show appropriate message based on model type
-            if "gpt" in selected_model or "claude" in selected_model:
-                st.warning("� Add your OpenAI/Anthropic API key in settings to use this model.")
-            elif "llama" in selected_model or "mistral" in selected_model or "mixtral" in selected_model or "qwen" in selected_model:
-                st.info("🖥️ Self-hosted models require local setup. Contact us for enterprise deployment.")
-            else:
-                st.info("🚀 This model is coming soon! Stay tuned.")
-            # Don't change selection for unavailable models
-        else:
-            # Update to active model
+        if selected_model in active_models:
             st.session_state.selected_model = selected_model
             from utils.ai_core import client as gemini_client
             gemini_client.set_model(selected_model)
-            st.success(f"✅ Switched to {model_options[selected_model]}")
+            st.toast(f"✅ Switched to {model_options[selected_model]}")
             st.rerun()
-    
-    st.caption(f"**Active:** {model_options[st.session_state.selected_model]}")
+        else:
+            st.warning("🔒 Add API key in settings to use this model.")
     
     st.divider()
     
@@ -676,64 +659,7 @@ with st.sidebar:
             st.error(f"⚠️ Widget error: {str(e)}")
             st.divider()
     
-    uploaded_files = st.file_uploader(
-        "Upload Files", type=["csv", "xlsx"], accept_multiple_files=True,
-        help="Drop your CSV or Excel files here to start analysis"
-    )
-    
-    # Only process if files have changed
-    if uploaded_files:
-        current_file_names = tuple(f.name for f in uploaded_files)
-        
-        if current_file_names != st.session_state.last_uploaded_files:
-            debug_log("🔍 New files detected, processing...")
-            
-            # Show loading state with progress
-            loading_placeholder = st.empty()
-            with loading_placeholder.container():
-                st.markdown("""
-                <div style='
-                    text-align: center;
-                    padding: 20px;
-                    border-radius: 8px;
-                    border: 1px solid rgba(229, 9, 20, 0.3);
-                    background: rgba(229, 9, 20, 0.05);
-                '>
-                    <div style='font-size: 24px; margin-bottom: 10px;'>🔄</div>
-                    <div style='font-weight: 600; color: #E50914;'>Processing Your Data...</div>
-                    <div style='font-size: 12px; color: #808080; margin-top: 5px;'>Cleaning, validating, and preparing for analysis</div>
-                </div>
-                """, unsafe_allow_html=True)
-                
-            try:
-                # Archive current chat before clearing (if it has messages)
-                if st.session_state.messages and st.session_state.active_dataset_key:
-                    if "chat_archives" not in st.session_state:
-                        st.session_state.chat_archives = []
-                    
-                    archive = {
-                        "dataset": st.session_state.active_dataset_key,
-                        "messages": st.session_state.messages.copy(),
-                        "archived_at": datetime.datetime.now().strftime("%H:%M:%S"),
-                        "message_count": len(st.session_state.messages)
-                    }
-                    st.session_state.chat_archives.append(archive)
-                
-                st.session_state.messages = []
-                # DON'T clear canvas_items - this keeps them persistent
-                st.session_state.processed_data = read_and_clean_files(tuple(uploaded_files))
-                st.session_state.last_uploaded_files = current_file_names
-                debug_log(f"✅ Processed {len(st.session_state.processed_data)} datasets")
-                
-                # Clear loading and show success
-                loading_placeholder.empty()
-                st.success(f"✅ Successfully loaded {len(st.session_state.processed_data)} dataset(s)!")
-                time.sleep(0.5)
-                st.rerun()
-            except Exception as e:
-                loading_placeholder.empty()
-                st.error(f"Failed to process files: {e}")
-    
+    # File uploader moved to main area - only show dataset selector if data exists
     if st.session_state.processed_data:
         dataset_keys = list(st.session_state.processed_data.keys())
         
@@ -978,6 +904,15 @@ with st.sidebar:
                 st.info("💡 No similar analyses found. Try different keywords or broader terms.")
         except Exception as e:
             st.warning(f"⚠️ Search feature temporarily unavailable: {str(e)}")
+    
+    # ==================== LOGOUT BUTTON (at the very bottom) ====================
+    st.divider()
+    if st.button("🚪 Logout", use_container_width=True, type="secondary", key="sidebar_logout_bottom"):
+        for key in list(st.session_state.keys()):
+            del st.session_state[key]
+        st.session_state['authenticated'] = False
+        st.session_state['authentication_status'] = None
+        st.rerun()
 
 def generate_enhanced_pdf_report(canvas_items, df, include_timestamp):
     """Generate PDF report with embedded charts"""
@@ -1065,19 +1000,113 @@ else:
     """, unsafe_allow_html=True)
     
     if not st.session_state.active_dataset_key:
+        # ==================== NO DATA LOADED - SHOW OPTIONS ====================
+        
+        # Demo Journey Flow Message
+        st.markdown("""
+        <div style='
+            background: linear-gradient(90deg, rgba(229, 9, 20, 0.1) 0%, rgba(229, 9, 20, 0.05) 100%);
+            padding: 15px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(229, 9, 20, 0.3);
+            margin-bottom: 25px;
+            text-align: center;
+        '>
+            <span style='font-size: 14px; color: #ccc;'>
+                📁 <strong style='color: #E50914;'>Upload Data</strong> 
+                <span style='color: #666;'>→</span> 
+                🤖 <strong style='color: #E50914;'>AI Analyzes</strong> 
+                <span style='color: #666;'>→</span> 
+                💬 <strong style='color: #E50914;'>Ask Questions</strong> 
+                <span style='color: #666;'>→</span> 
+                📊 <strong style='color: #E50914;'>Get Insights</strong>
+            </span>
+        </div>
+        """, unsafe_allow_html=True)
+        
         st.markdown("""
         <div style='
             background: linear-gradient(145deg, #1a1a1a, #252525);
             padding: 40px;
             border-radius: 12px;
-            border: 1px solid #333;
+            border: 1px solid #E50914;
             text-align: center;
+            margin-bottom: 25px;
         '>
-            <div style='font-size: 48px; margin-bottom: 15px;'>📚</div>
-            <h3 style='color: #fff; margin-bottom: 10px;'>Upload Your Data</h3>
-            <p style='color: #808080;'>Drop a CSV or Excel file in the sidebar to begin analysis</p>
+            <div style='font-size: 48px; margin-bottom: 15px;'>👋</div>
+            <h2 style='color: #fff; margin-bottom: 10px;'>Welcome! Let's get started</h2>
+            <p style='color: #808080; margin-bottom: 5px;'>Choose how you want to begin your analysis</p>
         </div>
         """, unsafe_allow_html=True)
+        
+        col1, col2 = st.columns(2, gap="large")
+        
+        with col1:
+            st.markdown("""
+            <div style='
+                background: linear-gradient(145deg, #252525, #1a1a1a);
+                padding: 25px;
+                border-radius: 12px;
+                border: 1px solid #333;
+                text-align: center;
+            '>
+                <div style='font-size: 36px; margin-bottom: 10px;'>📁</div>
+                <h3 style='color: #E50914; margin-bottom: 10px;'>Upload Your Data</h3>
+                <p style='color: #808080; font-size: 13px;'>CSV or Excel files supported</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # File uploader in main area
+            uploaded_files = st.file_uploader(
+                "Drop your files here",
+                type=["csv", "xlsx"],
+                accept_multiple_files=True,
+                key="main_file_uploader",
+                label_visibility="collapsed"
+            )
+            
+            if uploaded_files:
+                current_file_names = tuple(f.name for f in uploaded_files)
+                if current_file_names != st.session_state.last_uploaded_files:
+                    with st.spinner("🔄 Processing your data..."):
+                        try:
+                            st.session_state.messages = []
+                            st.session_state.processed_data = read_and_clean_files(tuple(uploaded_files))
+                            st.session_state.last_uploaded_files = current_file_names
+                            st.success(f"✅ Loaded {len(st.session_state.processed_data)} dataset(s)!")
+                            time.sleep(0.5)
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Failed to process files: {e}")
+        
+        with col2:
+            st.markdown("""
+            <div style='
+                background: linear-gradient(145deg, #252525, #1a1a1a);
+                padding: 25px;
+                border-radius: 12px;
+                border: 1px solid #333;
+                text-align: center;
+            '>
+                <div style='font-size: 36px; margin-bottom: 10px;'>🎯</div>
+                <h3 style='color: #E50914; margin-bottom: 10px;'>Try Sample Data</h3>
+                <p style='color: #808080; font-size: 13px;'>Explore with pre-loaded datasets</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Sample dataset buttons
+            sample_datasets = [
+                ("🛒 E-commerce Sales", "Sample_Datasets/sample_ecommerce_sales.csv"),
+                ("📊 Customer Survey", "Sample_Datasets/sample_customer_survey.csv"),
+                ("💰 Financial Metrics", "Sample_Datasets/sample_financial_metrics.csv")
+            ]
+            
+            for icon_name, filename in sample_datasets:
+                if st.button(f"{icon_name}", key=f"main_{filename}", use_container_width=True):
+                    st.session_state.demo_sample = filename
+                    st.session_state.demo_sample_name = icon_name
+                    st.rerun()
+
     else:
         if st.session_state.active_dataset_key in st.session_state.processed_data:
             active_df = st.session_state.processed_data[st.session_state.active_dataset_key]["df"]

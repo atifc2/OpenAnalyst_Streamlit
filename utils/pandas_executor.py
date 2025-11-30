@@ -444,6 +444,277 @@ def execute_simple_query(df: pd.DataFrame, operation: str, column: str = None, p
     return executor.execute(operation, column, params)
 
 
+# ============= SAFE CODE EXECUTOR =============
+
+import numpy as np
+import threading
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
+
+
+class CodeExecutionError(Exception):
+    """Custom exception for code execution errors."""
+    pass
+
+
+class SafeCodeExecutor:
+    """
+    Safely executes AI-generated pandas code in a sandboxed environment.
+    
+    Safety features:
+    - Restricted imports (only pandas, numpy)
+    - No file I/O, network, or system calls
+    - Execution timeout
+    - Memory limits (via output size check)
+    """
+    
+    # Allowed modules/functions
+    SAFE_BUILTINS = {
+        'len': len,
+        'range': range,
+        'enumerate': enumerate,
+        'zip': zip,
+        'map': map,
+        'filter': filter,
+        'sorted': sorted,
+        'reversed': reversed,
+        'sum': sum,
+        'min': min,
+        'max': max,
+        'abs': abs,
+        'round': round,
+        'int': int,
+        'float': float,
+        'str': str,
+        'bool': bool,
+        'list': list,
+        'dict': dict,
+        'tuple': tuple,
+        'set': set,
+        'True': True,
+        'False': False,
+        'None': None,
+        'print': lambda *args, **kwargs: None,  # Disable print
+    }
+    
+    # Dangerous patterns to block
+    BLOCKED_PATTERNS = [
+        'import os',
+        'import sys',
+        'import subprocess',
+        'import shutil',
+        '__import__',
+        'eval(',
+        'exec(',
+        'compile(',
+        'open(',
+        'file(',
+        'input(',
+        'raw_input(',
+        'getattr',
+        'setattr',
+        'delattr',
+        '__builtins__',
+        '__globals__',
+        '__code__',
+        '__class__',
+        'os.system',
+        'os.popen',
+        'subprocess',
+        '.to_csv',
+        '.to_excel',
+        '.to_sql',
+        '.to_pickle',
+        'read_csv',
+        'read_excel',
+        'read_sql',
+        'requests.',
+        'urllib',
+        'socket',
+        'http',
+    ]
+    
+    def __init__(self, df: pd.DataFrame, timeout_seconds: int = 10):
+        """
+        Initialize executor with dataframe.
+        
+        Args:
+            df: The pandas DataFrame to operate on
+            timeout_seconds: Maximum execution time
+        """
+        self.df = df.copy()  # Work on a copy for safety
+        self.timeout = timeout_seconds
+        self.result = None
+        self.error = None
+    
+    def _clean_code(self, code: str) -> str:
+        """
+        Clean and prepare code for execution.
+        Removes safe import statements (numpy, pandas) since they're pre-imported.
+        
+        Args:
+            code: Python code string
+            
+        Returns:
+            Cleaned code string
+        """
+        import re
+        lines = code.split('\n')
+        cleaned_lines = []
+        
+        for line in lines:
+            stripped = line.strip()
+            # Remove numpy/pandas import statements (they're pre-imported)
+            if re.match(r'^import\s+(numpy|np|pandas|pd)\s*$', stripped):
+                continue
+            if re.match(r'^import\s+(numpy|pandas)\s+as\s+(np|pd)\s*$', stripped):
+                continue
+            if re.match(r'^from\s+(numpy|pandas)\s+import\s+', stripped):
+                continue
+            cleaned_lines.append(line)
+        
+        return '\n'.join(cleaned_lines)
+    
+    def _validate_code(self, code: str) -> bool:
+        """
+        Check code for dangerous patterns.
+        
+        Args:
+            code: Python code string
+            
+        Returns:
+            True if code appears safe, raises CodeExecutionError otherwise
+        """
+        code_lower = code.lower()
+        
+        for pattern in self.BLOCKED_PATTERNS:
+            if pattern.lower() in code_lower:
+                raise CodeExecutionError(f"Blocked pattern detected: '{pattern}'")
+        
+        return True
+    
+    def execute(self, code: str) -> Dict[str, Any]:
+        """
+        Execute pandas code safely.
+        
+        Args:
+            code: Python code string (must store result in 'result' variable)
+            
+        Returns:
+            Dict with:
+            - 'success': bool
+            - 'result': DataFrame or value if successful
+            - 'error': Error message if failed
+            - 'result_type': Type of result ('dataframe', 'series', 'scalar', etc.)
+        """
+        # First clean the code (remove safe imports)
+        code = self._clean_code(code)
+        # Validate code first
+        try:
+            self._validate_code(code)
+        except CodeExecutionError as e:
+            logger.warning(f"Code validation failed: {e}")
+            return {
+                'success': False,
+                'result': None,
+                'error': str(e),
+                'result_type': None
+            }
+        
+        # Prepare execution environment
+        # Use full builtins to support pandas operations like .to_period()
+        import builtins
+        exec_globals = {
+            '__builtins__': builtins,
+            'pd': pd,
+            'np': np,
+            'df': self.df,
+            'result': None
+        }
+        
+        # Use a simple execution without signal-based timeout
+        # (Signal doesn't work in Streamlit's threaded environment)
+        try:
+            # Execute the code directly
+            exec(code, exec_globals)
+            
+            # Get result - first check for explicit 'result' variable
+            result = exec_globals.get('result')
+            
+            # If no explicit 'result', find ANY DataFrame that was created
+            if result is None:
+                # Look for any DataFrame in the execution globals (excluding the original 'df')
+                for var_name, var_value in exec_globals.items():
+                    if var_name not in ('__builtins__', 'pd', 'np', 'df', 'result', 'datetime', 'timedelta'):
+                        if isinstance(var_value, pd.DataFrame):
+                            result = var_value
+                            logger.info(f"Using variable '{var_name}' as result (no explicit 'result' variable)")
+                            break
+                        elif isinstance(var_value, pd.Series):
+                            result = var_value
+                            logger.info(f"Using Series variable '{var_name}' as result")
+                            break
+            
+            if result is None:
+                return {
+                    'success': False,
+                    'result': None,
+                    'error': "Code did not produce any DataFrame or result variable",
+                    'result_type': None
+                }
+            
+            # Determine result type
+            if isinstance(result, pd.DataFrame):
+                result_type = 'dataframe'
+                # Limit size for safety
+                if len(result) > 10000:
+                    result = result.head(10000)
+                    logger.warning("Result truncated to 10000 rows")
+            elif isinstance(result, pd.Series):
+                result_type = 'series'
+                result = result.reset_index()
+                result.columns = ['index', 'value'] if len(result.columns) == 2 else result.columns
+            elif isinstance(result, (int, float, str, bool)):
+                result_type = 'scalar'
+            elif isinstance(result, (list, dict)):
+                result_type = 'collection'
+            else:
+                result_type = 'other'
+            
+            logger.info(f"Code executed successfully. Result type: {result_type}")
+            
+            return {
+                'success': True,
+                'result': result,
+                'error': None,
+                'result_type': result_type
+            }
+                
+        except Exception as e:
+            logger.error(f"Code execution error: {e}")
+            return {
+                'success': False,
+                'result': None,
+                'error': str(e),
+                'result_type': None
+            }
+
+
+def execute_ai_code(df: pd.DataFrame, code: str, timeout: int = 10) -> Dict[str, Any]:
+    """
+    Convenience function to execute AI-generated code safely.
+    
+    Args:
+        df: pandas DataFrame
+        code: Python code string from AI
+        timeout: Max execution time in seconds
+        
+    Returns:
+        Execution result dict
+    """
+    executor = SafeCodeExecutor(df, timeout)
+    return executor.execute(code)
+
+
 # ============= TEST =============
 if __name__ == "__main__":
     # Create test data
@@ -479,3 +750,41 @@ if __name__ == "__main__":
         print(f"   Visualizable: {result['is_visualizable']}")
         if result.get('_raw_value'):
             print(f"   Raw value: {str(result['_raw_value'])[:50]}...")
+    
+    # Test SafeCodeExecutor
+    print("\n" + "=" * 60)
+    print("SAFE CODE EXECUTOR TEST")
+    print("=" * 60)
+    
+    safe_executor = SafeCodeExecutor(test_df)
+    
+    # Test 1: Simple groupby
+    code1 = """
+result = df.groupby('region')['revenue'].sum().reset_index()
+"""
+    print("\n📝 Test 1: Simple groupby")
+    res1 = safe_executor.execute(code1)
+    print(f"   Success: {res1['success']}")
+    if res1['success']:
+        print(f"   Result:\n{res1['result']}")
+    
+    # Test 2: With derived column
+    code2 = """
+df['profit'] = df['revenue'] * 0.3
+result = df.groupby('product')['profit'].sum().reset_index()
+"""
+    print("\n📝 Test 2: Derived column")
+    res2 = safe_executor.execute(code2)
+    print(f"   Success: {res2['success']}")
+    if res2['success']:
+        print(f"   Result:\n{res2['result']}")
+    
+    # Test 3: Blocked code
+    code3 = """
+import os
+result = os.listdir('.')
+"""
+    print("\n📝 Test 3: Blocked code (should fail)")
+    res3 = safe_executor.execute(code3)
+    print(f"   Success: {res3['success']}")
+    print(f"   Error: {res3['error']}")

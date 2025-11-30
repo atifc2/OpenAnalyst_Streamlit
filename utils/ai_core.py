@@ -514,6 +514,46 @@ Common derived columns (if available):
                         ]
                     }
                 
+                # ============= EXECUTE AI-GENERATED CODE =============
+                # Execute python_code and store result for charting
+                if isinstance(ai_response, dict) and ai_response.get("python_code") and df is not None:
+                    try:
+                        from utils.pandas_executor import execute_ai_code
+                        
+                        python_code = ai_response["python_code"]
+                        logger.info(f"Executing AI-generated code:\n{python_code[:200]}...")
+                        
+                        execution_result = execute_ai_code(df, python_code, timeout=15)
+                        
+                        if execution_result['success']:
+                            # Store executed result for chart rendering
+                            ai_response['_execution_success'] = True
+                            ai_response['_result_type'] = execution_result['result_type']
+                            
+                            # If result is a DataFrame, store as dict for charting
+                            if execution_result['result_type'] == 'dataframe':
+                                result_df = execution_result['result']
+                                ai_response['_result_data'] = result_df.to_dict('records')
+                                ai_response['_result_columns'] = result_df.columns.tolist()
+                                logger.info(f"Code executed successfully. Result: {len(result_df)} rows, columns: {result_df.columns.tolist()}")
+                            elif execution_result['result_type'] == 'series':
+                                result_df = execution_result['result']
+                                ai_response['_result_data'] = result_df.to_dict('records')
+                                ai_response['_result_columns'] = result_df.columns.tolist()
+                                logger.info(f"Code executed successfully. Series result.")
+                            else:
+                                ai_response['_result_value'] = execution_result['result']
+                                logger.info(f"Code executed successfully. Scalar result.")
+                        else:
+                            ai_response['_execution_success'] = False
+                            ai_response['_execution_error'] = execution_result['error']
+                            logger.warning(f"Code execution failed: {execution_result['error']}")
+                            
+                    except Exception as code_error:
+                        logger.warning(f"Code execution exception: {code_error}")
+                        ai_response['_execution_success'] = False
+                        ai_response['_execution_error'] = str(code_error)
+                
                 # Store interaction in vector DB for future semantic search with domain info
                 if VECTOR_DB_ENABLED and last_user_message and isinstance(ai_response, dict):
                     try:
