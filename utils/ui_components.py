@@ -165,14 +165,25 @@ def render_chat_response(ai_response, active_df, msg_key):
         # Determine the DataFrame to use for charting
         # Priority: executed result > original DataFrame
         chart_df = active_df
+        skip_chart = False  # Flag to skip chart for single-value results
+        
         if ai_response.get("_execution_success") and ai_response.get("_result_data"):
             # Use the AI-executed result DataFrame for charting
             import pandas as pd
             chart_df = pd.DataFrame(ai_response["_result_data"])
             import logging
             logging.getLogger(__name__).info(f"Using AI-executed result DataFrame: {len(chart_df)} rows")
+            
+            # Skip chart for single-value results (1 row with 1-2 columns = scalar answer)
+            if len(chart_df) == 1 and len(chart_df.columns) <= 2:
+                skip_chart = True
+                logging.getLogger(__name__).info("Skipping chart - single value result (not suitable for visualization)")
         
-        if ai_response.get("is_visualizable") and ai_response.get("chart_data"):
+        # Also skip if result was a scalar value (not a DataFrame)
+        if ai_response.get("_execution_success") and ai_response.get("_result_value") is not None:
+            skip_chart = True
+        
+        if ai_response.get("is_visualizable") and ai_response.get("chart_data") and not skip_chart:
             chart_data = ai_response["chart_data"]
             
             # Validate columns exist in the chart DataFrame
