@@ -14,9 +14,9 @@ fi
 
 # 1. Check for .env file
 if [ ! -f ".env" ]; then
-    echo "⚠️ .env file not found. Creating one..."
-    echo "DEEPSEEK_API_KEY=sk-54caf78ef48e462888301b9a9f6f5656" > .env
-    echo "✅ Created .env file with DeepSeek API key"
+    echo "⚠️ .env file not found. Creating template..."
+    echo "GEMINI_API_KEY=your_api_key_here" > .env
+    echo "✅ Created .env template. Replace placeholder with your real Gemini API key."
 else
     echo "✅ .env file exists"
 fi
