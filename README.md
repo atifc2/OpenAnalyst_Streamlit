@@ -45,6 +45,9 @@ Create a `.env` file in the project root:
 echo "GEMINI_API_KEY=your_api_key_here" > .env
 ```
 
+Get your Gemini API key from Google AI Studio:
+https://aistudio.google.com/app/apikey
+
 ## 5) Run the app
 
 ```bash

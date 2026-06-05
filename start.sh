@@ -21,6 +21,13 @@ else
     echo "✅ .env file exists"
 fi
 
+# Validate key is configured (not placeholder/empty)
+if ! grep -q '^GEMINI_API_KEY=' .env || grep -q '^GEMINI_API_KEY=your_api_key_here$' .env || grep -q '^GEMINI_API_KEY=$' .env; then
+    echo "❌ GEMINI_API_KEY is missing or still a placeholder in .env"
+    echo "Please update .env with your real Gemini API key before running the app."
+    exit 1
+fi
+
 # 2. Create virtual environment if it doesn't exist
 if [ ! -d "venv" ]; then
     echo "Creating Python virtual environment..."
