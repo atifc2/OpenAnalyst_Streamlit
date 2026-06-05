@@ -22,7 +22,8 @@ else
 fi
 
 # Validate key is configured (not placeholder/empty)
-if ! grep -q '^GEMINI_API_KEY=' .env || grep -q '^GEMINI_API_KEY=your_api_key_here$' .env || grep -q '^GEMINI_API_KEY=$' .env; then
+gemini_api_key=$(grep '^GEMINI_API_KEY=' .env | head -n 1 | cut -d'=' -f2-)
+if [ -z "$gemini_api_key" ] || [ "$gemini_api_key" = "your_api_key_here" ]; then
     echo "❌ GEMINI_API_KEY is missing or still a placeholder in .env"
     echo "Please update .env with your real Gemini API key before running the app."
     exit 1
