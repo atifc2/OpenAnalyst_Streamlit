@@ -31,6 +31,12 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+Windows activation:
+
+```powershell
+venv\Scripts\Activate.ps1
+```
+
 ## 4) Configure API key
 
 Create a `.env` file in the project root:
