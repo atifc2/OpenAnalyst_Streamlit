@@ -14,11 +14,20 @@ fi
 
 # 1. Check for .env file
 if [ ! -f ".env" ]; then
-    echo "⚠️ .env file not found. Creating one..."
-    echo "DEEPSEEK_API_KEY=sk-54caf78ef48e462888301b9a9f6f5656" > .env
-    echo "✅ Created .env file with DeepSeek API key"
+    echo "⚠️ .env file not found. Creating template..."
+    echo "GEMINI_API_KEY=your_api_key_here" > .env
+    echo "✅ Created .env template. Replace placeholder with your real Gemini API key."
 else
     echo "✅ .env file exists"
+fi
+
+# Validate key is configured (not placeholder/empty)
+gemini_api_key=$(grep '^GEMINI_API_KEY=' .env | head -n 1 | cut -d'=' -f2- | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e "s/^['\"]//" -e "s/['\"]$//")
+gemini_api_key_lower=$(printf '%s' "$gemini_api_key" | tr '[:upper:]' '[:lower:]')
+if [ -z "$gemini_api_key" ] || [ "$gemini_api_key_lower" = "your_api_key_here" ] || [ "$gemini_api_key_lower" = "placeholder" ] || [ "$gemini_api_key_lower" = "todo" ]; then
+    echo "❌ GEMINI_API_KEY is missing or still a placeholder in .env"
+    echo "Please update .env with your real Gemini API key before running the app."
+    exit 1
 fi
 
 # 2. Create virtual environment if it doesn't exist
